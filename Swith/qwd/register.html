@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>카카오톡으로 진행하는 회원가입</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 20px;
+            background-color: #f4f4f4;
+        }
+
+        h2 {
+            color: #333;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 15px;
+            box-sizing: border-box;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            background-color: rgb(202, 202, 0);
+            color: #fff;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: rgb(196, 183, 138);
+        }
+    </style>
+</head>
+<body>
+    <h2>카카오톡으로 회원가입</h2>
+    <form action="/kakao/kakaoregister" method="post">
+        <label for="email">이메일 :</label>
+        <input type="text" id="email" name="email" th:value="${kakaoInfo.email}" readonly>
+
+        <label for="nickname">닉네임 :</label>
+        <input type="text" id="nickname" name="nickname" th:value="${kakaoInfo.nickname}">
+
+        <label for="name">이름 :</label>
+        <input type="text" id="name" name="name">
+
+        <label for="address">주소 :</label>
+        <input type="text" id="address" name="address">
+
+        <label for="profileimg">프로필 :</label>
+        <input type="text" id="profileimg" name="profileimg">
+
+        <label for="introduction">자기소개 :</label>
+        <input type="text" id="introduction" name="introduction">
+
+        <input type="submit" value="가입완료">
+    </form>
+</body>
+</html>
