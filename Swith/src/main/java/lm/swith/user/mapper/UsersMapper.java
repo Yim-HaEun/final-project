@@ -6,9 +6,9 @@ import lm.swith.user.model.SwithUser;
 
 @Mapper
 public interface UsersMapper {
-	SwithUser insertUser(SwithUser swithUser);
+	void insertUser(SwithUser swithUser);
 	
-	SwithUser loginUser(String userID, String password);
+	SwithUser loginUser(String email, String password);
 	
 	SwithUser findUserRole(String role);
 

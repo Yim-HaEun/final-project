@@ -15,15 +15,27 @@ import lm.swith.user.Service.KakaoService;
 import lm.swith.user.Service.UserService;
 import lm.swith.user.common.MsgEntity;
 import lm.swith.user.model.SwithUser;
+import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequestMapping("/users")
+@RequiredArgsConstructor
 public class RegisterController {
-	@Autowired
-	private KakaoService kakaoService;
 	
-	@Autowired
-	private UserService userService;
+	private final KakaoService kakaoService;
+	
+	private final UserService userService;
+	
+	@GetMapping("/login")
+	public String LoginForm(Model model) {
+		model.addAttribute("kakaoUrl",kakaoService.getKakaoLogin());
+		//model.addAttribute("");//git
+		return "login";
+	}
+	@GetMapping("/home")
+	public String home() {
+		return "home";
+	}
 	
 	@GetMapping("/register")
 	public String showRegisterForm(Model model) {
@@ -47,7 +59,7 @@ public class RegisterController {
 
         SwithUser kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"), password,userName, userProfile,userAddress,userIntroduction,role );
         model.addAttribute("kakaoInfo", kakaoInfo);
-        return "register";
+        return "kakaoRegister";
     }
 
     @PostMapping("/kakaoregister")

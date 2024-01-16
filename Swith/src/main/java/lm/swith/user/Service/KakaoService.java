@@ -70,14 +70,15 @@ public class KakaoService {
                     httpEntity,
                     String.class
             );
-
+            System.out.println("Kakao API Token Response: " + response.getBody());
             JSONParser jsonParser = new JSONParser();
             JSONObject jsonObj = (JSONObject) jsonParser.parse(response.getBody());
 
             accessToken = (String) jsonObj.get("access_token");
 
         } catch (Exception e) {
-            throw new Exception("API 호출 실패");
+        	 throw new Exception("카카오 API 호출 실패: " + e.getMessage());
+            
         }
 
         return getUserInfoWithToken(accessToken,password, userName,userProfile,userAddress, userIntroduction,role);
@@ -102,7 +103,8 @@ public class KakaoService {
         JSONObject account = (JSONObject) jsonObj.get("kakao_account");
         JSONObject profile = (JSONObject) account.get("profile");
 
-        long userNO = (long) jsonObj.get("userNO");
+        Object userNOObject = jsonObj.get("userNO");
+        long userNO = userNOObject != null ? ((Number) userNOObject).longValue() : 0;
         String email = String.valueOf(account.get("email"));
         String nickname = String.valueOf(profile.get("nickname"));
 
@@ -125,12 +127,12 @@ public class KakaoService {
                 .build();
     }
 
-    /*public SwithUser signUpUser(SwithUser swithUser)  {
+    public SwithUser signUpUser(SwithUser swithUser)  {
     	SwithUser user = new SwithUser();
-    	user.setUserID(swithUser.getUserID());
+    	user.setEmail(swithUser.getEmail());
 		user.setPassword(swithUser.getPassword());
 		user.setUserName(swithUser.getUserName());
-		user.setUserNickname(swithUser.getUserNickname());
+		user.setNickname(swithUser.getNickname());
 		user.setUserProfile(swithUser.getUserProfile());
 		user.setUserAddress(swithUser.getUserAddress());
 		user.setUserIntroduction(swithUser.getUserIntroduction());
@@ -140,6 +142,6 @@ public class KakaoService {
 		return user;
 		
     }
-    */
+    
     
 }

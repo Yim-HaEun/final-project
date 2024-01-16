@@ -10,12 +10,13 @@ import lombok.RequiredArgsConstructor;
 
 @Controller
 @RequiredArgsConstructor
-@RequestMapping("/users")
+@RequestMapping("/user")
 public class LoginController {
 
 	
 	//git
 	private final KakaoService kakaoService;
+	
 	@GetMapping("/login")
 	public String LoginForm(Model model) {
 		model.addAttribute("kakaoUrl",kakaoService.getKakaoLogin());

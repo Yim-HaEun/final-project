@@ -10,37 +10,38 @@
 			<div class="card-body">
 				
 	<h2 class="card-title">카카오 회원가입</h2>
-	<form th:action="@{/users/kakaoregister}" method="post">
+	
+	<form action="/users/kakaoregister" method="post">
 		<div class="form-group">
 		<label for = "email">아이디 : </label>
-		<input type="text" id="email" th:value="${kakaoInfo.email}" required/>
+		<input type="text" id="email" name="email" th:value="${kakaoInfo.email}" required/>
 		</div>
 		
 		<div class="form-group">
 		<label for = "password">비밀번호 : </label>
-		<input type="text" id="password" required/>
+		<input type="text" id="password" name="password" required/>
 		</div>
 		
 		<div class="form-group">
 		<label for = "userName">이름 : </label>
-		<input type="text" id="userName" required/>
+		<input type="text" id="userName" name="userName" required/>
 		</div>
 		
 		<div class="form-group">
 		<label for = "nickname">닉네임 : </label>
-		<input type="text" id="nickname" th:value="${kakaoInfo.email}" "required/>
+		<input type="text" id="nickname" name="nickname" th:value="${kakaoInfo.nickname}" required/>
 		</div>
 		<div class="form-group">
 		<label for = "userProfile">프로필 : </label>
-		<input type="text" id="userProfile" required/>
+		<input type="text" id="userProfile" name="userProfile" required/>
 		</div>
 		<div class="form-group">
 		<label for = "userAddress">주소 : </label>
-		<input type="text" id="userAddress" required/>
+		<input type="text" id="userAddress" name="userAddress" required/>
 		</div>
 		<div class="form-group">
 		<label for = "userIntroduction">간단 자기소개 : </label>
-		<input type="text" id="userIntroduction" required/>
+		<input type="text" id="userIntroduction" name="userIntroduction" required/>
 		</div>
 		
 		
@@ -48,6 +49,8 @@
 		
 		<button type="submit" class="btn btn-primary">가입하기</button>
 	</form>
+	
+	
 			</div>
 		</div>
 	</div>

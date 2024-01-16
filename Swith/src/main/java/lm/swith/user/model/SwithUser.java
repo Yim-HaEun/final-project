@@ -17,8 +17,6 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
 public class SwithUser {
 	private Long userNO; //sequence
 	private String email; //email
@@ -29,4 +27,19 @@ public class SwithUser {
 	private String userAddress;//address
 	private String userIntroduction;//introduction
 	private String role;// authorization(user / admin) kakao,github
+	
+	public SwithUser() {};
+	
+	public SwithUser(long userNO, String email, String password, String userName, String nickname,
+            String userProfile, String userAddress, String userIntroduction, String role) {
+this.userNO = userNO;
+this.email = email;
+this.password = password;
+this.userName = userName;
+this.nickname = nickname;
+this.userProfile = userProfile;
+this.userAddress = userAddress;
+this.userIntroduction = userIntroduction;
+this.role = role;
+}
 }
