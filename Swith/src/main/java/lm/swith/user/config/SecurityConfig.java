@@ -14,28 +14,33 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-	@Bean
-	SecurityFilterChain filterChain(HttpSecurity http) throws Exception{
-		System.out.println("성공");
-		http
-		.authorizeHttpRequests((authorizeHttpRequests)-> authorizeHttpRequests
-				.requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
-		.formLogin((formLogin)->formLogin
-			.loginPage("/users/login")
-			.usernameParameter("email")
-			.defaultSuccessUrl("/users/home"))
-		.logout((logout)-> logout
-				.logoutRequestMatcher(new AntPathRequestMatcher("/users/logout"))
-				.logoutSuccessUrl("/")
-				.invalidateHttpSession(true))
-		;
-		return http.build();
-			
-	}
-	@Bean
-	AuthenticationManager authenticationManage(AuthenticationConfiguration a) throws Exception{
-		return a.getAuthenticationManager();
-	}
+	 @Bean
+	    SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+		 
+
+	        http
+	        .cors(cors -> cors.disable()).csrf(csrf -> csrf.disable())
+	            .authorizeHttpRequests(authorizeRequests -> 
+	                authorizeRequests
+	                    .requestMatchers(new AntPathRequestMatcher("/**")).permitAll()
+	            )
+	            .formLogin(formLogin ->
+	                formLogin
+	                    .loginPage("/users/login")
+	                    .usernameParameter("email")
+	                    .defaultSuccessUrl("/users/home")
+	            )
+	            .logout(logout ->
+	                logout
+	                    .logoutRequestMatcher(new AntPathRequestMatcher("/users/logout"))
+	                    .logoutSuccessUrl("/")
+	                    .invalidateHttpSession(true)
+	            );
+	             // Disable CSRF protection
+
+	        return http.build();
+	    }
+
 		
 	@Bean
 	static PasswordEncoder passwordEncoder() {

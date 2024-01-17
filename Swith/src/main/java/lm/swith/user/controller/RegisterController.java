@@ -1,14 +1,18 @@
 package lm.swith.user.controller;
 
 
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lm.swith.user.Service.KakaoService;
@@ -17,11 +21,11 @@ import lm.swith.user.common.MsgEntity;
 import lm.swith.user.model.SwithUser;
 import lombok.RequiredArgsConstructor;
 
-@Controller
+@RestController
 @RequestMapping("/users")
 @RequiredArgsConstructor
+@CrossOrigin(origins="http://localhost:3000", allowCredentials = "true")
 public class RegisterController {
-	
 	private final KakaoService kakaoService;
 	
 	private final UserService userService;
@@ -29,15 +33,16 @@ public class RegisterController {
 
 	
 	@GetMapping("/register")
-	public String showRegisterForm(Model model) {
-		model.addAttribute("users", new SwithUser());
-		return "register";
+	public List<SwithUser> findUsersAll() {
+		return userService.findUsersAll();
 	}
+	
 	@PostMapping("/register")
-	public String registerUser(SwithUser swithUser) {
-		userService.signUpUser(swithUser);
-			return "redirect:/";
+	public ResponseEntity<SwithUser> registerUser(@RequestBody SwithUser swithUser){
+		SwithUser createUser = userService.signUpUser(swithUser);
+		return ResponseEntity.ok(createUser);
 	}
+	
 	@GetMapping("/kakao/callback")
     public String callback(HttpServletRequest request,
                            @RequestParam(required = false) String password,
@@ -68,11 +73,11 @@ public class RegisterController {
         SwithUser swithUser = SwithUser.builder()
         		.email(email)
         		.password(password)
-                .userName(userName)
+                .username(userName)
                 .nickname(nickname)
-                .userProfile(userProfile)
-                .userAddress(userAddress)
-                .userIntroduction(userIntroduction)
+                .userprofile(userProfile)
+                .useraddress(userAddress)
+                .userintroduction(userIntroduction)
                 .role(role)
                 .build();
 

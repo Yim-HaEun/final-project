@@ -5,7 +5,7 @@
 	<!-- 회원등록 -->
 	<insert id ="insertUser" parameterType="lm.swith.user.model.SwithUser">
 		INSERT INTO USERS (ID, EMAIL, PASSWORD, USER_NAME, NICKNAME, USER_PROFILE, USER_ADDRESS, USER_INTRODUCTION, USER_ROLE)
-		VALUES(user_no_seq.NEXTVAL, #{email}, #{password}, #{userName}, #{nickname}, #{userProfile}, #{userAddress}, #{userIntroduction}, #{role})
+		VALUES(USERS_SEQ.NEXTVAL, #{email}, #{password}, #{username}, #{nickname}, #{userprofile}, #{useraddress}, #{userintroduction}, #{role})
 	</insert>
 	
 	
@@ -20,5 +20,8 @@
 	
 	<select id = "findUserRole" parameterType="lm.swith.user.model.SwithUser">
 		SELECT * FROM Users WHERE ROLE = #{role}
+	</select>
+	<select id = "findUsersAll" parameterType="lm.swith.user.model.SwithUser">
+		SELECT * FROM Users
 	</select>
 </mapper>

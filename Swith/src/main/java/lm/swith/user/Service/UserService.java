@@ -1,6 +1,7 @@
 package lm.swith.user.Service;
 
 import java.sql.Blob;
+import java.util.List;
 
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -33,11 +34,11 @@ public class UserService {
 		
 		user.setEmail(swithUser.getEmail());
 		user.setPassword(passwordEncoder.encode(swithUser.getPassword()));
-		user.setUserName(swithUser.getUserName());
+		user.setUsername(swithUser.getUsername());
 		user.setNickname(swithUser.getNickname());
-		user.setUserProfile(swithUser.getUserProfile());
-		user.setUserAddress(swithUser.getUserAddress());
-		user.setUserIntroduction(swithUser.getUserIntroduction());
+		user.setUserprofile(swithUser.getUserprofile());
+		user.setUseraddress(swithUser.getUseraddress());
+		user.setUserintroduction(swithUser.getUserintroduction());
 		user.setRole(swithUser.getRole());
 		
 		usersMapper.insertUser(user);
@@ -50,6 +51,9 @@ public class UserService {
 	//find role
 	public SwithUser findUserRole(String role) {
 		return usersMapper.findUserRole(role);
+	}
+	public List<SwithUser> findUsersAll(){
+		return usersMapper.findUsersAll();
 	}
 
 	

@@ -115,11 +115,11 @@ public class KakaoService {
 						.id(id)
 		                .email(email)
 		                .password(password)
-		                .userName(userName)
+		                .username(userName)
 		                .nickname(nickname)
-		                .userProfile(userProfile)
-		                .userAddress(userAddress) 
-		                .userIntroduction(userIntroduction)
+		                .userprofile(userProfile)
+		                .useraddress(userAddress) 
+		                .userintroduction(userIntroduction)
 		                .role(role)
 		                .build();
 		    }
@@ -127,11 +127,11 @@ public class KakaoService {
 				    	SwithUser user = new SwithUser();
 				    	user.setEmail(swithUser.getEmail());
 						user.setPassword(swithUser.getPassword());
-						user.setUserName(swithUser.getUserName());
+						user.setUsername(swithUser.getUsername());
 						user.setNickname(swithUser.getNickname());
-						user.setUserProfile(swithUser.getUserProfile());
-						user.setUserAddress(swithUser.getUserAddress());
-						user.setUserIntroduction(swithUser.getUserIntroduction());
+						user.setUserprofile(swithUser.getUserprofile());
+						user.setUseraddress(swithUser.getUseraddress());
+						user.setUserintroduction(swithUser.getUserintroduction());
 						user.setRole(swithUser.getRole());
 						
 						usersMapper.insertUser(swithUser);
