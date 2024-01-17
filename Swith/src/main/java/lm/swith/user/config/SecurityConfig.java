@@ -21,10 +21,11 @@ public class SecurityConfig {
 		.authorizeHttpRequests((authorizeHttpRequests)-> authorizeHttpRequests
 				.requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
 		.formLogin((formLogin)->formLogin
-			.loginPage("/members/login")
-			.defaultSuccessUrl("/members/home"))
+			.loginPage("/users/login")
+			.usernameParameter("email")
+			.defaultSuccessUrl("/users/home"))
 		.logout((logout)-> logout
-				.logoutRequestMatcher(new AntPathRequestMatcher("/members/logout"))
+				.logoutRequestMatcher(new AntPathRequestMatcher("/users/logout"))
 				.logoutSuccessUrl("/")
 				.invalidateHttpSession(true))
 		;

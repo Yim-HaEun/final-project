@@ -26,16 +26,7 @@ public class RegisterController {
 	
 	private final UserService userService;
 	
-	@GetMapping("/login")
-	public String LoginForm(Model model) {
-		model.addAttribute("kakaoUrl",kakaoService.getKakaoLogin());
-		//model.addAttribute("");//git
-		return "login";
-	}
-	@GetMapping("/home")
-	public String home() {
-		return "home";
-	}
+
 	
 	@GetMapping("/register")
 	public String showRegisterForm(Model model) {
@@ -62,6 +53,8 @@ public class RegisterController {
         return "kakaoRegister";
     }
 
+	
+	
     @PostMapping("/kakaoregister")
     public ResponseEntity<MsgEntity> registerUser(@RequestParam String email,
 									    		  @RequestParam String password,
@@ -70,7 +63,8 @@ public class RegisterController {
 										          @RequestParam String userProfile,
 										          @RequestParam String userAddress, 
 												  @RequestParam String userIntroduction, 
-												  @RequestParam String role) {
+												  @RequestParam String role
+												  ) {
         SwithUser swithUser = SwithUser.builder()
         		.email(email)
         		.password(password)
@@ -83,9 +77,17 @@ public class RegisterController {
                 .build();
 
         SwithUser registeredUser = userService.signUpUser(swithUser);
-
+        
+        
         return ResponseEntity.ok()
                 .body(new MsgEntity("Success", registeredUser));
+     
+       /* String redirectUrl = request.getContextPath() + "/";
+        MsgEntity responseMsg = new MsgEntity("Success", registeredUser, redirectUrl);
+
+        return ResponseEntity.ok()
+                .body(responseMsg);
+                */
     }
 
 

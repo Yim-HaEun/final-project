@@ -32,7 +32,7 @@ public class UserService {
 		SwithUser user = new SwithUser();
 		
 		user.setEmail(swithUser.getEmail());
-		user.setPassword(swithUser.getPassword());
+		user.setPassword(passwordEncoder.encode(swithUser.getPassword()));
 		user.setUserName(swithUser.getUserName());
 		user.setNickname(swithUser.getNickname());
 		user.setUserProfile(swithUser.getUserProfile());
@@ -40,12 +40,12 @@ public class UserService {
 		user.setUserIntroduction(swithUser.getUserIntroduction());
 		user.setRole(swithUser.getRole());
 		
-		usersMapper.insertUser(swithUser);
+		usersMapper.insertUser(user);
 		return user;
 	}
 	//login
-	public SwithUser login(String userID, String password) {
-		return usersMapper.loginUser(userID, password);
+	public SwithUser login(String email, String password) {
+		return usersMapper.loginUser(email, password);
 	}
 	//find role
 	public SwithUser findUserRole(String role) {

@@ -18,7 +18,7 @@ import lombok.*;
 @Getter
 @Setter
 public class SwithUser {
-	private Long userNO; //sequence
+	private Long id; //sequence
 	private String email; //email
 	private String password;//pw
 	private String userName;//real name
@@ -30,9 +30,9 @@ public class SwithUser {
 	
 	public SwithUser() {};
 	
-	public SwithUser(long userNO, String email, String password, String userName, String nickname,
+	public SwithUser(long id, String email, String password, String userName, String nickname,
             String userProfile, String userAddress, String userIntroduction, String role) {
-this.userNO = userNO;
+this.id = id;
 this.email = email;
 this.password = password;
 this.userName = userName;

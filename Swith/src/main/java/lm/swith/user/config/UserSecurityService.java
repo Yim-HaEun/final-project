@@ -23,8 +23,8 @@ public class UserSecurityService implements UserDetailsService{
 	
 	private final UsersMapper usersMapper;
 	
-	public UserDetails loadUserByUsername (String userID,String password) throws UsernameNotFoundException{
-		SwithUser _siteUser = usersMapper.loginUser(userID,password);
+	public UserDetails loadUserByUsername (String email) throws UsernameNotFoundException{
+		SwithUser _siteUser = usersMapper.secUser(email);
 		if(_siteUser == null) {
 			System.out.println("실패 : " + _siteUser);
 			throw new UsernameNotFoundException("사용자를 찾을 수 없습니다.");
@@ -40,11 +40,13 @@ public class UserSecurityService implements UserDetailsService{
 		}
 		return new User(_siteUser.getEmail(),_siteUser.getPassword(),authorities);
 		}
- 
-	@Override // UserDetailsService 를 사용하기 위한 오버라이드
-	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+
+	
+
+	
+
+	
+	
 
 }

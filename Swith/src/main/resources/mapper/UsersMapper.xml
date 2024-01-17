@@ -4,16 +4,18 @@
 <mapper namespace="lm.swith.user.mapper.UsersMapper">
 	<!-- 회원등록 -->
 	<insert id ="insertUser" parameterType="lm.swith.user.model.SwithUser">
-		INSERT INTO USERS (USER_NO, EMAIL, USER_PASSWORD, USER_NAME, NICKNAME, USER_PROFILE, USER_ADDRESS, USER_INTRODUCTION, USER_ROLE)
+		INSERT INTO USERS (ID, EMAIL, PASSWORD, USER_NAME, NICKNAME, USER_PROFILE, USER_ADDRESS, USER_INTRODUCTION, USER_ROLE)
 		VALUES(user_no_seq.NEXTVAL, #{email}, #{password}, #{userName}, #{nickname}, #{userProfile}, #{userAddress}, #{userIntroduction}, #{role})
 	</insert>
 	
 	
-	
+	<select id="secUser" parameterType="String" resultType="lm.swith.user.model.SwithUser">
+        SELECT * FROM Users WHERE email = #{email}
+    </select>
 	
 	
 	<select id ="loginUser" parameterType="lm.swith.user.model.SwithUser">
-	SELECT * FROM Users WHERE email = #{email} AND USER_PASSWORD = #{password}
+	SELECT * FROM Users WHERE email = #{email} AND PASSWORD = #{password}
 	</select>
 	
 	<select id = "findUserRole" parameterType="lm.swith.user.model.SwithUser">

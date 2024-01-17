@@ -1,6 +1,7 @@
 package lm.swith.user.mapper;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import lm.swith.user.model.SwithUser;
 
@@ -11,7 +12,9 @@ public interface UsersMapper {
 	SwithUser loginUser(String email, String password);
 	
 	SwithUser findUserRole(String role);
+	
+	SwithUser secUser(String email);
 
-
+	
 
 }
