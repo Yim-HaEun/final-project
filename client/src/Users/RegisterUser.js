@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
 
 function RegisterUser() {
   const [data, setData] = useState([]);
+  const [confirm, setConfirm] = useState('');
+
   const [swithUser, setNewUser] = useState({
     email: '',
     password: '',
@@ -14,24 +16,40 @@ function RegisterUser() {
     role: '',
   });
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await axios.get('http://localhost:8082/users/register', {
-          withCredentials: true,
-        });
-        setData(res.data);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    fetchData();
-  }, []);
-
   const handleInputChange = (e) => {
     //e 자리값 밑에 target
     const { name, value } = e.target;
     setNewUser((prevUser) => ({ ...prevUser, [name]: value }));
+  };
+
+  const handleEmail = async () => {
+    try {
+      const response = await axios.post(
+        'http://localhost:8082/users/mail',
+        swithUser,
+        {
+          withCredentials: true,
+        }
+      );
+      setData((prevUser) => [...prevUser, response.data]);
+      setConfirm(response.data);
+      alert('인증번호가 전송되었습니다.');
+    } catch (error) {
+      console.error('이메일이 부적합합니다.', error);
+    }
+  };
+
+  const handleConfirm = async () => {
+    try {
+      const response = await axios.post('http://localhost:8082/users/mail', {
+        withCredentials: true,
+      });
+      console.log(confirm);
+      alert('인증완료');
+    } catch (error) {
+      console.error('인증 실패', error);
+      alert('인증번호가 틀립니다.!');
+    }
   };
 
   const handleAddUser = async () => {
@@ -64,14 +82,6 @@ function RegisterUser() {
 
   return (
     <div>
-      <h1> API 호출 확인</h1>
-      <ul>
-        {data.map((user) => (
-          <li key={user.id}>
-            {user.username} = {user.email}
-          </li>
-        ))}
-      </ul>
       <h2>새로운 유저 저장</h2>
       <div>
         <label>회원 아이디(email) : </label>
@@ -81,6 +91,9 @@ function RegisterUser() {
           value={swithUser.email}
           onChange={handleInputChange}
         />
+        <button onClick={handleEmail}>이메일 인증하기</button>
+
+        <button onClick={handleConfirm}>인증확인</button>
       </div>
       <div>
         <label>비밀번호 : </label>
@@ -148,7 +161,6 @@ function RegisterUser() {
         />
       </div>
       <button onClick={handleAddUser}>유저 저장하기</button>
-      <div>로그인하기</div>
     </div>
   );
 }

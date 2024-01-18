@@ -32,14 +32,14 @@ public class SwithUser {
 	
 	public SwithUser(long id, String email, String password, String username, String nickname,
             String userprofile, String useraddress, String userintroduction, String role) {
-this.id = id;
-this.email = email;
-this.password = password;
-this.username = username;
-this.nickname = nickname;
-this.userprofile = userprofile;
-this.useraddress = useraddress;
-this.userintroduction = userintroduction;
-this.role = role;
-}
+				this.id = id;
+				this.email = email;
+				this.password = password;
+				this.username = username;
+				this.nickname = nickname;
+				this.userprofile = userprofile;
+				this.useraddress = useraddress;
+				this.userintroduction = userintroduction;
+				this.role = role;
+		}
 }
