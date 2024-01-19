@@ -1,10 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
+// 인증완료된 순간() 값이 넣어져야함.
+// 이메일 === 입력해놓고 회원가입하기 하는 text값이랑 같을때만
 function RegisterUser() {
   const [data, setData] = useState([]);
+
   const [confirm, setConfirm] = useState('');
 
+  const [number, setNumber] = useState('');
+
+  const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [] = useState();
   const [swithUser, setNewUser] = useState({
     email: '',
     password: '',
@@ -40,17 +47,27 @@ function RegisterUser() {
   };
 
   const handleConfirm = async () => {
-    try {
-      const response = await axios.post('http://localhost:8082/users/mail', {
-        withCredentials: true,
-      });
-      console.log(confirm);
-      alert('인증완료');
-    } catch (error) {
-      console.error('인증 실패', error);
-      alert('인증번호가 틀립니다.!');
+    //변경된 데이터 값 저장
+    console.log(confirm);
+    console.log(number);
+
+    setConfirm(number);
+
+    if (confirm === number) {
+      alert('인증 완료, 사용가능한 이메일입니다.');
+      //전송한 이메일 값을 a에 담아주기
+      // 발송하기 누를때 보내진 이메일 == 인증완료 누를때 input창에있는 이메일이랑 같을 경우 비활성화하기
+    } else {
+      alert('인증 번호가 다릅니다.');
+      console.error('인증 실패');
     }
+    setIsButtonDisabled(true);
   };
+
+  const handleNumberChange = (e) => {
+    const { value } = e.target;
+    setNumber(value);
+  }; //값을 담아주는 곳
 
   const handleAddUser = async () => {
     try {
@@ -93,7 +110,17 @@ function RegisterUser() {
         />
         <button onClick={handleEmail}>이메일 인증하기</button>
 
-        <button onClick={handleConfirm}>인증확인</button>
+        <br />
+
+        <input
+          type="text"
+          name="number"
+          value={number}
+          onChange={handleNumberChange}
+        />
+        <button disabled={isButtonDisabled} onClick={handleConfirm}>
+          인증확인
+        </button>
       </div>
       <div>
         <label>비밀번호 : </label>
@@ -164,4 +191,5 @@ function RegisterUser() {
     </div>
   );
 }
+
 export default RegisterUser;
