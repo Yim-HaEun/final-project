@@ -43,6 +43,7 @@ public class RegisterController {
 	private SwithDTO convertToDTO(SwithUser user) {
 		SwithDTO userDTO = new SwithDTO();
 		userDTO.setEmail(user.getEmail());
+		userDTO.setUser_no(user.getUser_no());
         userDTO.setUsername(user.getUsername());
         // 필요한 경우, 다른 필드도 추가로 복사
 

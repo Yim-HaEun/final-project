@@ -9,10 +9,8 @@ const MyPage = () => {
       try {
         // 서버에 사용자 정보를 가져오는 요청
         const response = await usersUserinfoAxios.get('/users/userinfo');
-        setUserData(response.data.email);
-        console.log(response.data.username);
-        console.log(response.data.email);
-        console.log();
+        setUserData(response.data);
+        console.log(userData);
       } catch (error) {
         console.error('Failed to fetch user data.', error);
       }
@@ -27,7 +25,7 @@ const MyPage = () => {
       {userData ? (
         <div>
           <p>
-            Welcome to the Dashboard, {userData.username}! You are logged in.
+            Welcome to the Dashboard, {userData.username}님! You are logged in.
           </p>
         </div>
       ) : (

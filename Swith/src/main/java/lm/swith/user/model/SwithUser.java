@@ -30,7 +30,7 @@ public class SwithUser {
 	
 	public SwithUser() {};
 	
-	public SwithUser(long user_no, String email, String password, String username, String nickname,
+	public SwithUser(Long user_no, String email, String password, String username, String nickname,
             String userprofile, String useraddress, String userintroduction, String role) {
 				this.user_no = user_no;
 				this.email = email;
