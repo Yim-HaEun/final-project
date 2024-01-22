@@ -105,14 +105,14 @@ public class KakaoService {
 					JSONObject account = (JSONObject) jsonObject.get("kakao_account");
 					JSONObject profile = (JSONObject) account.get("profile");
 					
-					long id = (long) jsonObject.get("id");
+					long user_no = (long) jsonObject.get("user_no");
 					String email = String.valueOf(account.get("email"));
 					String nickname = String.valueOf(profile.get("nickname"));
 					
 			
 				
 				return SwithUser.builder()
-						.id(id)
+						.user_no(user_no)
 		                .email(email)
 		                .password(password)
 		                .username(userName)

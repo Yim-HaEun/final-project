@@ -19,7 +19,8 @@ import org.springframework.web.client.RestTemplate;
 
 import lm.swith.user.mapper.UsersMapper;
 import lm.swith.user.model.SwithUser;
-
+import lombok.extern.slf4j.Slf4j;
+@Slf4j
 @Service
 public class UserService {
 	@Autowired
@@ -46,7 +47,7 @@ public class UserService {
 	}
 	//login
 	public SwithUser login(String email, String password) {
-		return usersMapper.loginUser(email, password);
+		return usersMapper.findByEmailAndPassword(email, password);
 	}
 	//find role
 	public SwithUser findUserRole(String role) {
@@ -55,6 +56,25 @@ public class UserService {
 	public List<SwithUser> findUsersAll(){
 		return usersMapper.findUsersAll();
 	}
+	
+	//validation before publishing token
+	public SwithUser getByCredentials(final String email, final String password) {
+		return usersMapper.findByEmailAndPassword(email, password);
+	}
+
+
+	public SwithUser getByCredentials(final String email, final String password, final PasswordEncoder encoder) {
+		final SwithUser originalUser = usersMapper.findByEmail(email);
+		// matches 메서드를 이용해 패스워드가 같은지 확인
+		if (originalUser != null && encoder.matches(password, originalUser.getPassword())) {
+	        return originalUser;
+	    }
+		return null;
+	}
+	
+	public SwithUser getUserByEmail(String email) {
+        return usersMapper.findByEmail(email);
+    }
 
 	
 

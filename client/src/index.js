@@ -1,14 +1,13 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client';
-import reportWebVitals from './reportWebVitals';
-import RegisterUser from './Users/RegisterUser';
-//import Login from './Users/Login';
-const root = ReactDOM.createRoot(document.getElementById('root'));
-root.render(
-  <React.StrictMode>
-    <RegisterUser />
-    {/*<Login />*/}
-  </React.StrictMode>
-);
+import './index.css';
+import { BrowserRouter as Router } from 'react-router-dom';
+import App from './App';
 
-reportWebVitals();
+import { createRoot } from 'react-dom/client';
+
+const root = createRoot(document.getElementById('root'));
+root.render(
+  <Router>
+    <App />
+  </Router>
+);
