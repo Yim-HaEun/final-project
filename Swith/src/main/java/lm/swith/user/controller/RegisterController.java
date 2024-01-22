@@ -104,10 +104,18 @@ public class RegisterController {
 	  public ResponseEntity<String> MailSend(@RequestBody SwithUser swithUser){
 	  	// MailService 객체 생성 
 	  	MailService mailService = new MailService(javaMailSender);
-	       
-	     int number = mailService.sendMail(swithUser.getEmail());
-	     String num = "" + number;
-	     return ResponseEntity.ok(num);
+	  	 SwithUser user = userService.getfindByEmail2(swithUser.getEmail());
+	  	 System.out.println(user.getEmail());
+	  	System.out.println(swithUser.getEmail());
+	  	 if(user.getEmail().ex) {
+	  		String error = "error";
+	  		 return ResponseEntity.ok(error);
+	     
+	  	 }else {
+	  		int number = mailService.sendMail(swithUser.getEmail());
+		     String num = "" + number;
+		     return ResponseEntity.ok(num);
+	  	 }
 	  }
 	  
 	  @GetMapping("/register")

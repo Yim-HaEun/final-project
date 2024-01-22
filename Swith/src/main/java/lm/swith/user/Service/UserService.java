@@ -75,6 +75,10 @@ public class UserService {
 	public SwithUser getUserByEmail(String email) {
         return usersMapper.findByEmail(email);
     }
+	
+	public SwithUser getfindByEmail2(String email) {
+		return usersMapper.findByEmail2(email);
+	}
 
 	
 

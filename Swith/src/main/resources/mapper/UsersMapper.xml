@@ -12,6 +12,10 @@
 	<select id="findByEmail" parameterType="lm.swith.user.model.SwithUser">
         SELECT * FROM Users WHERE EMAIL = #{email}
     </select>
+    
+    <select id="findByEmail2" parameterType="lm.swith.user.model.SwithUser">
+        SELECT EMAIL FROM Users WHERE EMAIL = #{email}
+    </select>
 	
 	
 	<select id ="findByEmailAndPassword" parameterType="lm.swith.user.model.SwithUser">

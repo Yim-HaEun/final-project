@@ -7,7 +7,7 @@ import { createRoot } from 'react-dom/client';
 
 const root = createRoot(document.getElementById('root'));
 root.render(
-  <Router>
+  <React.StrictMode>
     <App />
-  </Router>
+  </React.StrictMode>
 );
