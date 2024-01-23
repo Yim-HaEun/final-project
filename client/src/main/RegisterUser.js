@@ -41,13 +41,14 @@ function RegisterUser() {
 
       setConfirm(response.data.toString());
       //db에 이메일이 존재하면 alert 이미 존재하는 아이디입니다. else 사용가능한 아이디입니다.
-      if (response.data !== 'error') {
+      if (response.data !== 'exists') {
         console.log(response.data);
         console.log('서버 응답:', response);
         console.log('ok');
         alert('인증번호가 전송되었습니다.(사용가능)');
       } else {
         alert('이미 중복된 아이디입니다');
+
         console.log(response.data);
       }
     } catch (error) {
@@ -73,23 +74,24 @@ function RegisterUser() {
   };
 
   const handleAddUser = async () => {
-    try {
-      const response = await axios.post(
-        'http://localhost:8082/users/register',
-        swithUser,
-        {
-          withCredentials: true,
-        }
-      );
-      //변경된 데이터 값 저장
-      if (isButtonDisabled === true) {
+    if (isButtonDisabled === true) {
+      try {
+        //변경된 데이터 값 저장
+
+        const response = await axios.post(
+          'http://localhost:8082/users/register',
+          swithUser,
+          {
+            withCredentials: true,
+          }
+        );
         setData((prevUser) => [...prevUser, response.data]);
         navigate('/');
-      } else {
-        alert('ㅎㅇ');
+      } catch (error) {
+        console.error('데이터가 부적합합니다.', error);
       }
-    } catch (error) {
-      console.error('데이터가 부적합합니다.', error);
+    } else {
+      alert('이메일 인증을 해주세요');
     }
   };
 

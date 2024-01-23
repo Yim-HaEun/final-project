@@ -17,10 +17,8 @@ public interface UsersMapper {
 	List<SwithUser> findUsersAll();
 	
 	SwithUser findByEmail(String email);
-	
-	Boolean existsByEmail(String email);
 
 	SwithUser findByEmailAndPassword(String email, String password);
 	
-	SwithUser findByEmail2(String email);
+	SwithUser findEmail2(String email);
 }

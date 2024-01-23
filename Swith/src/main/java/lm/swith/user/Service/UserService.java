@@ -76,8 +76,8 @@ public class UserService {
         return usersMapper.findByEmail(email);
     }
 	
-	public SwithUser getfindByEmail2(String email) {
-		return usersMapper.findByEmail2(email);
+	public SwithUser getFindEmail(String email) {
+		return usersMapper.findEmail2(email);
 	}
 
 	

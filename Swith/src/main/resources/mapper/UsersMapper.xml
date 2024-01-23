@@ -13,7 +13,7 @@
         SELECT * FROM Users WHERE EMAIL = #{email}
     </select>
     
-    <select id="findByEmail2" parameterType="lm.swith.user.model.SwithUser">
+    <select id="findEmail2" parameterType="String" resultType="lm.swith.user.model.SwithUser">
         SELECT EMAIL FROM Users WHERE EMAIL = #{email}
     </select>
 	

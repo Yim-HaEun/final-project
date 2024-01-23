@@ -103,13 +103,14 @@ public class RegisterController {
 	  @PostMapping("/mail")
 	  public ResponseEntity<String> MailSend(@RequestBody SwithUser swithUser){
 	  	// MailService 객체 생성 
-	  	MailService mailService = new MailService(javaMailSender);
-	  	 SwithUser user = userService.getfindByEmail2(swithUser.getEmail());
-	  	 System.out.println(user.getEmail());
-	  	System.out.println(swithUser.getEmail());
-	  	 if(user.getEmail().ex) {
-	  		String error = "error";
-	  		 return ResponseEntity.ok(error);
+	  	MailService mailService = new MailService(javaMailSender);//send mail 
+	    //comparing email
+	  	SwithUser user = userService.getFindEmail(swithUser.getEmail()); 
+	  
+	  	//넣은 값이 db에 존재하는지, 넣은 값이 null이 아닌 
+	  	if(user != null && user.getEmail() != null) { //find해서 값이 존재하면 거부, null이면 
+	  		String exists = "exists";
+	  		 return ResponseEntity.ok(exists);
 	     
 	  	 }else {
 	  		int number = mailService.sendMail(swithUser.getEmail());
