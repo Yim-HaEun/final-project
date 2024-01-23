@@ -1,8 +1,23 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/KakaoMap.css';
-
+import usersUserinfoAxios from '../token/tokenAxios';
 const KakaoMap = () => {
+  const [userData, setUserData] = useState([]);
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        // 서버에 사용자 정보를 가져오는 요청
+        const response = await usersUserinfoAxios.get('/users/userinfo');
+        setUserData(response.data);
+        console.log(userData);
+      } catch (error) {
+        console.error('Failed to fetch user data.', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
   useEffect(() => {
     const script = document.createElement('script');
     script.async = true;
@@ -14,11 +29,35 @@ const KakaoMap = () => {
     script.onload = () => {
       window.kakao.maps.load(() => {
         const mapContainer = document.getElementById('map');
+
         const mapOption = {
+          //맵
           center: new window.kakao.maps.LatLng(37.502, 127.026581),
           level: 4,
         };
         const map = new window.kakao.maps.Map(mapContainer, mapOption);
+        const geocoder = new window.kakao.maps.services.Geocoder(); //입력한 주소에 마커
+        geocoder.addressSearch(userData.useraddress, (result, status) => {
+          if (status === window.kakao.maps.services.Status.OK) {
+            const coords = new window.kakao.maps.LatLng(
+              result[0].y,
+              result[0].x
+            );
+
+            const marker = new window.kakao.maps.Marker({
+              //마커로 표시
+              map: map,
+              position: coords,
+            });
+            // 장소에 대한 설명을 표시합니다
+            const infowindow = new window.kakao.maps.InfoWindow({
+              content:
+                '<div style="width:150px;text-align:center;padding:6px 0;">나의 집</div>',
+            });
+            infowindow.open(map, marker);
+            map.setCenter(coords);
+          }
+        });
 
         var content =
           '<div class="overlaybox">' +
@@ -73,7 +112,7 @@ const KakaoMap = () => {
     <div className="container">
       <div className="mt-5 px-5">
         <div className="adress_section">
-          <h1 className="banner_font">강남 역삼동 스윗</h1>
+          <h1 className="banner_font">{userData.useraddress}</h1>
           <br />
         </div>
 

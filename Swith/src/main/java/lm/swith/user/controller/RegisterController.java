@@ -45,6 +45,8 @@ public class RegisterController {
 		userDTO.setEmail(user.getEmail());
 		userDTO.setUser_no(user.getUser_no());
         userDTO.setUsername(user.getUsername());
+        userDTO.setUseraddress(user.getUseraddress());
+        userDTO.setNickname(user.getNickname());
         // 필요한 경우, 다른 필드도 추가로 복사
 
         return userDTO;
@@ -62,6 +64,8 @@ public class RegisterController {
 					.email(user.getEmail())
 					.user_no(user.getUser_no())
 					.username(user.getUsername())
+					.useraddress(user.getUseraddress())
+					.nickname(user.getNickname())
 					.token(token)          //반환된 토큰 적용
 					.build();
 			return ResponseEntity.ok().body(responseUserDTO);

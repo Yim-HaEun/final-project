@@ -4,6 +4,7 @@ import axios from 'axios';
 import Header from './Header';
 import '../css/RegisterUser.css';
 import Required from './img/required.png';
+import sample6_execDaumPostcode from './KakaoAddress';
 
 function RegisterUser() {
   const [number, setNumber] = useState('');
@@ -32,7 +33,7 @@ function RegisterUser() {
     e.preventDefault();
     try {
       const response = await axios.post(
-        'http://localhost:8082/users/mail',
+        'http://localhost:8080/users/mail',
         swithUser,
         {
           withCredentials: true,
@@ -79,12 +80,15 @@ function RegisterUser() {
         //변경된 데이터 값 저장
 
         const response = await axios.post(
-          'http://localhost:8082/users/register',
+          'http://localhost:8080/users/register',
           swithUser,
           {
             withCredentials: true,
           }
         );
+        // 추가된 부분: 주소 값을 설정
+        const address = document.getElementById('useraddress').value;
+        setNewUser((prevUser) => ({ ...prevUser, useraddress: address }));
         setData((prevUser) => [...prevUser, response.data]);
         navigate('/');
       } catch (error) {
@@ -118,32 +122,56 @@ function RegisterUser() {
       <h3 className="subTitle">회원가입후 S.With에 참여하세요</h3>
       <div className="container_register">
         <form className="m-5 mb-1">
-          <div className="register_id m-3">
+          <div className="register_id ml-5">
             <div className="two">
-              <h4 className="s_text">
-                아이디
+              <h4 className="s_text_id">
+                아이디(email)
                 <img src={Required} className="required_img" />
               </h4>
             </div>
-            <label className="m-2">
-              <input
-                type="text"
-                name="email"
-                value={swithUser.email}
-                onChange={handleInputChange}
-              />
-              <button onClick={handleEmail}>이메일 인증하기</button>
-            </label>
-
+            <label className="m-2"></label>
+            <input
+              className="textInput"
+              type="text"
+              name="email"
+              value={swithUser.email}
+              onChange={handleInputChange}
+            />
+            <button
+              onClick={handleEmail}
+              className="btn round"
+              style={{
+                backgroundColor: '#ffffb5',
+                width: '100px',
+                height: '50px',
+                margin: '10px',
+                marginTop: '5px',
+                borderRadius: '30px',
+              }}
+            >
+              인증하기
+            </button>
             <br />
-
             <input
               type="text"
               name="number"
+              className="textInput_check"
               value={number}
               onChange={handleNumberChange}
             />
-            <button disabled={isButtonDisabled} onClick={handleConfirm}>
+            <button
+              disabled={isButtonDisabled}
+              onClick={handleConfirm}
+              className="btn round"
+              style={{
+                backgroundColor: '#ffffb5',
+                width: '100px',
+                height: '50px',
+                margin: '10px',
+                marginTop: '5px',
+                borderRadius: '30px',
+              }}
+            >
               인증확인
             </button>
           </div>
@@ -228,12 +256,22 @@ function RegisterUser() {
               </h4>
             </div>
             <label className="m-2"></label>
+            <input type="text" id="useraddress" />
+            <br />
             <input
-              className="textInput"
-              type="text"
               name="useraddress"
-              value={swithUser.useraddress}
-              onChange={handleInputChange}
+              className="btn round"
+              style={{
+                backgroundColor: '#ffffb5',
+                width: '150px',
+                height: '50px',
+                margin: '10px',
+                marginTop: '5px',
+                borderRadius: '30px',
+              }}
+              type="button"
+              value="주소 찾기"
+              onClick={() => sample6_execDaumPostcode({ setNewUser })}
             />
           </div>
 
