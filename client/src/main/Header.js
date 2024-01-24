@@ -1,14 +1,30 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '../security/AuthContext';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { logout, isTokenAvailable } from '../token/tokenAxios';
 import { useNavigate } from 'react-router-dom';
+import usersUserinfoAxios from '../token/tokenAxios';
 
 import '../css/Header.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 export default function Header() {
+  const [userData, setUserData] = useState('');
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        // 서버에 사용자 정보를 가져오는 요청
+        const response = await usersUserinfoAxios.get('/users/userinfo');
+        setUserData(response.data);
+        console.log(userData);
+      } catch (error) {
+        console.error('Failed to fetch user data.', error);
+      }
+    };
+
+    fetchUserData();
+  }, []);
   const handleLogout = () => {
     if (logout()) {
       // 로그아웃이 성공했을 때의 추가 작업
@@ -80,7 +96,7 @@ export default function Header() {
                     <div className="profile_1">
                       <img
                         className="profile_img"
-                        src={process.env.PUBLIC_URL + '../img/girl.png'}
+                        src={`data:image/jpeg;base64,${userData.user_profile}`}
                         alt="profile"
                       />
                     </div>
