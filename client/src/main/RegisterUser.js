@@ -17,9 +17,9 @@ function RegisterUser() {
     password: '',
     username: '',
     nickname: '',
-    userprofile: '',
+    img: '',
     useraddress: '',
-    userintroduction: '',
+    user_introduction: '',
     role: '',
   });
 
@@ -104,7 +104,7 @@ function RegisterUser() {
     const reader = new FileReader();
 
     reader.onloadend = () => {
-      setNewUser((prevUser) => ({ ...prevUser, userprofile: reader.result }));
+      setNewUser((prevUser) => ({ ...prevUser, img: reader.result }));
     };
 
     if (file) {
@@ -234,14 +234,14 @@ function RegisterUser() {
               className="image_input"
               type="file"
               accept="image/*" // 이미지 파일만 선택할 수 있도록 지정
-              name="userprofile"
+              name="img"
               onChange={(e) => handleImageChange(e)}
             />
             {/* 프로필 사진 미리보기를 위한 이미지 컨테이너 */}
             <div className="profile-image-container">
-              {swithUser.userprofile && (
+              {swithUser.img && (
                 <img
-                  src={swithUser.userprofile}
+                  src={swithUser.img}
                   alt="프로필 이미지"
                   className="profile-image"
                 />
@@ -283,8 +283,8 @@ function RegisterUser() {
             <input
               className="textInput"
               type="text"
-              name="userintroduction"
-              value={swithUser.userintroduction}
+              name="user_introduction"
+              value={swithUser.user_introduction}
               onChange={handleInputChange}
             />
           </div>
