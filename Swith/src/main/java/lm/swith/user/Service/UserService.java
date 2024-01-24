@@ -37,9 +37,9 @@ public class UserService {
 		user.setPassword(passwordEncoder.encode(swithUser.getPassword()));
 		user.setUsername(swithUser.getUsername());
 		user.setNickname(swithUser.getNickname());
-		user.setUserprofile(swithUser.getUserprofile());
+		user.setUser_profile(swithUser.getUser_profile());
 		user.setUseraddress(swithUser.getUseraddress());
-		user.setUserintroduction(swithUser.getUserintroduction());
+		user.setUser_introduction(swithUser.getUser_introduction());
 		user.setRole(swithUser.getRole());
 		
 		usersMapper.insertUser(user);
@@ -76,9 +76,6 @@ public class UserService {
         return usersMapper.findByEmail(email);
     }
 	
-	public SwithUser getFindEmail(String email) {
-		return usersMapper.findEmail2(email);
-	}
 
 	
 

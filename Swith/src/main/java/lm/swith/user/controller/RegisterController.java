@@ -1,6 +1,14 @@
 package lm.swith.user.controller;
 
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.util.Base64;
+
+import javax.imageio.ImageIO;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
@@ -40,17 +48,7 @@ public class RegisterController {
 	private final TokenProvider tokenProvider;
 	
 	private final PasswordEncoder passwordEncoder;
-	private SwithDTO convertToDTO(SwithUser user) {
-		SwithDTO userDTO = new SwithDTO();
-		userDTO.setEmail(user.getEmail());
-		userDTO.setUser_no(user.getUser_no());
-        userDTO.setUsername(user.getUsername());
-        userDTO.setUseraddress(user.getUseraddress());
-        userDTO.setNickname(user.getNickname());
-        // 필요한 경우, 다른 필드도 추가로 복사
-
-        return userDTO;
-        }
+	
 	// -------- 토큰 발급 --------
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticate(@RequestBody SwithDTO siwthDTO) {
@@ -79,24 +77,22 @@ public class RegisterController {
 	}
 	
 	@GetMapping("/userinfo")
-	public ResponseEntity<SwithDTO> getUserInfo() {
+	public ResponseEntity<SwithUser> getUserInfo() {
         // 현재 인증된 사용자의 정보를 가져오는 로직
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
         String userEmail = authentication.getName();
-        System.out.println(userEmail);
-        System.out.println("email" + userEmail);
-
         // MyBatis를 이용하여 사용자 정보를 조회
         SwithUser user = userService.getUserByEmail(userEmail);
+        byte[] profile_img = user.getUser_profile();//blob형태를 base64로 인코딩해주는 코드
+        String imageBase64 = Base64.getEncoder().encodeToString(profile_img);
         
-        System.out.println("userno : " + user.getUser_no());
-        System.out.println("username : " + user.getUsername());
-        // User 엔터티를 UserDTO로 변환하여 반환
-        SwithDTO userDTO = convertToDTO(user);
-        System.out.println("usernoDT : " + userDTO.getUser_no());
-        System.out.println("usernameDT : " + userDTO.getUsername());
-        return ResponseEntity.ok(userDTO);
+        String cutString = imageBase64.substring(imageBase64.indexOf("data:image/jpeg;base64") + "data:image/jpeg;base64".length());
+        String imageUrl = "data:image/jpeg;base64,/" + cutString;
+        user.setPassword(null);//조회할때 패스워드 안나오게 하려고 null값을 준다.
+        user.setImg(imageUrl);//단순 출력용 blob을 string형태로 출력하기위함 
+      
+        return ResponseEntity.ok(user);
     }
 	  @GetMapping("/")
 	  public String MailPage(){
@@ -109,7 +105,7 @@ public class RegisterController {
 	  	// MailService 객체 생성 
 	  	MailService mailService = new MailService(javaMailSender);//send mail 
 	    //comparing email
-	  	SwithUser user = userService.getFindEmail(swithUser.getEmail()); 
+	  	SwithUser user = userService.getUserByEmail(swithUser.getEmail()); 
 	  
 	  	//넣은 값이 db에 존재하는지, 넣은 값이 null이 아닌 
 	  	if(user != null && user.getEmail() != null) { //find해서 값이 존재하면 거부, null이면 
@@ -134,7 +130,28 @@ public class RegisterController {
 	}
 	*/	
 	@PostMapping("/register")
-	public ResponseEntity<SwithUser> registerUser(@RequestBody SwithUser swithUser){
+	public ResponseEntity<SwithUser> registerUser(@RequestBody SwithUser swithUser) throws IOException{
+		String imageData = swithUser.getImg().split(",")[1];
+        byte[] imageBytes = Base64.getDecoder().decode(imageData);//디코딩해서 blob 형태로 다시 넣어줌
+        
+     // BufferedImage로 이미지 읽기
+        ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
+        BufferedImage originalImage = ImageIO.read(bis);
+        bis.close();
+
+        // 이미지 크기 조절 (예: 가로 100px로 조절)
+        int newWidth = 500;
+        int newHeight = (int) (originalImage.getHeight() * (1.0 * newWidth / originalImage.getWidth()));
+        BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+        resizedImage.getGraphics().drawImage(originalImage, 0, 0, newWidth, newHeight, null);
+
+        // 압축된 이미지를 Base64로 인코딩
+        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+        ImageIO.write(resizedImage, "png", bos);
+        byte[] compressedImageBytes = bos.toByteArray();
+        bos.close();
+        
+        swithUser.setUser_profile(compressedImageBytes);
 		SwithUser createUser = userService.signUpUser(swithUser);
 		return ResponseEntity.ok(createUser);
 	}
@@ -143,7 +160,7 @@ public class RegisterController {
     public String callback(HttpServletRequest request,
                            @RequestParam(required = false) String password,
                            @RequestParam(required = false) String userName, 
-                           @RequestParam(required = false) String userProfile,
+                           @RequestParam(required = false) byte[] userProfile,
                            @RequestParam(required = false) String userAddress,
                            @RequestParam(required = false) String userIntroduction,
                            @RequestParam(required = false) String role,
@@ -158,7 +175,7 @@ public class RegisterController {
 									    		  @RequestParam String password,
 										          @RequestParam String userName,
 										          @RequestParam String nickname,
-										          @RequestParam String userProfile,
+										          @RequestParam byte[] userProfile,
 										          @RequestParam String userAddress, 
 												  @RequestParam String userIntroduction, 
 												  @RequestParam String role
@@ -168,9 +185,9 @@ public class RegisterController {
         		.password(password)
                 .username(userName)
                 .nickname(nickname)
-                .userprofile(userProfile)
+                .user_profile(userProfile)
                 .useraddress(userAddress)
-                .userintroduction(userIntroduction)
+                .user_introduction(userIntroduction)
                 .role(role)
                 .build();
 

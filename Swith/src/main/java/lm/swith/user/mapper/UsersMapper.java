@@ -20,5 +20,4 @@ public interface UsersMapper {
 
 	SwithUser findByEmailAndPassword(String email, String password);
 	
-	SwithUser findEmail2(String email);
 }
