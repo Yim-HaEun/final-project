@@ -70,7 +70,7 @@ const MyPage = () => {
     }
     try {
       await usersUserinfoAxios.post('/users/updatePassword', {
-        user_no: userData.user_no,
+        email: userData.email,
         newPassword: newPassword,
       });
       setPasswordEditMode(false);
@@ -82,8 +82,8 @@ const MyPage = () => {
   const handleUpdateIntroduction = async () => {
     try {
       await usersUserinfoAxios.post('/users/updateIntroduction', {
-        user_no: userData.user_no,
-        user_introduction: userData.user_introduction,
+        email: userData.email,
+        newIntroduction: setNewIntroduction,
       });
       setUpdatingIntroduction(true);
     } catch (error) {
@@ -98,7 +98,7 @@ const MyPage = () => {
     setUpdatingAddress(true);
     try {
       await usersUserinfoAxios.post('/users/updateAddress', {
-        user_no: userData.user_no,
+        email: userData.email,
         newAddress: newAddress,
       });
     } catch (error) {
