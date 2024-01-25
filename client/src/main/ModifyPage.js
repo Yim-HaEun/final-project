@@ -25,15 +25,18 @@ const MyPage = () => {
     };
     fetchUserData();
   }, []);
+
   useEffect(() => {
     console.log(userData);
   }, [userData]);
+
   const handlePasswordEditToggle = () => {
     setPasswordEditMode(!passwordEditMode);
     setNewPassword('');
     setConfirmPassword('');
     setPasswordsMatch(true);
   };
+
   const handleIntroductionEditToggle = () => {
     setIntroductionEditMode(!introductionEditMode);
     setNewIntroduction('');
@@ -41,6 +44,7 @@ const MyPage = () => {
       handleUpdateIntroduction();
     }
   };
+
   const handleAddressEditToggle = () => {
     setAddressEditMode(!addressEditMode);
     setNewAddress('');
@@ -65,8 +69,8 @@ const MyPage = () => {
       return;
     }
     try {
-      await usersUserinfoAxios.put('/users/updatePassword', {
-        userNo: userData.user_no,
+      await usersUserinfoAxios.post('/users/updatePassword', {
+        user_no: userData.user_no,
         newPassword: newPassword,
       });
       setPasswordEditMode(false);
@@ -74,13 +78,14 @@ const MyPage = () => {
       console.error('비밀번호 업데이트에 실패했습니다.', error);
     }
   };
+
   const handleUpdateIntroduction = async () => {
-    setUpdatingIntroduction(true);
     try {
-      await usersUserinfoAxios.put('/users/updateIntroduction', {
-        userNo: userData.user_no,
-        newIntroduction: newIntroduction,
+      await usersUserinfoAxios.post('/users/updateIntroduction', {
+        user_no: userData.user_no,
+        user_introduction: userData.user_introduction,
       });
+      setUpdatingIntroduction(true);
     } catch (error) {
       console.error('자기 소개 업데이트에 실패했습니다.', error);
     } finally {
@@ -88,11 +93,12 @@ const MyPage = () => {
       setIntroductionEditMode(false);
     }
   };
+
   const handleUpdateAddress = async () => {
     setUpdatingAddress(true);
     try {
-      await usersUserinfoAxios.put('/users/updateAddress', {
-        userNo: userData.user_no,
+      await usersUserinfoAxios.post('/users/updateAddress', {
+        user_no: userData.user_no,
         newAddress: newAddress,
       });
     } catch (error) {

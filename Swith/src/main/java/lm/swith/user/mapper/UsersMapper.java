@@ -3,6 +3,7 @@ package lm.swith.user.mapper;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import lm.swith.user.model.SwithUser;
 
@@ -19,5 +20,7 @@ public interface UsersMapper {
 	SwithUser findByEmail(String email);
 
 	SwithUser findByEmailAndPassword(String email, String password);
+	
+	void updateIntroduction(@Param("user_no") Long user_no, @Param("newIntroduction") String newIntroduction);
 	
 }

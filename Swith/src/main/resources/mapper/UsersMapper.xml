@@ -25,4 +25,12 @@
 	<select id = "findUsersAll" parameterType="lm.swith.user.model.SwithUser">
 		SELECT * FROM Users
 	</select>
+	 
+	 <!-- 원정연 파트 -->
+	 <update id="updateIntroduction" parameterType="lm.swith.user.model.SwithUser">
+         UPDATE users
+            SET user_introduction = #{user_introduction}
+            WHERE user_no = #{user_no}
+    </update>
+	
 </mapper>

@@ -46,7 +46,6 @@ public class RegisterController {
 	private final MailService mailService;
 	private final JavaMailSender javaMailSender;
 	private final TokenProvider tokenProvider;
-	
 	private final PasswordEncoder passwordEncoder;
 	
 	// -------- 토큰 발급 --------
@@ -155,6 +154,15 @@ public class RegisterController {
 		SwithUser createUser = userService.signUpUser(swithUser);
 		return ResponseEntity.ok(createUser);
 	}
+	//원정연 파트 (update)
+
+	 @PostMapping("/updateIntroduction")
+	 public ResponseEntity<String> updateIntroduction(@RequestBody String user_introduction, @RequestParam Long user_no) {
+		 System.out.println("user_introduction" + user_introduction);
+		 System.out.println("long : " + user_no);
+	     userService.updateIntroduction(user_no, user_introduction);
+	     return ResponseEntity.ok("업데이트 성공");
+	 }
 	
 	@GetMapping("/kakao/callback")
     public String callback(HttpServletRequest request,

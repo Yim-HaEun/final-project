@@ -29,7 +29,9 @@ public class SwithUser {
 	private String user_introduction;//introduction
 	private String role;// authorization(user / admin) kakao,github
 	
+	
 	public SwithUser() {};
+	
 	
 	public SwithUser(Long user_no, String email, String password, String username, String nickname,
 			byte[] user_profile,String img, String useraddress, String user_introduction, String role) {
@@ -44,4 +46,6 @@ public class SwithUser {
 				this.user_introduction = user_introduction;
 				this.role = role;
 		}
+	
+	
 }

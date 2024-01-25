@@ -6,6 +6,7 @@ import Logout from './Logout';
 import Login from './Login';
 import RegisterUser from './RegisterUser';
 import StudyDetail from './StudyDetail';
+import ModifyPage from './ModifyPage';
 
 // function AuthenticatedRoute({ children }) {
 //   const authContext = useAuth();
@@ -26,6 +27,7 @@ export default function Control() {
           <Route path="/logout" element={<Logout />} />
           <Route path="/register" element={<RegisterUser />} />
           <Route path="/detail" element={<StudyDetail />} />
+          <Route path="/modify" element={<ModifyPage />} />
         </Routes>
       </BrowserRouter>
     </div>
