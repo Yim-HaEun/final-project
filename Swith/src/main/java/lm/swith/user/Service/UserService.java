@@ -75,9 +75,12 @@ public class UserService {
 	public SwithUser getUserByEmail(String email) {
         return usersMapper.findByEmail(email);
     }
+	public SwithUser getUserByNickname(String nickname) {
+        return usersMapper.findByNickname(nickname);
+    }
 	//원정연 파트 (update)
-	public void updateIntroduction(Long user_no, String newIntroduction) {
-        usersMapper.updateIntroduction(user_no, newIntroduction);
+	public void updateIntroduction(String email, String newIntroduction) {
+        usersMapper.updateIntroduction(email, newIntroduction);
     }
 	
 
