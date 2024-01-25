@@ -64,6 +64,12 @@ function RegisterUser() {
   //닉네임 중복 확인 및 길이 제약
   const handleNickname = async (e) => {
     e.preventDefault();
+    const { nickname } = swithUser;
+    const maxLength = 10;
+    if (nickname.length > maxLength) {
+      alert(`닉네임은 ${maxLength}자 이하로 입력해주세요.`);
+      return;
+    }
     try {
       const response = await axios.post(
         'http://localhost:8080/users/nickname',
@@ -72,6 +78,7 @@ function RegisterUser() {
           withCredentials: true,
         }
       );
+
       setConfirmNickname(response.data.toString());
       if (response.data !== 'existsNick') {
         alert('사용 가능한 닉네임입니다.');
@@ -97,14 +104,21 @@ function RegisterUser() {
       console.error('인증 실패');
     }
   };
-  const handleConfirmPassword = async () => {
+  const handleConfirmPassword = async (e) => {
     console.log('swithUser.password', swithUser.password);
     console.log('confirmPassword', confirmPassword);
+    const passwordRegex =
+      /^(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~?!@#$%^&*_-]).{8,}$/;
     if (swithUser.password === confirmPassword) {
-      alert('비밀번호가 일치합니다.');
-      setIsButtonDisabled1(true);
+      // Check if the password meets the regex pattern
+      if (passwordRegex.test(confirmPassword)) {
+        alert('비밀번호가 일치하며 조건에 부합합니다.');
+        setIsButtonDisabled1(true);
+      } else {
+        alert('비밀번호가 일치하지만 조건에 부합하지 않습니다.');
+      }
     } else {
-      alert('비밀번호가 일치하지않습니다.');
+      alert('비밀번호가 일치하지 않습니다.');
     }
   };
   const handlePasswordChange = (e) => {
@@ -241,6 +255,7 @@ function RegisterUser() {
                 비밀번호(password)
                 <img src={Required} className="required_img" />
               </h4>
+              <a>영문자,숫자,특수문자를 포함한 8자 이상의 비밀번호</a>
             </div>
             <label className="m-2"></label>
             <br />
