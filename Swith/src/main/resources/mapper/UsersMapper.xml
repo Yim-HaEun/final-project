@@ -12,6 +12,9 @@
 	<select id="findByEmail" parameterType="lm.swith.user.model.SwithUser">
         SELECT * FROM Users WHERE EMAIL = #{email}
     </select>
+    <select id="findByNickname" parameterType="lm.swith.user.model.SwithUser">
+        SELECT * FROM Users WHERE NICKNAME = #{nickname}
+    </select>
     
 	
 	
@@ -30,7 +33,7 @@
 	 <update id="updateIntroduction" parameterType="lm.swith.user.model.SwithUser">
          UPDATE users
             SET user_introduction = #{user_introduction}
-            WHERE user_no = #{user_no}
+            WHERE email = #{email}
     </update>
 	
 </mapper>
