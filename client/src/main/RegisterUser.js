@@ -8,10 +8,14 @@ import sample6_execDaumPostcode from './KakaoAddress';
 
 function RegisterUser() {
   const [number, setNumber] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
+
   const navigate = useNavigate();
   const [data, setData] = useState([]);
   const [confirm, setConfirm] = useState('');
+  const [confirmNickname, setConfirmNickname] = useState('');
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
+  const [isButtonDisabled1, setIsButtonDisabled1] = useState(false);
   const [swithUser, setNewUser] = useState({
     email: '',
     password: '',
@@ -57,6 +61,30 @@ function RegisterUser() {
     }
   };
 
+  //닉네임 중복 확인 및 길이 제약
+  const handleNickname = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.post(
+        'http://localhost:8080/users/nickname',
+        swithUser,
+        {
+          withCredentials: true,
+        }
+      );
+      setConfirmNickname(response.data.toString());
+      if (response.data !== 'existsNick') {
+        alert('사용 가능한 닉네임입니다.');
+        setConfirmNickname('new');
+      } else if (response.data === 'existsNick') {
+        alert('이미 존재하는 닉네임입니다.');
+        setConfirmNickname('existsNick');
+      }
+    } catch (error) {
+      console.error('닉네임이 부적합합니다.', error);
+    }
+  };
+
   const handleConfirm = async () => {
     console.log('number:', number);
     console.log('confirm:', confirm);
@@ -69,13 +97,32 @@ function RegisterUser() {
       console.error('인증 실패');
     }
   };
+  const handleConfirmPassword = async () => {
+    console.log('swithUser.password', swithUser.password);
+    console.log('confirmPassword', confirmPassword);
+    if (swithUser.password === confirmPassword) {
+      alert('비밀번호가 일치합니다.');
+      setIsButtonDisabled1(true);
+    } else {
+      alert('비밀번호가 일치하지않습니다.');
+    }
+  };
+  const handlePasswordChange = (e) => {
+    const { value } = e.target;
+    setConfirmPassword(value);
+  };
+
   const handleNumberChange = (e) => {
     const { value } = e.target;
     setNumber(value);
   };
 
   const handleAddUser = async () => {
-    if (isButtonDisabled === true) {
+    if (
+      isButtonDisabled === true &&
+      swithUser.password === confirmPassword &&
+      confirmNickname === 'new'
+    ) {
       try {
         //변경된 데이터 값 저장
 
@@ -90,12 +137,24 @@ function RegisterUser() {
         const address = document.getElementById('useraddress').value;
         setNewUser((prevUser) => ({ ...prevUser, useraddress: address }));
         setData((prevUser) => [...prevUser, response.data]);
+        console.log(confirmNickname);
         navigate('/');
       } catch (error) {
         console.error('데이터가 부적합합니다.', error);
       }
-    } else {
+    } else if (
+      isButtonDisabled === false &&
+      swithUser.password !== confirmPassword
+    ) {
       alert('이메일 인증을 해주세요');
+    } else if (
+      isButtonDisabled === true &&
+      swithUser.password !== confirmPassword
+    ) {
+      alert('비밀번호가 일치하지않습니다. 확인해주세요');
+    } else {
+      alert('모든 인증을 확인해주세요');
+      console.log(confirmNickname);
     }
   };
 
@@ -174,6 +233,7 @@ function RegisterUser() {
             >
               인증확인
             </button>
+            <br />
           </div>
           <div className="register_id m-3">
             <div className="two">
@@ -183,6 +243,7 @@ function RegisterUser() {
               </h4>
             </div>
             <label className="m-2"></label>
+            <br />
             <input
               className="textInput"
               type="password"
@@ -191,6 +252,30 @@ function RegisterUser() {
               autoComplete="off"
               onChange={handleInputChange}
             />
+            <br />
+            <input
+              className="textInput"
+              type="password"
+              name="confirmPassword"
+              value={confirmPassword}
+              autoComplete="off"
+              onChange={handlePasswordChange}
+            />
+            <button
+              disabled={isButtonDisabled1}
+              onClick={handleConfirmPassword}
+              className="btn round"
+              style={{
+                backgroundColor: '#ffffb5',
+                width: '100px',
+                height: '50px',
+                margin: '10px',
+                marginTop: '5px',
+                borderRadius: '30px',
+              }}
+            >
+              비밀번호 일치확인
+            </button>
           </div>
 
           <div className="register_id m-3">
@@ -224,6 +309,20 @@ function RegisterUser() {
               value={swithUser.nickname}
               onChange={handleInputChange}
             />
+            <button
+              onClick={handleNickname}
+              className="btn round"
+              style={{
+                backgroundColor: '#ffffb5',
+                width: '100px',
+                height: '50px',
+                margin: '10px',
+                marginTop: '5px',
+                borderRadius: '30px',
+              }}
+            >
+              닉네임 중복확인
+            </button>
           </div>
           <div className="register_id m-3">
             <div className="two">
