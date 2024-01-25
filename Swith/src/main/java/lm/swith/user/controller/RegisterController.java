@@ -117,6 +117,21 @@ public class RegisterController {
 		     return ResponseEntity.ok(num);
 	  	 }
 	  }
+	  @PostMapping("/nickname")
+	  public ResponseEntity<String> checkNickname(@RequestBody SwithUser swithUser){
+	  	
+	  	SwithUser user = userService.getUserByNickname(swithUser.getNickname()); 
+	  
+	  	//넣은 값이 db에 존재하는지, 넣은 값이 null이 아닌 
+	  	if(user != null && user.getNickname() != null) { //find해서 값이 존재하면 거부, null이면 
+	  		String existsNick = "existsNick";
+	  		 return ResponseEntity.ok(existsNick);
+	     
+	  	 }else {
+	  		String newNickname = "new";
+	  		 return ResponseEntity.ok(newNickname);
+	  	 }
+	  }
 	  
 	  @GetMapping("/register")
 	  public String showRegisterForm(Model model) {
@@ -157,10 +172,10 @@ public class RegisterController {
 	//원정연 파트 (update)
 
 	 @PostMapping("/updateIntroduction")
-	 public ResponseEntity<String> updateIntroduction(@RequestBody String user_introduction, @RequestParam Long user_no) {
-		 System.out.println("user_introduction" + user_introduction);
-		 System.out.println("long : " + user_no);
-	     userService.updateIntroduction(user_no, user_introduction);
+	 public ResponseEntity<String> updateIntroduction(@RequestParam("email") String email,@RequestParam String newIntroduction) {
+		 System.out.println("user_introduction" + newIntroduction);
+		 System.out.println("email : " + email);
+	     userService.updateIntroduction(email, newIntroduction);
 	     return ResponseEntity.ok("업데이트 성공");
 	 }
 	
