@@ -79,9 +79,12 @@ public class UserService {
         return usersMapper.findByNickname(nickname);
     }
 	//원정연 파트 (update)
-	public void updateIntroduction(String email, String newIntroduction) {
-        usersMapper.updateIntroduction(email, newIntroduction);
-    }
+	//public void updateIntroduction(String email, String newIntroduction) {
+        //usersMapper.updateIntroduction(email, newIntroduction);
+    //}
+	public void updateUser(SwithUser swithUser) {
+		usersMapper.updateUser(swithUser);
+	}
 	
 
 	

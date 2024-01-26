@@ -29,11 +29,14 @@
 		SELECT * FROM Users
 	</select>
 	 
-	 <!-- 원정연 파트 -->
+	 <!-- 원정연 파트
 	 <update id="updateIntroduction" parameterType="lm.swith.user.model.SwithUser">
          UPDATE users
             SET user_introduction = #{user_introduction}
             WHERE email = #{email}
-    </update>
+    </update> -->
 	
+	<update id = "updateUser" parameterType="lm.swith.user.model.SwithUser">
+		UPDATE USERS SET NICKNAME = #{nickname}, USERADDRESS = #{useraddress}, USER_INTRODUCTION = #{user_introduction} WHERE email = #{email}
+	</update>
 </mapper>

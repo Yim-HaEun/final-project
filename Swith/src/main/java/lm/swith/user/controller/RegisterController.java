@@ -20,6 +20,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -186,38 +187,22 @@ public class RegisterController {
 			return ResponseEntity.ok(createUser);
 		}
 	//원정연 파트 (update)
-	    @GetMapping("/modify")
-		public ResponseEntity<String> getUserByEmail(@RequestParam String email) {
-		    SwithUser swithUser = userService.getUserByEmail(email);
-		    if (swithUser != null) {
-		  
-		        return ResponseEntity.ok(swithUser.getEmail());
-		    } else {
-		        return ResponseEntity.notFound().build();
-		    }
-		}
-		@PutMapping("/modify")
-		public ResponseEntity<SwithUser> updateUser(@RequestParam String email, @RequestBody SwithUser updatedUser) {
-		        // 사용자 정보를 조회
-		        SwithUser swithUser = userService.getUserByEmail(email);
-		        if (swithUser != null) {
-		         
-		            //swithUser.setUsername(updatedUser.getUsername());
-		            //swithUser.setNickname(updatedUser.getNickname());
-		        	//swithUser.setUser_profile(updatedUser.getUser_profile());
-		            //swithUser.setUseraddress(updatedUser.getUseraddress());
-		            swithUser.setUser_introduction(updatedUser.getUser_introduction());
-		        
-		            // 사용자 정보 업데이트
-		            userService.updateIntroduction(email, swithUser.getUser_introduction());
-		            // 업데이트된 사용자 정보를 반환
-		            return ResponseEntity.ok(swithUser);
-		        } else {
-		            // 사용자가 존재하지 않을 경우 404 Not Found 반환
-		            return ResponseEntity.notFound().build();
-		        }
-		    }
-	
+		
+	//update
+	    @PostMapping("/updateUser")
+	    public ResponseEntity<String> updateUser(@RequestBody SwithUser swithUser){
+	    	System.out.println(swithUser.getNickname());
+	    	System.out.println(swithUser.getUseraddress());
+	    	System.out.println(swithUser.getUser_introduction());
+	    	System.out.println("getEmail " + swithUser.getEmail());
+	    	
+			
+	    	userService.updateUser(swithUser);
+	        return ResponseEntity.ok("User updated successfully");
+	    }
+	    
+	    
+	//카카오 
 	@GetMapping("/kakao/callback")
     public String callback(HttpServletRequest request,
                            @RequestParam(required = false) String password,

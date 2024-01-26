@@ -6,6 +6,7 @@ import Logout from './Logout';
 import Login from './Login';
 import RegisterUser from './RegisterUser';
 import StudyDetail from './StudyDetail';
+import MyPage from './MyPage';
 import ModifyPage from './ModifyPage';
 
 // function AuthenticatedRoute({ children }) {
@@ -26,7 +27,8 @@ export default function Control() {
           <Route path="/login" element={<Login />} />
           <Route path="/logout" element={<Logout />} />
           <Route path="/register" element={<RegisterUser />} />
-          <Route path="/detail" element={<StudyDetail />} />
+          <Route path="/post_detail/:post_no" element={<StudyDetail />} />
+          <Route path="/mypage" element={<MyPage />} />
           <Route path="/modify" element={<ModifyPage />} />
         </Routes>
       </BrowserRouter>

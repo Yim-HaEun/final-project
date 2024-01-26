@@ -18,10 +18,12 @@ public interface UsersMapper {
 	List<SwithUser> findUsersAll();
 	
 	SwithUser findByEmail(String email);
+	
 	SwithUser findByNickname(String nickname);
 
 	SwithUser findByEmailAndPassword(String email, String password);
 	
-	void updateIntroduction(String email, String newIntroduction);
+	//void updateIntroduction(String email, String newIntroduction);
+	void updateUser(SwithUser swithUser);
 	
 }

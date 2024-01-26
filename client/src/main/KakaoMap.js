@@ -20,6 +20,7 @@ const KakaoMap = () => {
 
     fetchUserData();
   }, []);
+
   useEffect(() => {
     const script = document.createElement('script');
     script.async = true;
@@ -69,6 +70,8 @@ const KakaoMap = () => {
             marker.setMap(map, marker);
             //infowindow.open(map, marker);
             map.setCenter(coords);
+          } else {
+            console.log('error');
           }
         });
       });

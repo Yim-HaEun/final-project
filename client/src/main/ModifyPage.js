@@ -1,193 +1,134 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import usersUserinfoAxios from '../token/tokenAxios';
+import Header from './Header';
+import axios from 'axios';
+import sample6_execDaumPostcode from './KakaoAddress';
+const UpdateUser = () => {
+  const [userData, setUserData] = useState([]); //주소값
+  const [newUser, setNewUser] = useState('');
+  const [swithUser, setUpdateUser] = useState({
+    email: `${userData.email}`,
+    nickname: '',
+    useraddress: '',
+    user_introduction: '',
+    email: '',
+  });
 
-const MyPage = () => {
-  const [userData, setUserData] = useState({});
-  const [passwordEditMode, setPasswordEditMode] = useState(false);
-  const [introductionEditMode, setIntroductionEditMode] = useState(false);
-  const [addressEditMode, setAddressEditMode] = useState(false);
-  const [newPassword, setNewPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
-  const [newIntroduction, setNewIntroduction] = useState('');
-  const [newAddress, setNewAddress] = useState('');
-  const [passwordsMatch, setPasswordsMatch] = useState(true);
-  const [updatingIntroduction, setUpdatingIntroduction] = useState(false);
-  const [updatingAddress, setUpdatingAddress] = useState(false);
+  const handleInputChange = (e) => {
+    //e 자리값 밑에 target
+    const { name, value } = e.target;
+
+    setUpdateUser((prevUser) => ({ ...prevUser, [name]: value }));
+  };
 
   useEffect(() => {
     const fetchUserData = async () => {
       try {
+        // 서버에 사용자 정보를 가져오는 요청
         const response = await usersUserinfoAxios.get('/users/userinfo');
-        setUserData(response.data);
+        setUserData(response.data); // 로그인한 토큰 이용해서 해당 유저 데이터 가져오는거
+        console.log(userData);
       } catch (error) {
-        console.error('사용자 데이터를 가져오는 데 실패했습니다.', error);
+        console.error('Failed to fetch user data.', error);
       }
     };
+
     fetchUserData();
   }, []);
 
-  useEffect(() => {
-    console.log(userData);
-  }, [userData]);
-
-  const handlePasswordEditToggle = () => {
-    setPasswordEditMode(!passwordEditMode);
-    setNewPassword('');
-    setConfirmPassword('');
-    setPasswordsMatch(true);
-  };
-
-  const handleIntroductionEditToggle = () => {
-    setIntroductionEditMode(!introductionEditMode);
-    setNewIntroduction('');
-    if (introductionEditMode) {
-      handleUpdateIntroduction();
-    }
-  };
-
-  const handleAddressEditToggle = () => {
-    setAddressEditMode(!addressEditMode);
-    setNewAddress('');
-  };
-  const handlePasswordChange = (e) => {
-    setNewPassword(e.target.value);
-    setPasswordsMatch(true);
-  };
-  const handleConfirmPasswordChange = (e) => {
-    setConfirmPassword(e.target.value);
-    setPasswordsMatch(true);
-  };
-  const handleIntroductionChange = (e) => {
-    setNewIntroduction(e.target.value);
-  };
-  const handleAddressChange = (e) => {
-    setNewAddress(e.target.value);
-  };
-  const handleUpdatePassword = async () => {
-    if (newPassword !== confirmPassword) {
-      setPasswordsMatch(false);
-      return;
-    }
+  const handleUpdateUser = async (e) => {
+    e.preventDefault();
     try {
-      await usersUserinfoAxios.post('/users/updatePassword', {
-        email: userData.email,
-        newPassword: newPassword,
-      });
-      setPasswordEditMode(false);
+      const response = await usersUserinfoAxios.post(
+        'http://localhost:8080/users/updateUser',
+        swithUser,
+        {
+          withCredentials: true,
+        }
+      );
+      userData((prevUser) => [...prevUser, response.data]);
     } catch (error) {
-      console.error('비밀번호 업데이트에 실패했습니다.', error);
+      console.error('수정 불가', error);
+    }
+  };
+  const handleImageChange = (e) => {
+    const file = e.target.files[0]; // 선택한 파일
+    const reader = new FileReader();
+
+    reader.onloadend = () => {
+      setUpdateUser((prevUser) => ({ ...prevUser, img: reader.result }));
+    };
+
+    if (file) {
+      reader.readAsDataURL(file);
     }
   };
 
-  const handleUpdateIntroduction = async () => {
-    try {
-      await usersUserinfoAxios.post('/users/updateIntroduction', {
-        email: userData.email,
-        newIntroduction: setNewIntroduction,
-      });
-      setUpdatingIntroduction(true);
-    } catch (error) {
-      console.error('자기 소개 업데이트에 실패했습니다.', error);
-    } finally {
-      setUpdatingIntroduction(false);
-      setIntroductionEditMode(false);
-    }
-  };
-
-  const handleUpdateAddress = async () => {
-    setUpdatingAddress(true);
-    try {
-      await usersUserinfoAxios.post('/users/updateAddress', {
-        email: userData.email,
-        newAddress: newAddress,
-      });
-    } catch (error) {
-      console.error('주소 업데이트에 실패했습니다.', error);
-    } finally {
-      setUpdatingAddress(false);
-      setAddressEditMode(false);
-    }
-  };
   return (
     <div>
-      <h1>마이 페이지</h1>
-      {userData && (
-        <ul>
-          <li>이메일: {userData.email || 'N/A'}</li>
-          <li>사용자 번호: {userData.user_no || 'N/A'}</li>
-          <li>이름: {userData.username || 'N/A'}</li>
-          <li>자기 소개: {userData.user_introduction || 'N/A'}</li>
-          <li>주소: {userData.useraddress || 'N/A'}</li>
-        </ul>
-      )}
+      <Header />
+
+      <br></br>
+      <h4>비밀번호</h4>
+
+      <h4>닉네임</h4>
       <div>
-        {passwordEditMode && (
-          <div>
-            <label>
-              새로운 비밀번호:
-              <input
-                type="password"
-                value={newPassword}
-                onChange={handlePasswordChange}
-              />
-            </label>
-            <label>
-              확인용 비밀번호:
-              <input
-                type="password"
-                value={confirmPassword}
-                onChange={handleConfirmPasswordChange}
-              />
-            </label>
-            {!passwordsMatch && (
-              <p style={{ color: 'red' }}>비밀번호가 일치하지 않습니다.</p>
-            )}
-            <button onClick={handleUpdatePassword}>저장</button>
-          </div>
-        )}
-        {introductionEditMode && (
-          <div>
-            <label>
-              새로운 자기 소개:
-              <input
-                type="text"
-                value={newIntroduction}
-                onChange={handleIntroductionChange}
-              />
-            </label>
-            <button onClick={handleUpdateIntroduction}>
-              {updatingIntroduction ? '저장 중...' : '저장'}
-            </button>
-          </div>
-        )}
-        {addressEditMode && (
-          <div>
-            <label>
-              새로운 주소:
-              <input
-                type="text"
-                value={newAddress}
-                onChange={handleAddressChange}
-              />
-            </label>
-            <button onClick={handleUpdateAddress}>
-              {updatingAddress ? '저장 중...' : '저장'}
-            </button>
-          </div>
-        )}
+        <input
+          type="text"
+          name="nickname"
+          value={setUserData.nickname}
+          onChange={handleInputChange}
+        />
       </div>
+      <h4>프로필</h4>
+
+      <h4>주소</h4>
       <div>
-        <button onClick={handlePasswordEditToggle}>
-          {passwordEditMode ? '취소' : '비밀번호 변경'}
-        </button>
-        <button onClick={handleIntroductionEditToggle}>
-          {introductionEditMode ? '취소' : '자기 소개 변경'}
-        </button>
-        <button onClick={handleAddressEditToggle}>
-          {addressEditMode ? '취소' : '주소 변경'}
-        </button>
+        <input type="text" id="useraddress" />
+        <input
+          name="useraddress"
+          className="btn round"
+          style={{
+            backgroundColor: '#ffffb5',
+            width: '150px',
+            height: '50px',
+            margin: '10px',
+            marginTop: '5px',
+            borderRadius: '30px',
+          }}
+          type="button"
+          value="주소 찾기"
+          onClick={() => sample6_execDaumPostcode({ setNewUser })}
+        />
       </div>
+      <h4>자기소개</h4>
+      <div>
+        <input
+          type="text"
+          name="user_introduction"
+          value={setUserData.user_introduction}
+          onChange={handleInputChange}
+        />
+      </div>
+      <button
+        onClick={handleUpdateUser}
+        type="button"
+        name="login"
+        className="btn round"
+        style={{
+          backgroundColor: '#75ddff',
+          width: '200px',
+          height: '50px',
+          margin: '10px',
+          marginTop: '20px',
+          marginBottom: '10px',
+          borderRadius: '30px',
+        }}
+      >
+        수정
+      </button>
     </div>
   );
 };
-export default MyPage;
+
+export default UpdateUser;

@@ -8,6 +8,7 @@ import usersUserinfoAxios from '../token/tokenAxios';
 
 import '../css/Header.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Dropdown from './Dropdown';
 
 export default function Header() {
   const [userData, setUserData] = useState('');
@@ -25,11 +26,17 @@ export default function Header() {
 
     fetchUserData();
   }, []);
+  const [view, setView] = useState(false);
+
+  const navigate = useNavigate();
   const handleLogout = () => {
-    if (logout()) {
+    if (isTokenAvailable() !== null) {
       // 로그아웃이 성공했을 때의 추가 작업
       // 예: 리다이렉트 등
-      useNavigate.push('/'); // 예시로 홈페이지로 리다이렉트하는 경우
+      localStorage.removeItem('token');
+
+      navigate('/'); // 예시로 홈페이지로 리다이렉트하는 경우
+      window.location.reload();
     } else {
       // 로그아웃이 실패했을 때의 추가 작업
       console.error('로그아웃 실패');
@@ -40,14 +47,14 @@ export default function Header() {
       <div className="container">
         <div className="row">
           <nav className="nav_section">
-            <div className="navbar-brand_font">
+            <div className="navbar-brand_font" style={{ paddingTop: '30px' }}>
               <a className="nav-link" href="/">
                 S.With
               </a>
             </div>
 
             <ul className="navbar-nav_2">
-              {isTokenAvailable && (
+              {isTokenAvailable() && (
                 <li className="nav-item">
                   <div className="write">
                     <div className="write_1">
@@ -62,7 +69,7 @@ export default function Header() {
                   </div>
                 </li>
               )}
-              {isTokenAvailable && (
+              {isTokenAvailable() && (
                 <li className="nav-item">
                   <div className="alarm">
                     <div className="alarm_1">
@@ -75,7 +82,7 @@ export default function Header() {
                   </div>
                 </li>
               )}
-              {!isTokenAvailable && (
+              {!isTokenAvailable() && (
                 <li className="nav-item">
                   <div className="profile">
                     <div className="profile_1">
@@ -90,7 +97,7 @@ export default function Header() {
                   </div>
                 </li>
               )}
-              {isTokenAvailable && (
+              {isTokenAvailable() && (
                 <li className="nav-item">
                   <div className="profile">
                     <div className="profile_1">
@@ -101,6 +108,18 @@ export default function Header() {
                       />
                     </div>
                   </div>
+                </li>
+              )}
+              {isTokenAvailable() && (
+                <li className="profileItem">
+                  <ul
+                    onClick={() => {
+                      setView(!view);
+                    }}
+                  >
+                    반가워요, {userData.nickname} 님! {view ? '⌃' : '⌄'}
+                    {view && <Dropdown />}
+                  </ul>
                 </li>
               )}
             </ul>
