@@ -5,7 +5,7 @@ import Header from './Header';
 import '../css/RegisterUser.css';
 import Required from './img/required.png';
 import sample6_execDaumPostcode from './KakaoAddress';
-
+import girl from '../main/img/girl.png';
 function RegisterUser() {
   const [number, setNumber] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
