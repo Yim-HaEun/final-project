@@ -9,6 +9,7 @@ import java.util.Base64;
 
 import javax.imageio.ImageIO;
 
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
@@ -16,13 +17,16 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StreamUtils;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lm.swith.user.Service.KakaoService;
@@ -90,7 +94,6 @@ public class RegisterController {
         String imageUrl = "data:image/jpeg;base64,/" + cutString;
         user.setPassword(null);//조회할때 패스워드 안나오게 하려고 null값을 준다.
         user.setImg(imageUrl);//단순 출력용 blob을 string형태로 출력하기위함 
-      
         return ResponseEntity.ok(user);
     }
 	  @GetMapping("/")
@@ -143,41 +146,77 @@ public class RegisterController {
 		return userService.findUsersAll();
 	}
 	*/	
-	@PostMapping("/register")
-	public ResponseEntity<SwithUser> registerUser(@RequestBody SwithUser swithUser) throws IOException{
-		String imageData = swithUser.getImg().split(",")[1];
-        byte[] imageBytes = Base64.getDecoder().decode(imageData);//디코딩해서 blob 형태로 다시 넣어줌
-        
-     // BufferedImage로 이미지 읽기
-        ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
-        BufferedImage originalImage = ImageIO.read(bis);
-        bis.close();
+	    @PostMapping("/register")
+	    public ResponseEntity<SwithUser> registerUser(
+	        @RequestParam(value = "img", required = false) MultipartFile imgFile, // img 받아오게 해주는 부분
+	        @RequestBody SwithUser swithUser
+	    ) throws IOException {
+	        if (imgFile != null && !imgFile.isEmpty()) {
+				// resource 폴더에 경로를 읽는다
+	        	String imageData = swithUser.getImg().split(",")[1];
+		        byte[] imageBytes = Base64.getDecoder().decode(imageData);//디코딩해서 blob 형태로 다시 넣어줌
+		        
+		     // BufferedImage로 이미지 읽기
+		        ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
+		        BufferedImage originalImage = ImageIO.read(bis);
+		        bis.close();
 
-        // 이미지 크기 조절 (예: 가로 100px로 조절)
-        int newWidth = 500;
-        int newHeight = (int) (originalImage.getHeight() * (1.0 * newWidth / originalImage.getWidth()));
-        BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
-        resizedImage.getGraphics().drawImage(originalImage, 0, 0, newWidth, newHeight, null);
+		        // 이미지 크기 조절 (예: 가로 100px로 조절)
+		        int newWidth = 500;
+		        int newHeight = (int) (originalImage.getHeight() * (1.0 * newWidth / originalImage.getWidth()));
+		        BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+		        resizedImage.getGraphics().drawImage(originalImage, 0, 0, newWidth, newHeight, null);
 
-        // 압축된 이미지를 Base64로 인코딩
-        ByteArrayOutputStream bos = new ByteArrayOutputStream();
-        ImageIO.write(resizedImage, "png", bos);
-        byte[] compressedImageBytes = bos.toByteArray();
-        bos.close();
-        
-        swithUser.setUser_profile(compressedImageBytes);
-		SwithUser createUser = userService.signUpUser(swithUser);
-		return ResponseEntity.ok(createUser);
-	}
+		        // 압축된 이미지를 Base64로 인코딩
+		        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+		        ImageIO.write(resizedImage, "png", bos);
+		        byte[] compressedImageBytes = bos.toByteArray();
+		        bos.close();
+		        swithUser.setUser_profile(compressedImageBytes);
+			} else {
+				ClassPathResource defaultImageResource = new ClassPathResource("img/girl.png");
+				byte[] defaultImageBytes = StreamUtils.copyToByteArray(defaultImageResource.getInputStream());
+				swithUser.setUser_profile(defaultImageBytes);//디코딩해서 blob 형태로 다시 넣어줌
+				
+			}
+
+	        
+	        
+			SwithUser createUser = userService.signUpUser(swithUser);
+			return ResponseEntity.ok(createUser);
+		}
 	//원정연 파트 (update)
-
-	 @PostMapping("/updateIntroduction")
-	 public ResponseEntity<String> updateIntroduction(@RequestParam("email") String email,@RequestParam String newIntroduction) {
-		 System.out.println("user_introduction" + newIntroduction);
-		 System.out.println("email : " + email);
-	     userService.updateIntroduction(email, newIntroduction);
-	     return ResponseEntity.ok("업데이트 성공");
-	 }
+	    @GetMapping("/modify")
+		public ResponseEntity<String> getUserByEmail(@RequestParam String email) {
+		    SwithUser swithUser = userService.getUserByEmail(email);
+		    if (swithUser != null) {
+		  
+		        return ResponseEntity.ok(swithUser.getEmail());
+		    } else {
+		        return ResponseEntity.notFound().build();
+		    }
+		}
+		@PutMapping("/modify")
+		public ResponseEntity<SwithUser> updateUser(@RequestParam String email, @RequestBody SwithUser updatedUser) {
+		        // 사용자 정보를 조회
+		        SwithUser swithUser = userService.getUserByEmail(email);
+		        if (swithUser != null) {
+		         
+		            //swithUser.setUsername(updatedUser.getUsername());
+		            //swithUser.setNickname(updatedUser.getNickname());
+		        	//swithUser.setUser_profile(updatedUser.getUser_profile());
+		            //swithUser.setUseraddress(updatedUser.getUseraddress());
+		            swithUser.setUser_introduction(updatedUser.getUser_introduction());
+		        
+		            // 사용자 정보 업데이트
+		            userService.updateIntroduction(email, swithUser.getUser_introduction());
+		            // 업데이트된 사용자 정보를 반환
+		            return ResponseEntity.ok(swithUser);
+		        } else {
+		            // 사용자가 존재하지 않을 경우 404 Not Found 반환
+		            return ResponseEntity.notFound().build();
+		        }
+		    }
 	
 	@GetMapping("/kakao/callback")
     public String callback(HttpServletRequest request,
