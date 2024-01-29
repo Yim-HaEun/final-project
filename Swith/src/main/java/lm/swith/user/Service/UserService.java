@@ -32,7 +32,6 @@ public class UserService {
 
 	public SwithUser signUpUser(SwithUser swithUser) { //save the register user  
 		SwithUser user = new SwithUser();
-		
 		user.setEmail(swithUser.getEmail());
 		user.setPassword(passwordEncoder.encode(swithUser.getPassword()));
 		user.setUsername(swithUser.getUsername());
@@ -61,8 +60,7 @@ public class UserService {
 	public SwithUser getByCredentials(final String email, final String password) {
 		return usersMapper.findByEmailAndPassword(email, password);
 	}
-
-
+	
 	public SwithUser getByCredentials(final String email, final String password, final PasswordEncoder encoder) {
 		final SwithUser originalUser = usersMapper.findByEmail(email);
 		// matches 메서드를 이용해 패스워드가 같은지 확인
@@ -82,11 +80,25 @@ public class UserService {
 	//public void updateIntroduction(String email, String newIntroduction) {
         //usersMapper.updateIntroduction(email, newIntroduction);
     //}
+	
+	//update user profile
+	public void updateUserProfile(SwithUser swithUser) {
+		usersMapper.updateUserProfile(swithUser);
+	}
+	
+	//update user info
 	public void updateUser(SwithUser swithUser) {
 		usersMapper.updateUser(swithUser);
 	}
-	
 
+	//update user password
+	public void updatePassword(SwithUser swithUser) {
+		swithUser.setPassword(passwordEncoder.encode(swithUser.getPassword()));
+		usersMapper.updatePassword(swithUser);
+	}
 	
-
+	//delete user by Email
+	public void deleteUser(SwithUser swithUser) {
+		usersMapper.deleteUser(swithUser);
+	}
 }

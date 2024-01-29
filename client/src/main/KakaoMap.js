@@ -41,6 +41,7 @@ const KakaoMap = () => {
         };
 
         const map = new window.kakao.maps.Map(mapContainer, mapOption); // 지도 생성
+
         const geocoder = new window.kakao.maps.services.Geocoder(); //주소- 좌표 변환 객체
         // userData.useraddress 로그인한 유저의 DB에저장된 Address 부분
         geocoder.addressSearch(userData.useraddress, (result, status) => {
@@ -67,6 +68,7 @@ const KakaoMap = () => {
               position: coords,
               image: markerImage, // 마커이미지 설정
             });
+
             marker.setMap(map, marker);
             //infowindow.open(map, marker);
             map.setCenter(coords);

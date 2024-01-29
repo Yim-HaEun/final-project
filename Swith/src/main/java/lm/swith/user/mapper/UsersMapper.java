@@ -26,4 +26,9 @@ public interface UsersMapper {
 	//void updateIntroduction(String email, String newIntroduction);
 	void updateUser(SwithUser swithUser);
 	
+	void updatePassword (SwithUser swithUser); //update password
+	
+	void updateUserProfile(SwithUser swithUser);
+	
+	void deleteUser(SwithUser swithUser);
 }

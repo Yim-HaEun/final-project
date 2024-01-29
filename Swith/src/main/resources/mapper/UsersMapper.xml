@@ -36,7 +36,26 @@
             WHERE email = #{email}
     </update> -->
 	
+	<!--update userinfo-->
 	<update id = "updateUser" parameterType="lm.swith.user.model.SwithUser">
 		UPDATE USERS SET NICKNAME = #{nickname}, USERADDRESS = #{useraddress}, USER_INTRODUCTION = #{user_introduction} WHERE email = #{email}
 	</update>
+	
+	<!--update user profile-->
+	<update id = "updateUserProfile" parameterType="lm.swith.user.model.SwithUser">
+		UPDATE USERS SET USER_PROFILE=#{user_profile}  WHERE email = #{email}
+	</update>
+	
+	<!--update user password-->
+	<update id = "updatePassword" parameterType="lm.swith.user.model.SwithUser">
+		UPDATE USERS SET PASSWORD = #{password} WHERE email = #{email}
+	</update>
+	
+	<!-- delete user -->
+	<delete id = "deleteUser" parameterType="lm.swith.user.model.SwithUser">
+		DELETE FROM USERS WHERE EMAIL = #{email}
+	</delete>
+	
+	
+	
 </mapper>

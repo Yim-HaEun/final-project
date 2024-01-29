@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -95,8 +94,12 @@ public class RegisterController {
         String imageUrl = "data:image/jpeg;base64,/" + cutString;
         user.setPassword(null);//조회할때 패스워드 안나오게 하려고 null값을 준다.
         user.setImg(imageUrl);//단순 출력용 blob을 string형태로 출력하기위함 
+        System.out.println(user.getImg());
+        System.out.println(user.getUser_profile());
+        
         return ResponseEntity.ok(user);
     }
+	
 	  @GetMapping("/")
 	  public String MailPage(){
 	      return "/";
@@ -149,11 +152,14 @@ public class RegisterController {
 	*/	
 	    @PostMapping("/register")
 	    public ResponseEntity<SwithUser> registerUser(
-	        @RequestParam(value = "img", required = false) MultipartFile imgFile, // img 받아오게 해주는 부분
+	        @RequestParam(value = "img", required = false) MultipartFile img, // img 받아오게 해주는 부분
 	        @RequestBody SwithUser swithUser
 	    ) throws IOException {
-	        if (imgFile != null && !imgFile.isEmpty()) {
+	    	System.out.println("img" + swithUser.getImg());
+	    	System.out.println("=====");
+	        if (swithUser.getImg() != null && !swithUser.getImg().isEmpty()) {
 				// resource 폴더에 경로를 읽는다
+	        	System.out.println("null아님");
 	        	String imageData = swithUser.getImg().split(",")[1];
 		        byte[] imageBytes = Base64.getDecoder().decode(imageData);//디코딩해서 blob 형태로 다시 넣어줌
 		        
@@ -175,6 +181,7 @@ public class RegisterController {
 		        bos.close();
 		        swithUser.setUser_profile(compressedImageBytes);
 			} else {
+				System.out.println("이미지 null임");
 				ClassPathResource defaultImageResource = new ClassPathResource("img/girl.png");
 				byte[] defaultImageBytes = StreamUtils.copyToByteArray(defaultImageResource.getInputStream());
 				swithUser.setUser_profile(defaultImageBytes);//디코딩해서 blob 형태로 다시 넣어줌
@@ -188,17 +195,64 @@ public class RegisterController {
 		}
 	//원정연 파트 (update)
 		
-	//update
+	//update 하은이 파트 
+	    
+	    //update user profile
+	    @PostMapping("/updateUserProfile")
+	    public ResponseEntity<String> updateUserProfile(@RequestBody SwithUser swithUser) throws IOException{
+	    	 System.out.println("getUser_profile : " + swithUser.getUser_profile());
+	     	if (swithUser.getImg() != null && !swithUser.getImg().isEmpty()) {
+	 			// resource 폴더에 경로를 읽는다
+	         	System.out.println("null아님");
+	         	String imageData = swithUser.getImg().split(",")[1];
+	 	        byte[] imageBytes = Base64.getDecoder().decode(imageData);//디코딩해서 blob 형태로 다시 넣어줌
+	 	        
+	 	     // BufferedImage로 이미지 읽기
+	 	        ByteArrayInputStream bis = new ByteArrayInputStream(imageBytes);
+	 	        BufferedImage originalImage = ImageIO.read(bis);
+	 	        bis.close();
+
+	 	        // 이미지 크기 조절 (예: 가로 100px로 조절)
+	 	        int newWidth = 500;
+	 	        int newHeight = (int) (originalImage.getHeight() * (1.0 * newWidth / originalImage.getWidth()));
+	 	        BufferedImage resizedImage = new BufferedImage(newWidth, newHeight, BufferedImage.TYPE_INT_ARGB);
+	 	        resizedImage.getGraphics().drawImage(originalImage, 0, 0, newWidth, newHeight, null);
+
+	 	        // 압축된 이미지를 Base64로 인코딩
+	 	        ByteArrayOutputStream bos = new ByteArrayOutputStream();
+	 	        ImageIO.write(resizedImage, "png", bos);
+	 	        byte[] compressedImageBytes = bos.toByteArray();
+	 	        bos.close();
+	 	        swithUser.setUser_profile(compressedImageBytes);
+	 		} else {
+	 			swithUser.setUser_profile(swithUser.getUser_profile());
+	 		}
+	     	userService.updateUserProfile(swithUser);
+	     	return ResponseEntity.ok("User updated successfully");
+	    }
+	   
+    	//update user info
 	    @PostMapping("/updateUser")
-	    public ResponseEntity<String> updateUser(@RequestBody SwithUser swithUser){
-	    	System.out.println(swithUser.getNickname());
-	    	System.out.println(swithUser.getUseraddress());
-	    	System.out.println(swithUser.getUser_introduction());
-	    	System.out.println("getEmail " + swithUser.getEmail());
+	    public ResponseEntity<String> updateUser(@RequestBody SwithUser swithUser) {
 	    	
-			
 	    	userService.updateUser(swithUser);
 	        return ResponseEntity.ok("User updated successfully");
+
+	    }
+	    
+	    //update user password
+	    @PostMapping("/updatePassword")
+	    public ResponseEntity<String> updatePassword(@RequestBody SwithUser swithUser){
+	    	System.out.println(swithUser.getPassword());
+	    	
+	    	userService.updatePassword(swithUser);
+	        return ResponseEntity.ok("User's password updated successfully");
+	    }
+	    
+	    @PostMapping("/deleteUser")
+	    public ResponseEntity<String> deleteUser(@RequestBody SwithUser swithUser){
+	    	userService.deleteUser(swithUser);
+	    	return ResponseEntity.ok("Delete User");
 	    }
 	    
 	    
@@ -243,7 +297,8 @@ public class RegisterController {
         
         return ResponseEntity.ok()
                 .body(new MsgEntity("Success", registeredUser));
-       /* String redirectUrl = request.getContextPath() + "/";
+       
+        /* String redirectUrl = request.getContextPath() + "/";
         MsgEntity responseMsg = new MsgEntity("Success", registeredUser, redirectUrl);
 
         return ResponseEntity.ok()

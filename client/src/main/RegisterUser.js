@@ -6,11 +6,13 @@ import '../css/RegisterUser.css';
 import Required from './img/required.png';
 import sample6_execDaumPostcode from './KakaoAddress';
 import girl from '../main/img/girl.png';
+
 function RegisterUser() {
   const [number, setNumber] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const navigate = useNavigate();
+
   const [data, setData] = useState([]);
   const [confirm, setConfirm] = useState('');
   const [confirmNickname, setConfirmNickname] = useState('');
@@ -92,6 +94,11 @@ function RegisterUser() {
     }
   };
 
+  //email
+  const handleNumberChange = (e) => {
+    const { value } = e.target;
+    setNumber(value);
+  };
   const handleConfirm = async () => {
     console.log('number:', number);
     console.log('confirm:', confirm);
@@ -104,6 +111,8 @@ function RegisterUser() {
       console.error('인증 실패');
     }
   };
+
+  //password
   const handleConfirmPassword = async (e) => {
     console.log('swithUser.password', swithUser.password);
     console.log('confirmPassword', confirmPassword);
@@ -126,11 +135,6 @@ function RegisterUser() {
     setConfirmPassword(value);
   };
 
-  const handleNumberChange = (e) => {
-    const { value } = e.target;
-    setNumber(value);
-  };
-
   const handleAddUser = async () => {
     if (
       isButtonDisabled === true &&
@@ -147,12 +151,13 @@ function RegisterUser() {
             withCredentials: true,
           }
         );
-        // 추가된 부분: 주소 값을 설정
+        //address
         const address = document.getElementById('useraddress').value;
         setNewUser((prevUser) => ({ ...prevUser, useraddress: address }));
         setData((prevUser) => [...prevUser, response.data]);
         console.log(confirmNickname);
-        navigate('/');
+        alert('회원가입이 완료되었습니다.');
+        navigate('/login');
       } catch (error) {
         console.error('데이터가 부적합합니다.', error);
       }
@@ -171,7 +176,7 @@ function RegisterUser() {
       console.log(confirmNickname);
     }
   };
-
+  //profile
   const handleImageChange = (e) => {
     const file = e.target.files[0]; // 선택한 파일
     const reader = new FileReader();
@@ -209,6 +214,7 @@ function RegisterUser() {
               name="email"
               value={swithUser.email}
               onChange={handleInputChange}
+              required
             />
             <button
               onClick={handleEmail}
@@ -266,6 +272,7 @@ function RegisterUser() {
               value={swithUser.password}
               autoComplete="off"
               onChange={handleInputChange}
+              required
             />
             <br />
             <input
@@ -307,6 +314,7 @@ function RegisterUser() {
               name="username"
               value={swithUser.username}
               onChange={handleInputChange}
+              required
             />
           </div>
           <div className="register_id m-3">
@@ -323,6 +331,7 @@ function RegisterUser() {
               name="nickname"
               value={swithUser.nickname}
               onChange={handleInputChange}
+              required
             />
             <button
               onClick={handleNickname}
@@ -386,6 +395,7 @@ function RegisterUser() {
               type="button"
               value="주소 찾기"
               onClick={() => sample6_execDaumPostcode({ setNewUser })}
+              required
             />
           </div>
 
