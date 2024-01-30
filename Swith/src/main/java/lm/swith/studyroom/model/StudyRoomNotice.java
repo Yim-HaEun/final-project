@@ -17,7 +17,7 @@ public class StudyRoomNotice {
 	private Long user_no;
 	private String notice_title;
 	private String notice_content;
-	private String notice_date;
+	private String notice_password;
 	private Date notice_post_date;
 	
 
