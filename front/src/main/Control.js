@@ -1,13 +1,13 @@
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import Header from "./Header";
-import MainPage from "./MainPage";
-import NewBoard from "./NewBoard";
-import Logout from "./Logout";
-import Login from "./Login";
-import RegisterUser from "./RegisterUser";
-import StudyDetail from "./StudyDetail";
-import MyPage from "./MyPage";
-import StudyRoom from "./StudyRoom";
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import Header from './Header';
+import MainPage from './MainPage';
+import NewBoard from './NewBoard';
+import Logout from './Logout';
+import Login from './Login';
+import RegisterUser from './RegisterUser';
+import StudyDetail from './StudyDetail';
+import MyPage from './MyPage';
+import StudyRoom from './StudyRoom/Room';
 
 // function AuthenticatedRoute({ children }) {
 //   const authContext = useAuth();
