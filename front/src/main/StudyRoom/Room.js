@@ -7,6 +7,13 @@ import NoticeModal from './NoticeModal';
 
 function StudyRoom() {
   const [userData, setUserData] = useState('');
+  const [notice, setNotice] = useState({
+    post_no: '',
+    user_no: '',
+    notice_title: '',
+    notice_content: '',
+    notice_password: '',
+  });
   useEffect(() => {
     const fetchUserData = async () => {
       try {
