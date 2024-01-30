@@ -1,8 +1,9 @@
 import Header from '../Header';
 import usersUserinfoAxios from '../../token/tokenAxios';
+
 import React, { useState, useEffect } from 'react';
 import { useParams, BrowserRouter, Routes, Route } from 'react-router-dom';
-import Notice from './Notice';
+import NoticeModal from './NoticeModal';
 
 function StudyRoom() {
   const [userData, setUserData] = useState('');
@@ -22,7 +23,7 @@ function StudyRoom() {
   }, []);
 
   const { post_no } = useParams(); // 동적 라우트 매개변수 가져오기
-
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [studyRoomPages, setStudyRoomPages] = useState([]);
 
   useEffect(() => {
@@ -42,13 +43,14 @@ function StudyRoom() {
   return (
     <div>
       <Header />
-
       <div>
-        <Notice />
+        <h4>Notice</h4>
+        {/*post_no, user_no */}
+        <p>하냥이의 번호는 = {post_no}</p>
+        <div>
+          <NoticeModal />
+        </div>
       </div>
-
-      {/*moment */}
-      <div></div>
     </div>
   );
 }
