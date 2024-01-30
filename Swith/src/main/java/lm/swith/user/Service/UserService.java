@@ -101,4 +101,9 @@ public class UserService {
 	public void deleteUser(SwithUser swithUser) {
 		usersMapper.deleteUser(swithUser);
 	}
+	
+	// select user_no
+	public SwithUser findByUserNo(Long user_no) {
+		return usersMapper.findByUserNo(user_no);
+	}
 }

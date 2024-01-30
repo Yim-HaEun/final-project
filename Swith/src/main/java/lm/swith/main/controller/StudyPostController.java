@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -31,10 +32,10 @@ public class StudyPostController {
     @GetMapping("/post_list")
     public ResponseEntity<List<StudyPost>> getAllStudyPostWithSkills() {
         List<StudyPost> studyPost = studyPostService.getAllStudyPostWithSkills();
-        if (studyPost != null) {
+        if (!studyPost.isEmpty()) {
             return ResponseEntity.ok(studyPost);
         } else {
-            return ResponseEntity.notFound().build();
+            return ResponseEntity.noContent().build();
         }
     }
        
@@ -50,6 +51,17 @@ public class StudyPostController {
         }
     }
 	
+	// 스터디룸 페이지
+		@GetMapping("/study_room/{post_no}")
+	    public ResponseEntity<StudyPost> getStudyRoomByPostNo(@PathVariable Long post_no) {
+	        StudyPost studyPost = studyPostService.getStudyPostByPostNo(post_no); 
+	        if (studyPost != null) {
+	            return ResponseEntity.ok(studyPost);
+	        } else {
+	            return ResponseEntity.notFound().build();
+	        }
+	    }
+	
 	// 스터디 등록 페이지
 	@GetMapping("/post")
 	public String showPostForm (Model model) {
@@ -58,9 +70,25 @@ public class StudyPostController {
 	
     // 스터디 생성 처리
     @PostMapping("/create")
-    public String insertStudyPost(@ModelAttribute StudyPost studyPost) {
-        studyPostService.insertStudyPost(studyPost);
-        return "redirect:/";
+    public ResponseEntity<?> insertStudyPost(@RequestBody StudyPost studyPost) {
+    	System.out.println("getUser_no : " + studyPost.getUser_no());
+    	System.out.println("getNickname : " +  studyPost.getNickname());
+    	System.out.println(" getStudy_title : " +studyPost.getStudy_title());
+    	System.out.println("getStudy_content : " + studyPost.getStudy_content());
+    	System.out.println("getStudy_method : " + studyPost.getStudy_method());
+    	System.out.println("getRecruit_type : " + studyPost.getRecruit_type());
+    	System.out.println("getStudy_period : " + studyPost.getStudy_period());
+    	System.out.println("getStudy_start : " +studyPost.getStudy_start());
+    	System.out.println("getRecruit_deadline : " +studyPost.getRecruit_deadline());
+    	System.out.println("getStudy_status : " + studyPost.getStudy_status());
+    	System.out.println("getStudy_likes : " +studyPost.getStudy_likes());
+    	System.out.println("getStudy_location : " +studyPost.getStudy_location());
+    	System.out.println("getFirst_study : " + studyPost.getFirst_study());
+    	System.out.println("getStudy_post_time : " +studyPost.getStudy_post_time());
+    	System.out.println("getSkill_no : " + studyPost.getSkill_no());
+    	System.out.println("getPostTechStacks : " + studyPost.getPostTechStacks());
+        studyPostService.insertTestStudyPost(studyPost);
+        return ResponseEntity.ok("ㅎㅇ");
     }
 	
 	

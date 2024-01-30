@@ -2,10 +2,14 @@ package lm.swith.main.mapper;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 
 import lm.swith.main.model.Cafes;
+import lm.swith.main.model.PostTechStacks;
+import lm.swith.main.model.Skill;
+import lm.swith.main.model.StudyApplication;
 import lm.swith.main.model.StudyPost;
 
 
@@ -16,7 +20,7 @@ public interface StudyPostMapper {
 	List<StudyPost> getAllStudyPostWithSkills();
 	
 	// 스터디 등록
-	void insertStudyPost (StudyPost studyPost);
+	//void insertStudyPost (StudyPost studyPost);
 	
 	// 스터디 삭제
 	void deleteStudyPost (Long post_no);
@@ -39,5 +43,13 @@ public interface StudyPostMapper {
 	
 	//카페 검색
 	List<Cafes> searchCafes(String keyword);
+	
+	
+	// test
+    void insertStudyPosts(StudyPost studyPost);
+    void insertPostTechStacks(PostTechStacks postTechStacks);
+    
+    void insertSkill(List<Skill> skill);
+    void insertStudyApplication(StudyApplication studyApplication);
 	
 }

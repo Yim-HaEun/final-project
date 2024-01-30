@@ -4,9 +4,12 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lm.swith.main.mapper.StudyPostMapper;
 import lm.swith.main.model.Cafes;
+import lm.swith.main.model.PostTechStacks;
+import lm.swith.main.model.StudyApplication;
 import lm.swith.main.model.StudyPost;
 
 @Service
@@ -14,16 +17,17 @@ public class StudyPostService {
 	@Autowired
 	private final StudyPostMapper studyPostMapper;
 	
-    @Autowired
+
     public StudyPostService(StudyPostMapper studyPostMapper) {
         this.studyPostMapper = studyPostMapper;
     }
 	// Main Part
     
     // 스터디 등록하기
-	public void insertStudyPost (StudyPost studyPost) {
-		studyPostMapper.insertStudyPost(studyPost);
-	}
+	/*
+	 * public void insertStudyPost (StudyPost studyPost) {
+	 * studyPostMapper.insertStudyPost(studyPost); }
+	 */
 	
 	// 스터디 목록 불러오기	
     public List<StudyPost> getAllStudyPostWithSkills() {
@@ -67,4 +71,38 @@ public class StudyPostService {
     public List<Cafes> searchCafes(String keyword) {
         return studyPostMapper.searchCafes(keyword);
     }
+    
+    @Transactional
+    public void insertTestStudyPost(StudyPost studyPost) {
+        try {
+            // StudyPost 삽입
+            studyPostMapper.insertStudyPosts(studyPost);
+
+            // PostTechStacks 삽입
+            System.out.println("Original skill_no list: " + studyPost.getSkill_no());
+            List<Long> postTechStacksList = studyPost.getSkill_no();
+            System.out.println("postTechStacksList size: " + postTechStacksList.size());
+            for (Long skill_no : postTechStacksList) {
+                System.out.println("Current skill_no: " + skill_no);
+                PostTechStacks postTechStacks = new PostTechStacks();
+                postTechStacks.setPost_no(studyPost.getPost_no());
+                postTechStacks.setSkill_no(skill_no);
+                System.out.println("PostTechStacks skill_no: " + postTechStacks.getSkill_no());
+                // PostTechStacks를 삽입
+                studyPostMapper.insertPostTechStacks(postTechStacks);
+            }
+
+            // StudyApplication 삽입
+            StudyApplication studyApplication = new StudyApplication();
+            studyApplication.setPost_no(studyPost.getPost_no());
+            studyApplication.setUser_no(studyPost.getUser_no());
+            studyPostMapper.insertStudyApplication(studyApplication);
+        } catch (Exception e) {
+            // 롤백 여부 확인을 위해 예외 발생
+            throw new RuntimeException("Transaction rolled back", e);
+        }
+    }
+    
+    
+    
 }

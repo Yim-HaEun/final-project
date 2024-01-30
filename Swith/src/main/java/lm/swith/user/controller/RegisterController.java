@@ -10,6 +10,7 @@ import java.util.Base64;
 import javax.imageio.ImageIO;
 
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.core.Authentication;
@@ -52,6 +53,24 @@ public class RegisterController {
 	private final TokenProvider tokenProvider;
 	private final PasswordEncoder passwordEncoder;
 	
+	
+	// -- user_no 로 유저정보 가져오기
+	@GetMapping("/info/{user_no}")
+	public ResponseEntity<?> findByUserNo(@PathVariable Long user_no) {
+	    SwithUser user = userService.findByUserNo(user_no);
+
+	    if (user != null) {
+	        System.out.println(user.getEmail());
+	        System.out.println(user.getUser_no());
+	        System.out.println(user.getNickname());
+	        System.out.println(user.getUser_profile());
+	        return ResponseEntity.ok(user);
+	    } else {
+	        return ResponseEntity.notFound().build();
+	    }
+	}
+	
+	
 	// -------- 토큰 발급 --------
 	@PostMapping("/signin")
 	public ResponseEntity<?> authenticate(@RequestBody SwithDTO siwthDTO) {
@@ -80,24 +99,37 @@ public class RegisterController {
 	}
 	
 	@GetMapping("/userinfo")
-	public ResponseEntity<SwithUser> getUserInfo() {
+	public ResponseEntity<?> getUserInfo() {
         // 현재 인증된 사용자의 정보를 가져오는 로직
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         
-        String userEmail = authentication.getName();
-        // MyBatis를 이용하여 사용자 정보를 조회
-        SwithUser user = userService.getUserByEmail(userEmail);
-        byte[] profile_img = user.getUser_profile();//blob형태를 base64로 인코딩해주는 코드
-        String imageBase64 = Base64.getEncoder().encodeToString(profile_img);
-        
-        String cutString = imageBase64.substring(imageBase64.indexOf("data:image/jpeg;base64") + "data:image/jpeg;base64".length());
-        String imageUrl = "data:image/jpeg;base64,/" + cutString;
-        user.setPassword(null);//조회할때 패스워드 안나오게 하려고 null값을 준다.
-        user.setImg(imageUrl);//단순 출력용 blob을 string형태로 출력하기위함 
-        System.out.println(user.getImg());
-        System.out.println(user.getUser_profile());
-        
-        return ResponseEntity.ok(user);
+     // 사용자가 인증되었는지 확인
+        if (authentication != null && authentication.isAuthenticated() && !"anonymousUser".equals(authentication.getPrincipal())) {
+            String userEmail = authentication.getName();
+            // MyBatis를 이용하여 사용자 정보를 조회
+            SwithUser user = userService.getUserByEmail(userEmail);
+            byte[] profile_img = user.getUser_profile();
+
+            if (profile_img != null && profile_img.length > 0) {
+                // blob형태를 base64로 인코딩해주는 코드
+                String imageBase64 = Base64.getEncoder().encodeToString(profile_img);
+
+                String cutString = imageBase64.substring(imageBase64.indexOf("data:image/jpeg;base64") + "data:image/jpeg;base64".length());
+                String imageUrl = "data:image/jpeg;base64,/" + cutString;
+                user.setPassword(null);// 조회할 때 패스워드 안나오게 하려고 null값을 준다.
+                user.setImg(imageUrl);// 단순 출력용 blob을 string형태로 출력하기 위함
+                System.out.println(user.getImg());
+                System.out.println(user.getUser_profile());
+
+                return ResponseEntity.ok(user);
+            } else {
+                // 사용자 정보나 프로필 이미지가 없을 경우에 대한 처리
+                return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+            }
+        } else {
+            // 사용자가 인증되지 않았을 경우에 대한 처리
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
     }
 	
 	  @GetMapping("/")
