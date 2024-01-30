@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+
 import { Route, useParams } from 'react-router-dom';
 import usersUserinfoAxios from '../../token/tokenAxios';
 import NoticeModal from './NoticeModal';
+import 'bootstrap/dist/css/bootstrap.min.css';
 //select
 const Notice = () => {
   const { post_no } = useParams();
@@ -15,13 +17,6 @@ const Notice = () => {
   });
 
   const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const openModal = () => {
-    setIsModalOpen(true);
-  };
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
 
   useEffect(() => {
     const fetchUserData = async () => {
@@ -44,17 +39,15 @@ const Notice = () => {
       {/*post_no, user_no */}
       <p>하냥이의 번호는 = {post_no}</p>
       <div>
-        <button onClick={() => NoticeModal({})}>+</button>
+        <button
+          onClick={() => {
+            setIsModalOpen(true);
+          }}
+        >
+          +jjj
+        </button>
       </div>
-
-      {/* Modal */}
-      {isModalOpen && (
-        <div className="modal">
-          {/* Your modal content goes here */}
-          <h2>New Post</h2>
-          <button onClick={closeModal}>Close</button>
-        </div>
-      )}
+      {isModalOpen === true ? <NoticeModal /> : null}
     </div>
   );
 };
