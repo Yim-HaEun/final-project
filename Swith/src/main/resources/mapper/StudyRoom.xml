@@ -5,8 +5,8 @@
 	
 	<!-- insert -->
 	<insert id="createStudyRoomNotice" parameterType="lm.swith.studyroom.model.StudyRoomNotice">
-	INSERT INTO STUDY_ROOM_NOTICE(POST_NO, USER_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_DATE)
-	VALUES(#{post_no}, #{user_no}, #{notice_title}, #{notice_content}, #{notice_date})
+	INSERT INTO STUDY_ROOM_NOTICE(POST_NO, USER_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_PASSWORD)
+	VALUES(#{post_no}, #{user_no}, #{notice_title}, #{notice_content}, #{notice_password})
 	</insert>
 
 	<insert id="createStudyMoment" parameterType="lm.swith.studyroom.model.StudyMoment">
