@@ -35,4 +35,5 @@ public class StudyRoomController {
 		studyRoomService.createStudyRoomNotice(studyRoomNotice);
 		return ResponseEntity.ok("Success");
 	}
+	
 }
