@@ -8,7 +8,6 @@ import RegisterUser from './RegisterUser';
 import StudyDetail from './StudyDetail';
 import MyPage from './MyPage';
 import StudyRoom from './StudyRoom/Room';
-
 // function AuthenticatedRoute({ children }) {
 //   const authContext = useAuth();
 
