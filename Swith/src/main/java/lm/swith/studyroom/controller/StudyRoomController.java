@@ -21,6 +21,12 @@ import lombok.RequiredArgsConstructor;
 public class StudyRoomController {
 	private final StudyRoomService studyRoomService;
 
+	// StudyRoomNotice
+	@PostMapping("/create/StudyNoticeMoment/{post_no}") // INSERT
+	public ResponseEntity<?> createStudyRoomNotice(@PathVariable Long post_no, @RequestBody StudyRoomNotice studyRoomNotice){
+		studyRoomService.createStudyRoomNotice(studyRoomNotice);
+		return ResponseEntity.ok("Success");
+	}
 	
 	// Study Moment
 	@PostMapping("/create/StudyMoment/{post_no}") // INSERT
@@ -29,11 +35,6 @@ public class StudyRoomController {
 		return ResponseEntity.ok("Success");
 	}
 
-	// StudyRoomNotice
-	@PostMapping("/create/StudyNoticeMoment/{post_no}") // INSERT
-	public ResponseEntity<?> createStudyRoomNotice(@PathVariable Long post_no, @RequestBody StudyRoomNotice studyRoomNotice){
-		studyRoomService.createStudyRoomNotice(studyRoomNotice);
-		return ResponseEntity.ok("Success");
-	}
+	
 	
 }
