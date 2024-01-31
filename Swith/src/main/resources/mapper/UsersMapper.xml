@@ -4,8 +4,8 @@
 <mapper namespace="lm.swith.user.mapper.UsersMapper">
 	<!-- 회원등록 -->
 	<insert id ="insertUser" parameterType="lm.swith.user.model.SwithUser">
-		INSERT INTO USERS (EMAIL, PASSWORD, USERNAME, NICKNAME, USER_PROFILE, USERADDRESS, USER_INTRODUCTION, USER_ROLE)
-		VALUES(#{email}, #{password}, #{username}, #{nickname}, #{user_profile}, #{useraddress}, #{user_introduction}, #{role})
+		INSERT INTO USERS (EMAIL, PASSWORD, USERNAME, NICKNAME, USER_PROFILE, USERADDRESS, USER_INTRODUCTION )
+		VALUES(#{email}, #{password}, #{username}, #{nickname}, #{user_profile}, #{useraddress}, #{user_introduction})
 	</insert>
 	
 	
@@ -29,14 +29,7 @@
 		SELECT * FROM Users
 	</select>
 	 
-	 <!-- 원정연 파트
-	 <update id="updateIntroduction" parameterType="lm.swith.user.model.SwithUser">
-         UPDATE users
-            SET user_introduction = #{user_introduction}
-            WHERE email = #{email}
-    </update> -->
 	
-	<!--update userinfo-->
 	<update id = "updateUser" parameterType="lm.swith.user.model.SwithUser">
 		UPDATE USERS SET NICKNAME = #{nickname}, USERADDRESS = #{useraddress}, USER_INTRODUCTION = #{user_introduction} WHERE email = #{email}
 	</update>
