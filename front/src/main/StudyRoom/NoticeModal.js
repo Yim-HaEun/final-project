@@ -11,6 +11,7 @@ function MyButton() {
   const [notice, setNotice] = useState({
     post_no: `${post_no}`,
     user_no: '',
+    notice_no: '',
     notice_title: '',
     notice_content: '',
     notice_password: '',
@@ -67,10 +68,11 @@ function MyButton() {
 
       setNotice(response.data);
     } catch (error) {
-      console.log('시패' + userData.user_no);
-      console.log(notice.post_no);
+      console.log('user-no' + userData.user_no);
+      console.log('post-no' + notice.post_no);
       console.error('데이터 저장 불가', error);
     }
+    setShow(false);
   };
 
   return (
@@ -122,7 +124,6 @@ function MyButton() {
             type="password"
             name="notice_password"
             maxLength="4"
-            minLength="4"
             value={notice.notice_password}
             onChange={handleInputChange}
           />
