@@ -1,5 +1,7 @@
 package lm.swith.studyroom.mapper;
 
+import java.util.List;
+
 import org.apache.ibatis.annotations.Mapper;
 
 import lm.swith.studyroom.model.StudyMoment;
@@ -12,10 +14,10 @@ public interface StudyRoomMapper {
 	void createStudyRoomNotice(StudyRoomNotice studyRoomNotice);
 	
 	// SELECT
-	StudyRoomNotice findByStudyRoomNotice(StudyRoomNotice studyRoomNotice);
+	List<StudyRoomNotice> findByStudyRoomNotice(Long post_no);
 	
 	//DELETE
-	void deleteStudyRoom(StudyRoomNotice studyRoomNotice);
+	void deleteStudyRoomNotice(Long notice_no, String notice_password);
 	
 	
 // StudyMoment Mapper
