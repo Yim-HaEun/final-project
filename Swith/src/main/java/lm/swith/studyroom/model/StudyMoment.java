@@ -9,6 +9,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 public class StudyMoment {
+	private Long moment_no;
 	private Long post_no;
 	private Long user_no;
 	private byte[] moment_picture;
