@@ -4,7 +4,9 @@ import usersUserinfoAxios from '../../token/tokenAxios';
 import React, { useState, useEffect } from 'react';
 import { useParams, BrowserRouter, Routes, Route } from 'react-router-dom';
 import NoticeModal from './NoticeModal';
+import MomentModal from './MomentModal';
 import Notice from './Notice';
+import Moment from './Moment';
 function StudyRoom() {
   const [userData, setUserData] = useState('');
   const [notice, setNotice] = useState({
@@ -54,8 +56,10 @@ function StudyRoom() {
         {/*post_no, user_no */}
         <p>하냥이의 번호는 = {post_no}</p>
         <div>
-          <Notice />
           <NoticeModal />
+          <Notice />
+          <MomentModal />
+          <Moment />
         </div>
       </div>
     </div>
