@@ -8,6 +8,7 @@ import RegisterUser from './RegisterUser';
 import StudyDetail from './StudyDetail';
 import MyPage from './MyPage';
 import StudyRoom from './StudyRoom/Room';
+import ModifyPage from './ModifyPage';
 // function AuthenticatedRoute({ children }) {
 //   const authContext = useAuth();
 
@@ -29,6 +30,7 @@ export default function Control() {
           <Route path="/post_detail/:post_no" element={<StudyDetail />} />
           <Route path="/mypage" element={<MyPage />} />
           <Route path="/study_room/:post_no" element={<StudyRoom />} />
+          <Route path="/modify" element={<ModifyPage />} />
         </Routes>
       </BrowserRouter>
     </div>
