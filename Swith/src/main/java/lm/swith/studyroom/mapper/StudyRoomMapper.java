@@ -14,7 +14,7 @@ public interface StudyRoomMapper {
 	void createStudyRoomNotice(StudyRoomNotice studyRoomNotice);
 	
 	// SELECT
-	List<StudyRoomNotice> findByStudyRoomNotice(Long post_no);
+	List<StudyRoomNotice> findByStudyNoticeWithNickname(Long post_no);
 	
 	//DELETE
 	void deleteStudyRoomNotice(Long notice_no, String notice_password);
@@ -25,10 +25,10 @@ public interface StudyRoomMapper {
 	void createStudyMoment(StudyMoment studyMoment);
 	
 	// SELECT
-	StudyMoment findByStudyMoment(StudyMoment studyMoment);
+	List<StudyMoment> findByStudyMoment(Long post_no); //생각해보기
 	
 	//DELETE
-	void deleteStudyMoment(StudyMoment studyMoment);
+	void deleteStudyMoment(Long moment_no, Long user_no);//생각해보기
 }
 	
 	
