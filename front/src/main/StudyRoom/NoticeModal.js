@@ -3,10 +3,10 @@ import axios from 'axios';
 import usersUserinfoAxios from '../../token/tokenAxios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useParams, BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
-function MyButton() {
+function NoticeModal() {
   const { post_no } = useParams();
   const [notice, setNotice] = useState({
     post_no: `${post_no}`,
@@ -16,7 +16,7 @@ function MyButton() {
     notice_content: '',
     notice_password: '',
   });
-  const [show, setShow] = useState(false);
+  const [show, setShow] = useState(false); //모달 보여주기
 
   const [userData, setUserData] = useState('');
 
@@ -57,7 +57,7 @@ function MyButton() {
     e.preventDefault();
     try {
       const response = await usersUserinfoAxios.post(
-        `/studyRoom/create/StudyNoticeMoment/${post_no}`,
+        `/studyRoom/create/StudyNotice/${post_no}`,
         notice,
         {
           withCredentials: true,
@@ -127,7 +127,15 @@ function MyButton() {
             value={notice.notice_password}
             onChange={handleInputChange}
           />
-          <Button className="." variant="secondary" onClick={handleSave}>
+          <Button
+            className="."
+            variant="secondary"
+            onClick={(e) => {
+              handleSave(e);
+              // 페이지 새로고침
+              window.location.reload();
+            }}
+          >
             저장
           </Button>
           <Button
@@ -142,4 +150,4 @@ function MyButton() {
     </div>
   );
 }
-export default MyButton;
+export default NoticeModal;
