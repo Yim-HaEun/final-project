@@ -156,6 +156,7 @@ public class RegisterController {
 		     return ResponseEntity.ok(num);
 	  	 }
 	  }
+	  
 	  @PostMapping("/nickname")
 	  public ResponseEntity<String> checkNickname(@RequestBody SwithUser swithUser){
 	  	
@@ -233,7 +234,8 @@ public class RegisterController {
 	    @PostMapping("/updateUserProfile")
 	    public ResponseEntity<String> updateUserProfile(@RequestBody SwithUser swithUser) throws IOException{
 	    	 System.out.println("getUser_profile : " + swithUser.getUser_profile());
-	     	if (swithUser.getImg() != null && !swithUser.getImg().isEmpty()) {
+	     	
+	    	 if (swithUser.getImg() != null && !swithUser.getImg().isEmpty()) {
 	 			// resource 폴더에 경로를 읽는다
 	         	System.out.println("null아님");
 	         	String imageData = swithUser.getImg().split(",")[1];
