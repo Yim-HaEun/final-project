@@ -1,15 +1,15 @@
-import React, { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
-import Header from "./Header";
-import "../css/StudyDetail.css";
-import "../css/NewBoard.css";
-import usersUserinfoAxios from "../token/tokenAxios";
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import Header from './Header';
+import '../css/StudyDetail.css';
+import '../css/NewBoard.css';
+import usersUserinfoAxios from '../token/tokenAxios';
 
 function StudyDetail() {
   const { post_no } = useParams(); // 동적 라우트 매개변수 가져오기
 
   const [detailPages, setDetailPage] = useState([]);
+
   const [swithUser, setSwithUser] = useState('');
   useEffect(() => {
     const fetchStudyDetail = async () => {
@@ -21,7 +21,7 @@ function StudyDetail() {
         console.log(detailPages);
         console.log(post_no.study_title);
       } catch (error) {
-        console.log("Error fetching study detail: ", error);
+        console.log('Error fetching study detail: ', error);
       }
     };
 
@@ -38,10 +38,9 @@ function StudyDetail() {
             `/users/info/${detailPages.user_no}`
           );
           setSwithUser(response.data);
-        } catch (error) {
-        }
+        } catch (error) {}
       };
-  
+
       fetchStudyDetailUserNo();
     }
   }, [detailPages]);
@@ -149,7 +148,7 @@ function StudyDetail() {
           <p className="postContent">{detailPages.study_content}</p>
         </div>
 
-        <div style={{ paddingBottom: "80px" }}>
+        <div style={{ paddingBottom: '80px' }}>
           <div className="commentInput">
             <div className="commentInput_comment">
               댓글 <span className="commentInput_count">1</span>
