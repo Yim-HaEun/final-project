@@ -105,9 +105,6 @@ const Moment = () => {
                 <br />
                 <p>작성자 : </p>
                 <p>{selMoment.nickname}</p>
-                <p>{selMoment.user_no} 작성자 유저번호</p>
-                <br />
-                <p>{userData.user_no} 로그인한 유저번호</p>
               </div>
               <h1 className="board_title">{selMoment.moment_title}</h1>
               <div className="board_content_border"></div>
