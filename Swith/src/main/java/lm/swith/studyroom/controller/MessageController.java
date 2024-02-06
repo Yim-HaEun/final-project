@@ -28,7 +28,7 @@ public class MessageController {
     public void enter(MessageRequestDto messageRequestDto) {
         enterRoomService.enterRoom(
             messageRequestDto.getPost_no(),
-            messageRequestDto.getUserId()
+            messageRequestDto.getNickname()
         );
     }
 
@@ -37,7 +37,7 @@ public class MessageController {
         quitRoomService.quitRoom(
   
             messageRequestDto.getPost_no(),
-            messageRequestDto.getUserId()
+            messageRequestDto.getNickname()
         );
     }
 
@@ -45,14 +45,14 @@ public class MessageController {
     public void message(MessageRequestDto messageRequestDto) {
         convertAndSendMessageService.convertAndSendMessage(
             messageRequestDto.getPost_no(),
-            messageRequestDto.getUserId(),
+            messageRequestDto.getNickname(),
             messageRequestDto.getMessage()
         );
         Timestamp times = Timestamp.from(Instant.now());
         messageRequestDto.setTimestamp(times);
         System.out.println("getMessage : " + messageRequestDto.getMessage());
         System.out.println("getPost_no : " + messageRequestDto.getPost_no());
-        System.out.println("getUserId : " + messageRequestDto.getUserId());
+        System.out.println("nickname : " + messageRequestDto.getNickname());
         System.out.println("getTimestamp : " +messageRequestDto.getTimestamp());
         studyRoomService.saveChatMessage(messageRequestDto);
         System.out.println("실행완");

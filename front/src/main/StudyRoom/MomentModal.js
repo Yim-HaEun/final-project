@@ -3,10 +3,11 @@ import axios from 'axios';
 import usersUserinfoAxios from '../../token/tokenAxios';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function MomentModal() {
+  const navigate = useNavigate();
   const { post_no } = useParams();
   const [moment, setMoment] = useState({
     post_no: `${post_no}`,
@@ -40,7 +41,6 @@ function MomentModal() {
         //console.error("Failed to fetch user data.", error);
       }
     };
-
     fetchUserData();
   }, []);
   const handleInputChange = (e) => {
@@ -48,6 +48,7 @@ function MomentModal() {
     const { name, value } = e.target;
     setMoment((prevUser) => ({ ...prevUser, [name]: value }));
   };
+
   const handleSave = async (e) => {
     e.preventDefault();
     try {
@@ -58,6 +59,7 @@ function MomentModal() {
           withCredentials: true,
         }
       );
+
       console.log(userData.user_no);
       console.log(moment.post_no);
 
@@ -69,6 +71,7 @@ function MomentModal() {
     }
     setShow(false);
   };
+
   //s.with moment
   const handleImageChange = (e) => {
     const file = e.target.files[0]; // 선택한 파일
@@ -141,7 +144,7 @@ function MomentModal() {
             onClick={(e) => {
               handleSave(e);
               // 페이지 새로고침
-              window.location.reload();
+              navigate(`/study_room/${post_no}`);
             }}
           >
             저장

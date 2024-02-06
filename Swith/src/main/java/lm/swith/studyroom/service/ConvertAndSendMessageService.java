@@ -12,16 +12,16 @@ public class ConvertAndSendMessageService {
     @Autowired
     private SimpMessagingTemplate template;
 
-    public void convertAndSendMessage(String type,
+    public void convertAndSendMessage(
                                       Long roomId,
-                                      Long userId,
+                                      String nickname,
                                       String message) {
         template.convertAndSend(
             "/subscription/chat/room/" + roomId,
             new MessageResponseDto(
                 MessageIdGenerator.generateId(),
-                type,
-                "사용자 " + userId + ": " + message
+               
+                nickname + ": " + message
             )
         );
     }

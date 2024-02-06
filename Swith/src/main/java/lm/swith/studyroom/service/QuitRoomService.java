@@ -12,15 +12,15 @@ public class QuitRoomService {
     @Autowired
     private SimpMessagingTemplate template;
 
-    public void quitRoom(String type,
+    public void quitRoom(
                          Long roomId,
-                         Long userId) {
+                         String nickname) {
         template.convertAndSend(
             "/subscription/chat/room/" + roomId,
             new MessageResponseDto(
                 MessageIdGenerator.generateId(),
-                type,
-                "사용자 " + userId + " 님이 "
+
+                "사용자 " + nickname + " 님이 "
                     + "채팅방 " + roomId + "에서 나갔습니다."
             )
         );

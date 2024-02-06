@@ -12,15 +12,15 @@ public class EnterRoomService {
     @Autowired
     private SimpMessagingTemplate template;
 
-    public void enterRoom(String type,
+    public void enterRoom(
                           Long roomId,
-                          Long userId) {
+                          String nickname) {
         template.convertAndSend(
             "/subscription/chat/room/" + roomId,
             new MessageResponseDto(
                 MessageIdGenerator.generateId(),
-                type,
-                "사용자 " + userId + " 님이 "
+               
+                "사용자 " + nickname + " 님이 "
                     + "채팅방 " + roomId + "에 입장하셨습니다."
             )
         );

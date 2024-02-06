@@ -16,13 +16,12 @@ public class MessageRequestDto {
     
     private Long post_no;
     
-    private Long userId;
+    private String nickname;
 
     private String message;
     
     private Timestamp timestamp;
 
-    public MessageRequestDto() {
-        this.timestamp = Timestamp.from(Instant.now());
-    }
+
+    
 }
