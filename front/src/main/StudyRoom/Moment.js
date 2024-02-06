@@ -8,7 +8,6 @@ const Moment = () => {
   const { post_no } = useParams();
   const [userData, setUserData] = useState('');
 
-  const [selectedMomentKey, setSelectedMomentKey] = useState(null);
   const [moment, setMoment] = useState({
     post_no: '',
     user_no: '',

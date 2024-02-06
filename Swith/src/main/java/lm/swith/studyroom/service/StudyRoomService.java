@@ -1,13 +1,18 @@
 package lm.swith.studyroom.service;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import lm.swith.studyroom.mapper.StudyRoomMapper;
+import lm.swith.studyroom.model.Calendar;
+import lm.swith.studyroom.model.MessageRequestDto;
 import lm.swith.studyroom.model.StudyMoment;
 import lm.swith.studyroom.model.StudyRoomNotice;
+import lm.swith.studyroom.model.Todo;
 
 @Service
 public class StudyRoomService {
@@ -41,4 +46,31 @@ public class StudyRoomService {
 	public void deleteStudyRoomNotice(Long notice_no, String notice_password) {
 		studyRoomMapper.deleteStudyRoomNotice(notice_no, notice_password);
 	}
+	
+	//Calendar Service
+	public void createCalendarEvent(Calendar calendar) {
+		studyRoomMapper.createCalendarEvent(calendar);
+	}
+	
+	//Todo Service
+	public void createTodoList(Todo todo) {
+		studyRoomMapper.createTodoList(todo);
+	}
+	public List<Todo> getTodoListByDate(Date todo_date){
+		
+		return studyRoomMapper.getTodoListByDate(todo_date);
+	}
+	
+//Chatting
+	
+	@Transactional // INSERT
+	public void saveChatMessage(MessageRequestDto chatmessage) {
+		System.out.println("실행되었나요? Service");
+		studyRoomMapper.insertMessage(chatmessage);
+	}
+	
+	// 채팅목록 (post_no)기준
+    public List<MessageRequestDto> getMessagesByPostNo(Long post_no) {
+        return studyRoomMapper.selectMessagesByPostNo(post_no);
+    }
 }

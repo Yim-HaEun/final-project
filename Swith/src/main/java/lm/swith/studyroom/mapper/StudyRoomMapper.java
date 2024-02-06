@@ -1,5 +1,6 @@
 package lm.swith.studyroom.mapper;
 
+import java.sql.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Insert;
@@ -7,9 +8,11 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import lm.swith.studyroom.model.Calendar;
 import lm.swith.studyroom.model.MessageRequestDto;
 import lm.swith.studyroom.model.StudyMoment;
 import lm.swith.studyroom.model.StudyRoomNotice;
+import lm.swith.studyroom.model.Todo;
 
 @Mapper
 public interface StudyRoomMapper {
@@ -36,14 +39,24 @@ public interface StudyRoomMapper {
 	
 	
 // Chatting
- 	@Insert("INSERT INTO chat_messages (user_id, room_id, message, timestamp) " +
-            "VALUES (#{userId}, #{post_no}, #{message}, #{timestamp})")
-    @Options(useGeneratedKeys = true, keyProperty = "id")
-    void saveChatMessage(MessageRequestDto chatMessage);
+	
+	void insertMessage(MessageRequestDto chatMessage);
 
-    @Select("SELECT * FROM chat_messages WHERE post_no = #{post_no} ORDER BY timestamp ASC")
-    List<MessageRequestDto> getChatMessagesByRoomId(Long post_no);
+	List<MessageRequestDto> selectMessagesByPostNo(Long post_no);
+    
+//Calendar
+    //INSERT
+	void createCalendarEvent(Calendar calendar);
+	
+//TodoLsit
+	//INSERT
+	void createTodoList(Todo todo);
+
+	List<Todo> getTodoListByDate(Date todo);
 }
+
+
+
 	
 	
 	

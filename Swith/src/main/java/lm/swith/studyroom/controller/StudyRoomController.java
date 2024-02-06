@@ -4,6 +4,8 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.security.Timestamp;
+import java.sql.Date;
 import java.util.Base64;
 import java.util.List;
 
@@ -22,9 +24,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import lm.swith.studyroom.model.Calendar;
+import lm.swith.studyroom.model.MessageRequestDto;
 import lm.swith.studyroom.model.StudyMoment;
 import lm.swith.studyroom.model.StudyMomentListResponse;
 import lm.swith.studyroom.model.StudyRoomNotice;
+import lm.swith.studyroom.model.Todo;
 import lm.swith.studyroom.service.StudyRoomService;
 import lombok.RequiredArgsConstructor;
 
@@ -110,6 +115,7 @@ public class StudyRoomController {
 		studyRoomService.createStudyMoment(studyMoment);
 		return ResponseEntity.ok("Success");
 		}
+		
 	}//select
 	@GetMapping("/select/StudyMoment/{post_no}")
 	public ResponseEntity<?> findByStudyMoment(@PathVariable Long post_no) {
@@ -129,5 +135,47 @@ public class StudyRoomController {
 		studyRoomService.deleteStudyMoment(moment.getMoment_no(), moment.getUser_no());
 		return ResponseEntity.ok(moment);
 	}
+	
+//STUDYROOM CALENDAR 
+	//INSERT
+	@PostMapping("/create/Calendar/{post_no}")
+	public ResponseEntity<?> createCalendarEvent(@PathVariable Long post_no, @RequestBody Calendar calendar) {
+		studyRoomService.createCalendarEvent(calendar);
+		return ResponseEntity.ok(studyRoomService);
+	}
+	
+//STUDYROOM TODO
+	//INSERT
+	@PostMapping("/create/Todo/{post_no}")
+	public ResponseEntity<?> createTodoList(@PathVariable Long post_no, @RequestBody Todo todo){
+		System.out.println(todo.getTodo_description());
+		System.out.println(todo.getChecked());
+		System.out.println(todo.getTodo_date());
+		todo.setPost_no(post_no);
+		System.out.println(todo.getPost_no());
+		studyRoomService.createTodoList(todo);
+		return ResponseEntity.ok(studyRoomService);
+	}
+	@GetMapping("/get/Todo/{date}")
+	public ResponseEntity<?>getTodoListByDate(@PathVariable Date todo_date){
+		 try {
+	            List<Todo> todoList = studyRoomService.getTodoListByDate(todo_date);
+	            return ResponseEntity.ok(todoList);
+	        } catch (Exception e) {
+	            e.printStackTrace();
+	            return ResponseEntity.ok("error"); 
+	        }
+		 
+	}
+	
+	// 채팅 SELECT
+	@GetMapping("/post/{post_no}")
+	public ResponseEntity<List<MessageRequestDto>> getInitialMessages(@PathVariable Long post_no) {
+		System.out.println("성공적으로 불러옴!");
+	    List<MessageRequestDto> initialMessages = studyRoomService.getMessagesByPostNo(post_no);
+	    return ResponseEntity.ok(initialMessages);
+	}
+	
+	
 
 }

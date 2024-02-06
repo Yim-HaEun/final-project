@@ -2,14 +2,20 @@ import Header from '../Header';
 import usersUserinfoAxios from '../../token/tokenAxios';
 import Chat from './Chat';
 import React, { useState, useEffect } from 'react';
-import { useParams, BrowserRouter, Routes, Route } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+
 import NoticeModal from './NoticeModal';
 import MomentModal from './MomentModal';
 import Notice from './Notice';
 import Moment from './Moment';
 import DayCount from './DayCount';
+
+import ReactCalendar from './ReactCalendar';
+import TodoApp from './Todo/TodoApp';
+
 const StudyRoom = () => {
   const [userData, setUserData] = useState('');
+
   const [notice, setNotice] = useState({
     post_no: '',
     user_no: '',
@@ -47,6 +53,15 @@ const StudyRoom = () => {
           <br />
           <br />
           <br />
+          <ReactCalendar />
+          <br />
+          <div>
+            <TodoApp />{' '}
+          </div>
+
+          <br />
+          <br />
+          <br />
           <br />
           <NoticeModal />
           <br />
@@ -57,6 +72,7 @@ const StudyRoom = () => {
           <br />
           <br />
           <MomentModal />
+
           <Moment />
         </div>
         <br />

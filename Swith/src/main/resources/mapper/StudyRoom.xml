@@ -2,7 +2,13 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lm.swith.studyroom.mapper.StudyRoomMapper">
-	
+		<resultMap id="messageResultMap" type="lm.swith.studyroom.model.MessageRequestDto">
+        <id property="message_id" column="message_id"/>
+        <result property="post_no" column="post_no"/>
+        <result property="userId" column="user_no"/>
+        <result property="message" column="message"/>
+        <result property="timestamp" column="timestamp"/>
+    </resultMap>
 	<!-- insert -->
 	<insert id="createStudyRoomNotice" parameterType="lm.swith.studyroom.model.StudyRoomNotice">
 	INSERT INTO STUDY_ROOM_NOTICE(POST_NO, USER_NO, NOTICE_TITLE, NOTICE_CONTENT, NOTICE_PASSWORD)
@@ -13,6 +19,27 @@
 	INSERT INTO STUDY_Moment(POST_NO, USER_NO, MOMENT_PICTURE, MOMENT_TITLE)
 	VALUES(#{post_no}, #{user_no}, #{moment_picture}, #{moment_title})
 	</insert>
+	
+	<insert id="createCalendarEvent" parameterType="lm.swith.studyroom.model.Calendar">
+	INSERT INTO STUDY_ROOM_CALENDAR(POST_NO, USER_NO, TITLE, EVENT_DATE)
+	VALUES(#{post_no}, #{user_no}, #{title}, #{start})
+	</insert>
+	
+	
+	<insert id="createTodoList" parameterType="lm.swith.studyroom.model.Todo">
+	INSERT INTO EVENTS (POST_NO,TODO_DESCRIPTION, CHECKED, TODO_DATE)
+	VALUES(#{post_no},  #{todo_description}, #{checked}, #{todo_date})
+	</insert>
+	
+	<!-- Chat -->
+	 <insert id="insertMessage" parameterType="lm.swith.studyroom.model.MessageRequestDto">
+        INSERT INTO message (post_no, user_no, message, timestamp)
+        VALUES (#{post_no}, #{userId}, #{message}, #{timestamp})
+    </insert>
+    
+
+
+   
 	
 	
 	<!-- select -->
@@ -34,7 +61,10 @@
 		JOIN Users U ON SM.USER_NO = U.USER_NO
 		WHERE SM.POST_NO = #{post_no} ORDER BY moment_post_date DESC
 	</select>
-	
+	<!-- Chat -->
+	 <select id="selectMessagesByPostNo" resultMap="messageResultMap">
+        SELECT * FROM message WHERE post_no = #{post_no}
+    </select>
 	
 	<!-- delete notice, moment -->
 	<delete id="deleteStudyRoomNotice" parameterType="lm.swith.studyroom.model.StudyRoomNotice">
