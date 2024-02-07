@@ -11,6 +11,7 @@ function StudyDetail() {
   const [detailPages, setDetailPage] = useState([]);
 
   const [swithUser, setSwithUser] = useState('');
+
   useEffect(() => {
     const fetchStudyDetail = async () => {
       try {

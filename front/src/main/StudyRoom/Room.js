@@ -1,6 +1,6 @@
 import Header from '../Header';
 import usersUserinfoAxios from '../../token/tokenAxios';
-import Chat from './Chat';
+
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -9,7 +9,7 @@ import MomentModal from './MomentModal';
 import Notice from './Notice';
 import Moment from './Moment';
 import DayCount from './DayCount';
-
+import StudyRoomSkills from './StudyRoomSkills';
 import ReactCalendar from './ReactCalendar';
 import TodoApp from './Todo/TodoApp';
 
@@ -44,15 +44,18 @@ const StudyRoom = () => {
     <div>
       <Header />
       <div>
-        <h4>Notice</h4>
         {/*post_no, user_no */}
+        <h2>스터디 방 제목 띄우기</h2>
         <p>하냥이의 번호는 = {post_no}</p>
 
         <div>
           <DayCount />
           <br />
           <br />
+          <h3>기술 스택</h3>
+          <StudyRoomSkills />
           <br />
+          <h2>Todo List</h2>
           <ReactCalendar />
           <br />
           <div>
@@ -63,6 +66,7 @@ const StudyRoom = () => {
           <br />
           <br />
           <br />
+          <h4>Notice</h4>
           <NoticeModal />
           <br />
 
@@ -79,7 +83,6 @@ const StudyRoom = () => {
         <br />
         <br />
         <br />
-        <Chat />
       </div>
     </div>
   );

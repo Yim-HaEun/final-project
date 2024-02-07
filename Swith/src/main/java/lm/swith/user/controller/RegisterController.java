@@ -161,12 +161,11 @@ public class RegisterController {
 	  public ResponseEntity<String> checkNickname(@RequestBody SwithUser swithUser){
 	  	
 	  	SwithUser user = userService.getUserByNickname(swithUser.getNickname()); 
-	  
+	  	
 	  	//넣은 값이 db에 존재하는지, 넣은 값이 null이 아닌 
-	  	if(user != null && user.getNickname() != null) { //find해서 값이 존재하면 거부, null이면 
+	  	if(user != null && user.getNickname() == null) { //find해서 값이 존재하면 거부, null이면 
 	  		String existsNick = "existsNick";
 	  		 return ResponseEntity.ok(existsNick);
-	     
 	  	 }else {
 	  		String newNickname = "new";
 	  		 return ResponseEntity.ok(newNickname);

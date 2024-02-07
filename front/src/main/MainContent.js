@@ -1,14 +1,14 @@
-import { useParams, Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
-import "../css/MainPageCss.css";
-import KakaoMap from "./KakaoMap";
-import "../css/KakaoMap.css";
-import "bootstrap/dist/css/bootstrap.min.css";
-import HeartButton from "./HeartButton";
-import SearchIcon from "./img/search.png";
-import DeleteIcon from "./img/delete.png";
-import axios from "axios";
-import usersUserinfoAxios from "../token/tokenAxios";
+import { useParams, Link } from 'react-router-dom';
+import { useState, useEffect, useRef } from 'react';
+import '../css/MainPageCss.css';
+import KakaoMap from './KakaoMap';
+import '../css/KakaoMap.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import HeartButton from './HeartButton';
+import SearchIcon from './img/search.png';
+import DeleteIcon from './img/delete.png';
+import axios from 'axios';
+import usersUserinfoAxios from '../token/tokenAxios';
 
 function MainContent() {
   // const [searchPost, setSearchPost] = useState([]);
@@ -56,9 +56,9 @@ function MainContent() {
   };
 
   useEffect(() => {
-    window.addEventListener("click", handleClickOutside);
+    window.addEventListener('click', handleClickOutside);
     return () => {
-      window.removeEventListener("click", handleClickOutside);
+      window.removeEventListener('click', handleClickOutside);
     };
   }, []);
 
@@ -66,11 +66,11 @@ function MainContent() {
   useEffect(() => {
     const fetchBoards = async () => {
       try {
-        const response = await usersUserinfoAxios.get("/post_list");
+        const response = await usersUserinfoAxios.get('/post_list');
         setBoards(response.data);
         console.log(response.data);
       } catch (error) {
-        console.error("Error fetching boards:", error);
+        console.error('Error fetching boards:', error);
         setBoards([]); // 에러 발생 시, 빈 배열로 상태를 설정
       }
     };
@@ -78,16 +78,16 @@ function MainContent() {
     fetchBoards();
   }, []);
 
-  const [userData, setUserData] = useState("");
+  const [userData, setUserData] = useState('');
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         // 서버에 사용자 정보를 가져오는 요청
-        const response = await usersUserinfoAxios.get("/users/userinfo");
+        const response = await usersUserinfoAxios.get('/users/userinfo');
         setUserData(response.data);
         console.log(userData);
       } catch (error) {
-        console.error("Failed to fetch user data.", error);
+        console.error('Failed to fetch user data.', error);
       }
     };
 
@@ -147,61 +147,64 @@ function MainContent() {
     setSelectedMethod([method]); // 배열로 설정
   };
 
-  const methods = ["온라인", "오프라인", "온/오프 병행"];
+  const methods = ['온라인', '오프라인', '온/오프 병행'];
 
   const cities = [
-    "강남/역삼/삼성",
-    "신사/청담/압구정",
-    "서초/교대/사당",
-    "잠실/송파/강동",
-    "을지로/명동/중구/동대문",
-    "서울역/이태원/용산",
-    "종로/인사동",
-    "홍대/합정/마포/서대문",
-    "여의도",
-    "구로/신도림/금천",
-    "건대입구/성수/왕십리",
-    "성북/강북/노원/도봉",
-    "기타",
+    '강남/역삼/삼성',
+    '신사/청담/압구정',
+    '서초/교대/사당',
+    '잠실/송파/강동',
+    '을지로/명동/중구/동대문',
+    '서울역/이태원/용산',
+    '종로/인사동',
+    '홍대/합정/마포/서대문',
+    '여의도',
+    '구로/신도림/금천',
+    '건대입구/성수/왕십리',
+    '성북/강북/노원/도봉',
+    '기타',
   ];
 
-  const skills = [
-    "Angular",
-    "C",
-    "C++",
-    "Django",
-    "Docker",
-    "Express",
-    "Figma",
-    "Firebase",
-    "Flask",
-    "Flutter",
-    "Git",
-    "Flask",
-    "Go",
-    "GraphQL",
-    "Java Script",
-    "Java",
-    "Kubernetes",
-    "MongoDB",
-    "mySql",
-    "NestJS",
-    "NodeJS",
-    "Php",
-    "Python",
-    "R",
-    "React",
-    "React Native",
-    "Spring",
-    "Svelte",
-    "Swift",
-    "Type Script",
-    "Unity",
-    "Vue",
-    "Zeplin",
+  const skills = [];
+
+  const skillInfo = [
+    { name: 'Angular', imageId: 'Angular.png' },
+    { name: 'C', imageId: 'C.png' },
+    { name: 'C++', imageId: 'C++.png' },
+    { name: 'Django', imageId: 'Django.png' },
+    { name: 'Docker', imageId: 'Docker.png' },
+    { name: 'Express', imageId: 'Express.png' },
+    { name: 'Figma', imageId: 'Figma.png' },
+    { name: 'Firebase', imageId: 'Firebase.png' },
+    { name: 'Flask', imageId: 'Flast.png' },
+    { name: 'Flutter', imageId: 'Flutter.png' },
+    { name: 'Git', imageId: 'Git.png' },
+    { name: 'Go', imageId: 'Go.png' },
+    { name: 'GraphQL', imageId: 'GRAPH_QL.png' },
+    { name: 'Java Script', imageId: 'JAVA_SCRIPT.png' },
+    { name: 'Java', imageId: 'Java.png' },
+    { name: 'Kotlin', imageId: 'Kotlin.png' },
+    { name: 'Kubernetes', imageId: 'Kubernetes.png' },
+    { name: 'MongoDB', imageId: 'MONGO_DB.png' },
+    { name: 'mySql', imageId: 'mySql.png' },
+    { name: 'NestJS', imageId: 'NEST_JS.png' },
+    { name: 'NextJS', imageId: 'NEXT_JS.png' },
+    { name: 'NodeJS', imageId: 'NODE_JS.png' },
+    { name: 'Php', imageId: 'Php.png' },
+    { name: 'Python', imageId: 'Python.png' },
+    { name: 'R', imageId: 'R.png' },
+    { name: 'React', imageId: 'react.png' },
+    { name: 'React Native', imageId: 'REACT_NATIVE.png' },
+    { name: 'Spring', imageId: 'Spring.png' },
+    { name: 'Svelte', imageId: 'Svelte.png' },
+    { name: 'Swift', imageId: 'Swift.png' },
+    { name: 'Type Script', imageId: 'Swift.png' },
+    { name: 'Unity', imageId: 'Unity.png' },
+    { name: 'Vue', imageId: 'Vue.png' },
+    { name: 'Zeplin', imageId: 'Zeplin.png' },
   ];
 
-  const recruits = ["프로젝트", "스터디", "멘토/멘티"];
+  const recruits = ['프로젝트', '스터디', '멘토/멘티'];
 
   const toggleLike = () => {
     setLike(!like);
@@ -209,9 +212,9 @@ function MainContent() {
 
   // 클릭된 상태를 관리하는 배열 추가
   const [clickedSkills, setClickedSkills] = useState([]);
-  const [clickedCity, setClickedCity] = useState("");
-  const [clickedRecruit, setClickedRecruit] = useState("");
-  const [clickedMethod, setClickedMethod] = useState("");
+  const [clickedCity, setClickedCity] = useState('');
+  const [clickedRecruit, setClickedRecruit] = useState('');
+  const [clickedMethod, setClickedMethod] = useState('');
 
   // 기술스택 핸들러
   const handleClickSkill = (skill) => {
@@ -221,7 +224,7 @@ function MainContent() {
     } else {
       if (clickedSkills.length > 4) {
         // 클릭된 스킬이 5개 이상이면 추가 클릭을 방지하고 경고 메시지를 표시
-        alert("최대 5개까지만 선택 가능합니다.");
+        alert('최대 5개까지만 선택 가능합니다.');
       } else {
         // 클릭된 스킬이 배열에 없다면 추가
         setClickedSkills([...clickedSkills, skill]);
@@ -304,14 +307,14 @@ function MainContent() {
                     <button
                       className="region_toggle_button"
                       type="button"
-                      aria-expanded={isSkillVisible ? "true" : "false"}
+                      aria-expanded={isSkillVisible ? 'true' : 'false'}
                       onClick={toggleContentSkill}
                     >
                       {clickedSkills.length <= 0 ? (
-                        "기술스택"
+                        '기술스택'
                       ) : (
                         <EllipsisText
-                          text={clickedSkills.join(", ")}
+                          text={clickedSkills.join(', ')}
                           maxLength={8}
                         />
                       )}
@@ -332,13 +335,13 @@ function MainContent() {
                     <button
                       className="region_toggle_button"
                       type="button"
-                      aria-expanded={isCityVisible ? "true" : "false"}
+                      aria-expanded={isCityVisible ? 'true' : 'false'}
                       onClick={toggleContentCity}
                     >
                       {clickedCity ? (
                         <EllipsisText text={clickedCity} maxLength={4} />
                       ) : (
-                        "지역"
+                        '지역'
                       )}
                       <svg
                         height="20"
@@ -357,13 +360,13 @@ function MainContent() {
                     <button
                       className="region_toggle_button"
                       type="button"
-                      aria-expanded={isMethodVisible ? "true" : "false"}
+                      aria-expanded={isMethodVisible ? 'true' : 'false'}
                       onClick={toggleContentMethod}
                     >
                       {clickedMethod ? (
                         <EllipsisText text={clickedMethod} maxLength={4} />
                       ) : (
-                        "진행방식"
+                        '진행방식'
                       )}
                       <svg
                         height="20"
@@ -382,13 +385,13 @@ function MainContent() {
                     <button
                       className="region_toggle_button"
                       type="button"
-                      aria-expanded={isRecruitVisible ? "true" : "false"}
+                      aria-expanded={isRecruitVisible ? 'true' : 'false'}
                       onClick={toggleContentRecruit}
                     >
                       {clickedRecruit ? (
                         <EllipsisText text={clickedRecruit} maxLength={4} />
                       ) : (
-                        "모집구분"
+                        '모집구분'
                       )}
                       <svg
                         height="20"
@@ -420,7 +423,7 @@ function MainContent() {
           <div
             id="region_section"
             className={
-              isMethodVisible ? "method-content active" : "method-content"
+              isMethodVisible ? 'method-content active' : 'method-content'
             }
           >
             {isMethodVisible && (
@@ -430,7 +433,7 @@ function MainContent() {
                     <li
                       key={method}
                       className={`seoulToggle ${
-                        clickedMethod.includes(method) ? "clicked" : ""
+                        clickedMethod.includes(method) ? 'clicked' : ''
                       }`}
                       onClick={() => {
                         toggleContentMethod(method);
@@ -450,7 +453,7 @@ function MainContent() {
           <div
             id="region_section"
             className={
-              isRecruitVisible ? "recruit-content active" : "recruit-content"
+              isRecruitVisible ? 'recruit-content active' : 'recruit-content'
             }
           >
             {isRecruitVisible && (
@@ -460,7 +463,7 @@ function MainContent() {
                     <li
                       key={recruit}
                       className={`seoulToggle ${
-                        clickedRecruit.includes(recruit) ? "clicked" : ""
+                        clickedRecruit.includes(recruit) ? 'clicked' : ''
                       }`}
                       onClick={() => {
                         toggleContentRecruit(recruit);
@@ -479,7 +482,7 @@ function MainContent() {
           {/* 지역 */}
           <div
             id="region_section"
-            className={isCityVisible ? "city-content active" : "city-content"}
+            className={isCityVisible ? 'city-content active' : 'city-content'}
           >
             {isCityVisible && (
               <div className="region_section">
@@ -488,7 +491,7 @@ function MainContent() {
                     <li
                       key={city}
                       className={`seoulToggle ${
-                        clickedCity.includes(city) ? "clicked" : ""
+                        clickedCity.includes(city) ? 'clicked' : ''
                       }`}
                       onClick={() => {
                         toggleContentCity(city);
@@ -508,7 +511,7 @@ function MainContent() {
           <div
             id="region_section"
             className={
-              isSkillVisible ? "skill-content active" : "skill-content"
+              isSkillVisible ? 'skill-content active' : 'skill-content'
             }
             ref={modalEl}
           >
@@ -519,7 +522,7 @@ function MainContent() {
                     <li
                       key={skill}
                       className={`skillToggle ${
-                        clickedSkills.includes(skill) ? "clicked" : ""
+                        clickedSkills.includes(skill) ? 'clicked' : ''
                       }`}
                       onClick={() => {
                         toggleContentSkill(skill);
@@ -565,66 +568,79 @@ function MainContent() {
         </div>
 
         <ul className="board_box_section">
-  {Array.isArray(boards) && boards.length > 0 ? (
-    boards.map((board) => (
-      <a
-        key={board.post_no}
-        className="board_box"
-        href={`/post_detail/${board.post_no}`}
-      >
+          {Array.isArray(boards) && boards.length > 0 ? (
+            boards.map((board) => (
+              <a
+                key={board.post_no}
+                className="board_box"
+                href={`/post_detail/${board.post_no}`}
+              >
+                <li>
+                  <div className="study_sort_badge">
+                    <div className="study_sort_badge_content">
+                      {board.recruit_type}
+                    </div>
+                    <HeartButton
+                      className="heart_button"
+                      like={like}
+                      onClick={toggleLike}
+                    />
+                  </div>
+                  <div className="study_schedule">
+                    <p className="">마감일</p>
+                    <p>|</p>
+                    <p>{board.recruit_deadline}</p>
+                  </div>
+                  <div>
+                    <h1 className="board_title">{board.study_title}</h1>
+                  </div>
+                  <ul className="skill_icon_section">
+                    {board.studyPostWithSkills.map((skill, index) => {
+                      const matchedSkill = skillInfo.find(
+                        (info) => info.name === skill.skill_name
+                      );
+                      const imageUrl = matchedSkill ? matchedSkill.imageId : '';
 
-              <li>
-                <div className="study_sort_badge">
-                  <div className="study_sort_badge_content">
-                    {board.recruit_type}
-                  </div>
-                  <HeartButton
-                    className="heart_button"
-                    like={like}
-                    onClick={toggleLike}
-                  />
-                </div>
-                <div className="study_schedule">
-                  <p className="">마감일</p>
-                  <p>|</p>
-                  <p>{board.recruit_deadline}</p>
-                </div>
-                <div>
-                  <h1 className="board_title">{board.study_title}</h1>
-                </div>
-                <ul className="skill_icon_section">
-                  {board.studyPostWithSkills.map((skill, index) => (
-                    <li key={index}>{skill.skill_name}</li>
-                  ))}
-                </ul>
-                <div className="board_content_border"></div>
-                <section className="board_info_section">
-                  <div className="board_info_left">
-                    <div className="user_profile_img">
-                      <img
-                        className="user_profile_img_set"
-                        width="30px"
-                        height="30px"
-                        src={board.profileImg}
-                        alt="Profile"
-                      />
+                      return (
+                        <li key={index}>
+                          <img
+                            src={`https://2mihye.github.io/Skill_IMG/images/${imageUrl}`}
+                            alt={skill.skill_name}
+                            width="20"
+                            height="20"
+                          />
+                        </li>
+                      );
+                    })}
+                  </ul>
+                  <div className="board_content_border"></div>
+                  <section className="board_info_section">
+                    <div className="board_info_left">
+                      <div className="user_profile_img">
+                        <img
+                          className="user_profile_img_set"
+                          width="30px"
+                          height="30px"
+                          src={board.profileImg}
+                          alt="Profile"
+                        />
+                      </div>
+                      <div>{board.nickname}</div>
                     </div>
-                    <div>{board.nickname}</div>
-                  </div>
-                  <div className="board_info_right">
-                    <div className="comment_count_section">
-                      <p>댓글아이콘</p>
-                      <p>{board.commentCount}</p>
+                    <div className="board_info_right">
+                      <div className="comment_count_section">
+                        <p>댓글아이콘</p>
+                        <p>{board.commentCount}</p>
+                      </div>
                     </div>
-                  </div>
-                </section>
-              </li>
+                  </section>
+                </li>
               </a>
-    ))
-  ) : (
-    <p>No boards available.</p>
-  )}
-</ul>
+            ))
+          ) : (
+            <p>No boards available.</p>
+          )}
+        </ul>
       </main>
     </div>
   );
