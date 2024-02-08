@@ -22,5 +22,7 @@ public class SwithDTO {
 	private String nickname;
 	private Long user_no;
 	
+	
+	
 }
 

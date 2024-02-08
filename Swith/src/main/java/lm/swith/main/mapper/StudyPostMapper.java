@@ -21,7 +21,8 @@ public interface StudyPostMapper {
 	
 	// 스터디 등록
 	//void insertStudyPost (StudyPost studyPost);
-	
+	// 스터디 승인된사람들 목록
+	List<StudyApplication> getAllApplicantsByPostNoStudyRoom(Long post_no);
 	// 스터디 삭제
 	void deleteStudyPost (Long post_no);
 	
@@ -51,5 +52,10 @@ public interface StudyPostMapper {
     
     void insertSkill(List<Skill> skill);
     void insertStudyApplication(StudyApplication studyApplication);
+    
+    // 내가 참여한 스터디 목록 OK
+	List<StudyPost> getAllStudiesWithUserNo(Long user_no);
 	
+	//스터디룸 이름 
+	StudyPost getStudyRoomTitle(Long post_no);
 }

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { useParams } from 'react-router-dom';
 import usersUserinfoAxios from '../../token/tokenAxios';
-
+import './css/Notice.css';
 const DayCount = () => {
   const { post_no } = useParams(); // 동적 라우트 매개변수 가져오기
 
@@ -31,9 +31,13 @@ const DayCount = () => {
   const days = Math.floor(dDay / (1000 * 60 * 60 * 24));
   return (
     <div>
-      <p>s.with 시작일 : {DayCount.study_start}</p>
-
-      {days === 0 ? 'D-DAY' : days < 0 ? `D${days}` : `D+${days}`}
+      <span className="DayCount_startDay">
+        s.with 시작일 : {DayCount.study_start}
+      </span>
+      <span className="DayCount">
+        {' '}
+        {days === 0 ? 'D-DAY' : days < 0 ? `D${days}` : `D+${days}`}
+      </span>
     </div>
   );
 };

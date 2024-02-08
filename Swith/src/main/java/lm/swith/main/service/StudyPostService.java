@@ -102,6 +102,11 @@ public class StudyPostService {
             throw new RuntimeException("Transaction rolled back", e);
         }
     }
+    //스터디룸 방 이름 
+	public StudyPost getStudyRoomTitle(Long post_no) {
+		
+		return studyPostMapper.getStudyRoomTitle(post_no);
+	}
     
     
     

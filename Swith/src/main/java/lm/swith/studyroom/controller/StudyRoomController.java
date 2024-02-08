@@ -24,6 +24,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
+import lm.swith.main.model.StudyApplication;
+import lm.swith.main.model.StudyPost;
+import lm.swith.main.service.StudyPostService;
 import lm.swith.studyroom.model.Calendar;
 import lm.swith.studyroom.model.MessageRequestDto;
 import lm.swith.studyroom.model.StudyMoment;
@@ -39,7 +42,7 @@ import lombok.RequiredArgsConstructor;
 @CrossOrigin(origins = "http://localhost:3000", allowCredentials = "true", allowedHeaders = "*")
 public class StudyRoomController {
 	private final StudyRoomService studyRoomService;
-
+	private final StudyPostService studyPostService;
 	// StudyRoomNotice
 	@PostMapping("/create/StudyNotice/{post_no}") // INSERT
 	public ResponseEntity<?> createStudyRoomNotice(@PathVariable Long post_no, @RequestBody StudyRoomNotice notice) {
@@ -174,6 +177,24 @@ public class StudyRoomController {
 		System.out.println("성공적으로 불러옴!");
 	    List<MessageRequestDto> initialMessages = studyRoomService.getMessagesByPostNo(post_no);
 	    return ResponseEntity.ok(initialMessages);
+	}
+	
+	//participants
+	@GetMapping("/Participant/{post_no}")
+	public ResponseEntity<List<StudyApplication>> getParticipantStudyRoom(@PathVariable Long post_no){
+		List<StudyApplication> studyApplications = studyRoomService.StudyRoomParticipant(post_no);
+		if (!studyApplications.isEmpty()) {
+			return ResponseEntity.ok(studyApplications);
+		}else {
+			return ResponseEntity.noContent().build();
+		}
+	}
+	
+	//studyRoom Title select
+	@GetMapping ("Title/{post_no}")
+	public ResponseEntity <StudyPost> getStudyRoomTitle(@PathVariable Long post_no){
+		 StudyPost studyPost = studyPostService.getStudyRoomTitle(post_no);
+		return ResponseEntity.ok(studyPost);
 	}
 	
 	

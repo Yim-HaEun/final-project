@@ -2,7 +2,7 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import usersUserinfoAxios from '../../token/tokenAxios';
-
+import './css/Notice.css';
 const StudyRoomSkills = () => {
   const { post_no } = useParams(); //동적 라우트 매개변수 가져오기
   const [swithUser, setSwithUser] = useState('');
@@ -48,7 +48,7 @@ const StudyRoomSkills = () => {
     ),
   ];
   return (
-    <div>
+    <div className="studyRoom_skills">
       <li className="studyContent_contentWrapper">
         <span className="studyInfo_title">기술스택</span>
         <span className="studyInfo_title_a">

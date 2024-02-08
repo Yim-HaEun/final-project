@@ -5,7 +5,7 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useParams } from 'react-router-dom';
 import 'bootstrap/dist/css/bootstrap.min.css';
-
+import './css/Notice.css';
 function NoticeModal() {
   const { post_no } = useParams();
   const [notice, setNotice] = useState({
@@ -77,9 +77,18 @@ function NoticeModal() {
 
   return (
     <div>
-      <Button className="btn" variant="outline-primary" onClick={handleShow}>
-        공지글+
-      </Button>
+      <div>
+        <h4 className="notice">
+          Notice{' '}
+          <Button
+            className="Modal_btn"
+            variant="outline-primary"
+            onClick={handleShow}
+          >
+            공지글+
+          </Button>
+        </h4>
+      </div>
 
       <Modal show={show} onHide={handleClose}>
         <Modal.Header>

@@ -1,0 +1,16 @@
+.carousel-moment {
+  width: 100%; /* 부모 요소의 너비를 100%로 설정합니다. */
+}
+.carousel-item {
+  flex: 0 0 auto; /* 아이템이 자동으로 크기를 조절하지 않도록 합니다. */
+  width: 33.333%; /* 각 아이템이 부모 요소의 1/3만큼의 너비를 가지도록 합니다. */
+}
+.Moment_item {
+  width: 300px;
+  padding-left: 10%;
+}
+.M_item {
+  display: flex;
+  flex-direction: row; /* 아이템을 수평으로 배열합니다. */
+  align-items: center; /* 아이템을 수직 가운데 정렬합니다. */
+}

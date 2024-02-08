@@ -196,6 +196,14 @@
 			#{post_no}, #{user_no}, #{status}
 		)
 	</insert>
+		<!-- 승인된 스터디 인원만 조회 -->
+	<select id="getAllApplicantsByPostNoStudyRoom"
+		resultMap="StudyApplicationResult" parameterType="Long">
+		SELECT sa.*,u.nickname, u.USER_PROFILE, u.user_no
+		FROM study_application sa
+		LEFT JOIN users u ON sa.user_no = u.user_no
+		WHERE sa.post_no = #{post_no} AND sa.status = '승인'
+	</select>
 
 	
 
@@ -419,6 +427,11 @@
 	<delete id="deleteLikes" parameterType="lm.swith.main.model.Likes">
 		DELETE FROM LIKES WHERE post_no = #{post_no} AND user_no = #{user_no}
 	</delete>
+	
+	<!-- 스터디 룸 제목  -->
+	<select id="getStudyRoomTitle" resultType="lm.swith.main.model.StudyPost">
+		SELECT * FROM study_post WHERE post_no = #{post_no} 
+	</select>
 	
 </mapper>
     

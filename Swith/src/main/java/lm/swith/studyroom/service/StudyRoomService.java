@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import lm.swith.main.mapper.StudyPostMapper;
+import lm.swith.main.model.StudyApplication;
 import lm.swith.studyroom.mapper.StudyRoomMapper;
 import lm.swith.studyroom.model.Calendar;
 import lm.swith.studyroom.model.MessageRequestDto;
@@ -19,7 +21,14 @@ public class StudyRoomService {
 	
 	@Autowired
 	private StudyRoomMapper studyRoomMapper;
+	@Autowired
+	private StudyPostMapper studyPostMapper;
 	
+	// SELECT STUDYROOM Participant 
+		public List<StudyApplication> StudyRoomParticipant(Long post_no){
+			 return studyPostMapper.getAllApplicantsByPostNoStudyRoom(post_no);
+	    }
+		
 	// StudyMomnet Service
 	public void createStudyMoment(StudyMoment studyMoment) {
 		studyRoomMapper.createStudyMoment(studyMoment);
