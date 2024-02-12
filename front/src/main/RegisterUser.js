@@ -29,6 +29,7 @@ function RegisterUser() {
     user_introduction: '',
     role: '',
   });
+
   //이용약관
   const [allAgree, setAllAgree] = useState(false);
   const [Agreements, setAgreements] = useState({
@@ -37,15 +38,18 @@ function RegisterUser() {
     provision: false,
     location: false,
   });
+
   const handleAgreementChange = (e) => {
     // 개별 동의
     const { name, checked } = e.target;
     setAgreements((prevAgreements) => ({ ...prevAgreements, [name]: checked }));
-    const allChecked = Object.values({ ...Agreements, [name]: checked }).every(
+  };
+  useEffect(() => {
+    const allChecked = Object.values(Agreements).every(
       (value) => value === true
     );
     setAllAgree(allChecked);
-  };
+  }, [Agreements]);
 
   const handleAllAgreementChange = (e) => {
     const { checked } = e.target;
@@ -173,7 +177,8 @@ function RegisterUser() {
     if (
       isButtonDisabled === true &&
       swithUser.password === confirmPassword &&
-      confirmNickname === 'new'
+      confirmNickname === 'new' &&
+      allAgree === true
     ) {
       try {
         //변경된 데이터 값 저장
