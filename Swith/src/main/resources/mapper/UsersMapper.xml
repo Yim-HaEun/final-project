@@ -12,6 +12,7 @@
 	<select id="findByEmail" parameterType="lm.swith.user.model.SwithUser">
         SELECT * FROM Users WHERE EMAIL = #{email}
     </select>
+    
     <select id="findByNickname" parameterType="lm.swith.user.model.SwithUser">
         SELECT * FROM Users WHERE NICKNAME = #{nickname}
     </select>
@@ -61,5 +62,6 @@
 	<select id="findByUserNo" parameterType="lm.swith.user.model.SwithUser">
 		SELECT * FROM Users WHERE USER_NO = #{user_no}
 	</select>
+
 	
 </mapper>

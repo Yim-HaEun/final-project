@@ -1,17 +1,24 @@
 import { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import usersUserinfoAxios from '../../token/tokenAxios';
+import axios from 'axios';
 import './css/StudyRoomTitle.css';
 const StudyRoomTitle = () => {
   const { post_no } = useParams();
+
   const [userData, setUserData] = useState('');
-  const [studyRoomTitle, setStudyRoomTitle] = useState({});
+  const [showInput, setShowInput] = useState(false); //수정하기 버튼 누르면 input
+
+  const [studyRoomTitle, setStudyRoomTitle] = useState({
+    //가져오고 업데이트 해줄 곳
+    post_no: '',
+    user_no: '',
+    study_title: '',
+  });
 
   useEffect(() => {
     const fetchUserData = async () => {
-      // 토큰이 없으면 함수 실행 중단
       try {
-        // 서버에 사용자 정보를 가져오는 요청
         const response = await usersUserinfoAxios.get('/users/userinfo');
         const userNo = response.data.user_no;
 
@@ -19,35 +26,109 @@ const StudyRoomTitle = () => {
           ...prevUserData,
           user_no: userNo,
         }));
-        setStudyRoomTitle((prevUserData) => ({
-          // setMoment의 user_no에 받아온 userNo 값을 넣어줌
-          ...prevUserData,
+
+        // studyRoomTitle 상태에도 user_no를 설정
+        setStudyRoomTitle((prevStudyRoomTitle) => ({
+          ...prevStudyRoomTitle,
           user_no: userNo,
         }));
       } catch (error) {
-        //console.error("Failed to fetch user data.", error);
-        setStudyRoomTitle([]);
+        console.error('Failed to fetch user data.', error);
       }
     };
     fetchUserData();
   }, []);
-
   useEffect(() => {
     const fetchStudyRoomTitle = async () => {
       try {
         const response = await usersUserinfoAxios.get(
-          `/studyRoom/Title/${post_no}`
+          `/studyRoom/create/Title/${post_no}`
         );
-        //,notice,
-        setStudyRoomTitle(response.data);
-        console.log(response.data);
+        const userNo = response.data.user_no;
+        setStudyRoomTitle((prevUserData) => ({
+          ...prevUserData,
+          user_no: userNo, // user_no를 설정해줘야 합니다.
+          study_title: response.data.study_title, // study_title도 설정해줘야 합니다.
+        }));
       } catch (error) {
         console.log('값을 못불러와요', error);
       }
     };
     fetchStudyRoomTitle();
-  }, []);
+  }, [post_no]);
 
-  return <div className="StudyRoomTitle">{studyRoomTitle.study_title}</div>;
+  const handleInputChange = (e) => {
+    setStudyRoomTitle({ ...studyRoomTitle, study_title: e.target.value });
+  };
+
+  const handleUpdateTitle = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await usersUserinfoAxios.post(
+        `/studyRoom/update/Title/${post_no}`,
+        studyRoomTitle, // studyRoomTitle을 직접 전달
+        {
+          params: {
+            post_no: post_no, // post_no는 URL 파라미터로 전달
+            user_no: studyRoomTitle.user_no, // user_no는 URL 파라미터로 전달
+            study_title: studyRoomTitle.study_title,
+          },
+          withCredentials: true,
+        }
+      );
+      console.log('서버 응답:', response.data);
+      setStudyRoomTitle({
+        ...studyRoomTitle,
+        study_title: response.data.study_title,
+      });
+      window.location.reload();
+      console.log('사용자 프로필 업데이트 성공');
+    } catch (error) {
+      console.error('업데이트 불가', error);
+    }
+  };
+  return (
+    <div>
+      <div className="StudyRoomTitle">{studyRoomTitle.study_title}</div>
+      <div>
+        {showInput ? (
+          <>
+            <input
+              className="room_title_input"
+              type="text"
+              name="study_title"
+              value={studyRoomTitle.study_title}
+              onChange={handleInputChange}
+            />
+            <button
+              className=".notice_x_button "
+              onClick={(e) => {
+                handleUpdateTitle(e);
+                setShowInput(false);
+              }}
+            >
+              수정하기
+            </button>
+          </>
+        ) : (
+          <button
+            className="StudyRoomTitle_button"
+            onClick={() => {
+              setShowInput((prevShowInput) => !prevShowInput);
+            }}
+            style={{
+              display:
+                showInput ||
+                (userData.user_no !== studyRoomTitle.user_no && !showInput)
+                  ? 'none'
+                  : 'block',
+            }}
+          >
+            수정
+          </button>
+        )}
+      </div>
+    </div>
+  );
 };
 export default StudyRoomTitle;

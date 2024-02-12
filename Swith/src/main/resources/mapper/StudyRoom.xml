@@ -76,5 +76,15 @@
 		DELETE FROM STUDY_MOMENT WHERE USER_NO = #{user_no} AND MOMENT_NO = #{moment_no}
 	</delete>
 	
+	<!-- 스터디 룸 제목  -->
+	<select id="getStudyRoomTitle" resultType="lm.swith.main.model.StudyPost">
+		SELECT * FROM study_post WHERE post_no = #{post_no} 
+	</select>
+	
+	<!-- 스터디 룸 제목 수정  -->
+	<update id= "updateStudyRoomTitle" parameterType="lm.swith.main.model.StudyPost">
+	  UPDATE STUDY_POST SET STUDY_TITLE = #{study_title} WHERE post_no = #{post_no} AND user_no = #{user_no}
+	</update>
+	
 	
 </mapper>

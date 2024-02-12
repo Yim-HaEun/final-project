@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import usersUserinfoAxios from '../../token/tokenAxios';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './css/Notice.css';
+import StudyRoomTitle from './StudyRoomTitle';
 //select
 //delete = password이용 해서 삭제
 

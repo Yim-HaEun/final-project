@@ -1,19 +1,26 @@
 @font-face {
-  font-family: "NPSfontBold";
-  src: url("https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2")
-    format("woff2");
+  font-family: 'NPSfontBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2310@1.0/NPSfontBold.woff2')
+    format('woff2');
   font-weight: 700;
   font-style: normal;
 }
 
+.visible {
+  display: block;
+}
+
+.hidden {
+  display: none;
+}
 .title {
-  font-family: "NPSfontBold";
+  font-family: 'NPSfontBold';
   color: #2c2f30;
   font-size: 40px;
 }
 
 .s_text {
-  font-family: "NPSfontBold";
+  font-family: 'NPSfontBold';
   color: #2c2f30;
   font-size: 17px;
   display: flex;
@@ -30,7 +37,7 @@
 }
 
 .subTitle {
-  font-family: "NPSfontBold";
+  font-family: 'NPSfontBold';
   color: #757575;
   font-size: 20px;
 }
@@ -67,7 +74,7 @@
 }
 
 .s_text_id {
-  font-family: "NPSfontBold";
+  font-family: 'NPSfontBold';
   color: #2c2f30;
   font-size: 17px;
   display: flex;

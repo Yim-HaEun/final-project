@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import lm.swith.main.mapper.StudyPostMapper;
 import lm.swith.main.model.StudyApplication;
+import lm.swith.main.model.StudyPost;
 import lm.swith.studyroom.mapper.StudyRoomMapper;
 import lm.swith.studyroom.model.Calendar;
 import lm.swith.studyroom.model.MessageRequestDto;
@@ -82,4 +83,13 @@ public class StudyRoomService {
     public List<MessageRequestDto> getMessagesByPostNo(Long post_no) {
         return studyRoomMapper.selectMessagesByPostNo(post_no);
     }
+    
+ //title
+    public StudyPost getStudyRoomTitle(Long post_no) {
+    	return studyRoomMapper.getStudyRoomTitle(post_no);
+    }
+    public void updateStudyRoomTitle(Long post_no, Long user_no, String study_title) {
+    	studyRoomMapper.updateStudyRoomTitle(post_no, user_no,study_title);
+    }
+    
 }

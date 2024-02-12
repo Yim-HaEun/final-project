@@ -8,14 +8,15 @@ import sample6_execDaumPostcode from './KakaoAddress';
 import girl from '../main/img/girl.png';
 
 function RegisterUser() {
-  const [number, setNumber] = useState('');
+  const [number, setNumber] = useState(''); //보낸 난수
   const [confirmPassword, setConfirmPassword] = useState('');
 
   const navigate = useNavigate();
 
   const [data, setData] = useState([]);
-  const [confirm, setConfirm] = useState('');
+  const [confirm, setConfirm] = useState(''); //인증 input값
   const [confirmNickname, setConfirmNickname] = useState('');
+  const [isVisible, setIsVisible] = useState(false);
   const [isButtonDisabled, setIsButtonDisabled] = useState(false);
   const [isButtonDisabled1, setIsButtonDisabled1] = useState(false);
   const [swithUser, setNewUser] = useState({
@@ -28,6 +29,38 @@ function RegisterUser() {
     user_introduction: '',
     role: '',
   });
+  //이용약관
+  const [allAgree, setAllAgree] = useState(false);
+  const [Agreements, setAgreements] = useState({
+    terms: false,
+    personalInfo: false,
+    provision: false,
+    location: false,
+  });
+  const handleAgreementChange = (e) => {
+    // 개별 동의
+    const { name, checked } = e.target;
+    setAgreements((prevAgreements) => ({ ...prevAgreements, [name]: checked }));
+    const allChecked = Object.values({ ...Agreements, [name]: checked }).every(
+      (value) => value === true
+    );
+    setAllAgree(allChecked);
+  };
+
+  const handleAllAgreementChange = (e) => {
+    const { checked } = e.target;
+    setAgreements((prevAgreements) =>
+      Object.keys(prevAgreements).reduce((newAgreements, AgreementKey) => ({
+        ...newAgreements,
+        [AgreementKey]: checked,
+      }))
+    );
+    setAllAgree(checked);
+  };
+
+  const handleToggle = () => {
+    setIsVisible(!isVisible);
+  };
 
   const handleInputChange = (e) => {
     //e 자리값 밑에 target
@@ -199,6 +232,71 @@ function RegisterUser() {
       <h1 className="title">회원가입</h1>
       <br></br>
       <h3 className="subTitle">회원가입후 S.With에 참여하세요</h3>
+      <button onClick={handleToggle}>이용약관 전체동의</button>
+      <div className={isVisible ? 'visible' : 'hidden'}>
+        <ul>
+          <li>
+            <label htmlFor="agreement_allcheck">이용약관 전체동의</label>
+            <input
+              type="checkbox"
+              id="agreement_allcheck"
+              name="agreement_allcheck"
+              checked={allAgree}
+              onChange={handleAllAgreementChange}
+            />
+          </li>
+          <li>
+            <label htmlFor="agreement_terms"> 이용약관 동의 [필수]</label>
+            <input
+              type="checkbox"
+              id="agreement_terms"
+              name="terms"
+              required
+              checked={Agreements.terms}
+              onChange={handleAgreementChange}
+            />
+          </li>
+          <li>
+            <label htmlFor="agreement_personalInfo">
+              개인정보 이용 수집 동의 [필수]
+            </label>
+            <input
+              type="checkbox"
+              id="agreement_personalInfo"
+              name="personalInfo"
+              required
+              checked={Agreements.personalInfo}
+              onChange={handleAgreementChange}
+            />
+          </li>
+          <li>
+            <label htmlFor="agreement_provision">
+              개인정보 제 3자 제공 동의 [필수]
+            </label>
+            <input
+              type="checkbox"
+              id="agreement_provision"
+              name="provision"
+              required
+              checked={Agreements.provision}
+              onChange={handleAgreementChange}
+            />
+          </li>
+          <li>
+            <label htmlFor="agreement_location">
+              위치정보 동의 약관 [필수]
+            </label>
+            <input
+              type="checkbox"
+              id="agreement_location"
+              name="location"
+              required
+              checked={Agreements.location}
+              onChange={handleAgreementChange}
+            />
+          </li>
+        </ul>
+      </div>
       <div className="container_register">
         <form className="m-5 mb-1">
           <div className="register_id ml-5">

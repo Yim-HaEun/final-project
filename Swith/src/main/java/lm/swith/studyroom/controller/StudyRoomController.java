@@ -191,11 +191,21 @@ public class StudyRoomController {
 	}
 	
 	//studyRoom Title select
-	@GetMapping ("Title/{post_no}")
+	@GetMapping ("/create/Title/{post_no}")
 	public ResponseEntity <StudyPost> getStudyRoomTitle(@PathVariable Long post_no){
-		 StudyPost studyPost = studyPostService.getStudyRoomTitle(post_no);
+		 StudyPost studyPost = studyRoomService.getStudyRoomTitle(post_no);
 		return ResponseEntity.ok(studyPost);
 	}
+	//studyroom title update
+	@PostMapping("/update/Title/{post_no}")
+	public ResponseEntity <?> updateStudyRoomTitle(@PathVariable Long post_no, @RequestParam Long user_no, @RequestParam String study_title ){
+		 System.out.println("getPost_no : " + post_no);
+		 System.out.println("user no : " + user_no);
+		studyRoomService.updateStudyRoomTitle(post_no, user_no, study_title);
+		System.out.println("Success");
+		return ResponseEntity.ok("Success");
+	}
+	
 	
 	
 

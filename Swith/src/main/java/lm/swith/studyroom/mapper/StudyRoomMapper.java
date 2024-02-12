@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Options;
 import org.apache.ibatis.annotations.Select;
 
+import lm.swith.main.model.StudyPost;
 import lm.swith.studyroom.model.Calendar;
 import lm.swith.studyroom.model.MessageRequestDto;
 import lm.swith.studyroom.model.StudyMoment;
@@ -53,6 +54,13 @@ public interface StudyRoomMapper {
 	void createTodoList(Todo todo);
 
 	List<Todo> getTodoListByDate(Date todo);
+
+//title
+	//SELECT
+	StudyPost getStudyRoomTitle(Long post_no);
+	
+	//UPDATE
+	void updateStudyRoomTitle(Long post_no,Long user_no, String study_title); //update는 void나 int형식으로 반환해야함
 }
 
 

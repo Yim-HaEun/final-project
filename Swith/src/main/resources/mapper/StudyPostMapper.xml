@@ -428,10 +428,6 @@
 		DELETE FROM LIKES WHERE post_no = #{post_no} AND user_no = #{user_no}
 	</delete>
 	
-	<!-- 스터디 룸 제목  -->
-	<select id="getStudyRoomTitle" resultType="lm.swith.main.model.StudyPost">
-		SELECT * FROM study_post WHERE post_no = #{post_no} 
-	</select>
 	
 </mapper>
     

@@ -56,6 +56,5 @@ public interface StudyPostMapper {
     // 내가 참여한 스터디 목록 OK
 	List<StudyPost> getAllStudiesWithUserNo(Long user_no);
 	
-	//스터디룸 이름 
-	StudyPost getStudyRoomTitle(Long post_no);
+	
 }

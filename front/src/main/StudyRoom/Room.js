@@ -12,9 +12,8 @@ import DayCount from './DayCount';
 import StudyRoomSkills from './StudyRoomSkills';
 import ReactCalendar from './ReactCalendar';
 import TodoApp from './Todo/TodoApp';
-import Participant from './Participant';
 import StudyRoomTitle from './StudyRoomTitle';
-
+import Application from './Application';
 const StudyRoom = () => {
   const [userData, setUserData] = useState('');
 
@@ -47,9 +46,9 @@ const StudyRoom = () => {
       <Header />
       <div>
         {/*post_no, user_no */}
+
         <StudyRoomTitle />
-        <p>하냥이의 번호는 = {post_no}</p>
-        <Participant />
+        <Application />
         <div>
           <DayCount />
           <br />

@@ -132,6 +132,8 @@ public class RegisterController {
         }
     }
 	
+	
+	
 	  @GetMapping("/")
 	  public String MailPage(){
 	      return "/";
@@ -157,6 +159,29 @@ public class RegisterController {
 	  	 }
 	  }
 	  
+	  @ResponseBody
+	  @PostMapping("/findPassword")
+	  public ResponseEntity<String> findPassword(@RequestBody SwithUser swithUser){
+		  MailService mailService = new MailService(javaMailSender);
+		  int number = mailService.sendMail(swithUser.getEmail());
+		     String num = "" + number;
+		     return ResponseEntity.ok(num);
+	  }
+	  
+	  //email(아이디)찾기
+	  @PostMapping("/ExistEmail")
+	  public ResponseEntity<String> checkEmail(@RequestBody SwithUser swithUser){
+		  SwithUser user = userService.getUserByEmail(swithUser.getEmail());
+		  //값이 db에 존재하는지 아닌지
+		  if(user != null && user.getEmail()==null) { // 존재한다면
+			  String existsEmail = "existsEmail";
+			  return ResponseEntity.ok(existsEmail);
+		  }else {
+			  String None = "none";
+			  return ResponseEntity.ok(None);
+		  }
+	  }
+	  //닉네임 중복 체크 
 	  @PostMapping("/nickname")
 	  public ResponseEntity<String> checkNickname(@RequestBody SwithUser swithUser){
 	  	
@@ -276,7 +301,7 @@ public class RegisterController {
 	    //update user password
 	    @PostMapping("/updatePassword")
 	    public ResponseEntity<String> updatePassword(@RequestBody SwithUser swithUser){
-	    	System.out.println(swithUser.getPassword());
+	    	
 	    	
 	    	userService.updatePassword(swithUser);
 	        return ResponseEntity.ok("User's password updated successfully");

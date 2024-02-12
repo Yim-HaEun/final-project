@@ -83,10 +83,10 @@ const Moment = () => {
   const chunkedMoments = chunkArray(selMoment, 3);
 
   return (
-    <div>
+    <div className="carousel-inner">
       <Carousel interval={null}>
-        {chunkedMoments.map((chunk, index) => (
-          <Carousel.Item key={index} className="M_item">
+        {chunkedMoments.map((chunk, moment) => (
+          <Carousel.Item key={moment.moment_no} className="M_item">
             {chunk.map((moment) => (
               <div key={moment.moment_no} className="carousel-moment">
                 <div className="Moment_item">
