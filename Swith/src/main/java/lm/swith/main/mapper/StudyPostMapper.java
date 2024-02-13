@@ -186,5 +186,6 @@ public interface StudyPostMapper {
 		// 알람(찜한사람)
 		List<Likes> alarmLikeInfo(Long post_no);
 	
-	
+		// 스터디방 종료날짜 선언
+		void updateStudyRoomEnd(Long post_no, String studyroomend);
 	}

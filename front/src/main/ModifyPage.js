@@ -217,6 +217,13 @@ const UpdateUser = () => {
             withCredentials: true,
           }
         );
+        const responseApplication = await usersUserinfoAxios.post(
+          'http://localhost:8080/users/deleteApplication',
+          userData,
+          {
+            withCredentials: true,
+          }
+        );
         console.log('사용자 삭제 성공'); //사용자 삭제후,
         if (isTokenAvailable() !== null) {
           //로그아웃 후 메인페이지로

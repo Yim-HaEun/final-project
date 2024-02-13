@@ -18,6 +18,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import lm.swith.main.model.Likes;
+import lm.swith.main.model.StudyApplication;
 import lm.swith.user.mapper.UsersMapper;
 import lm.swith.user.model.SwithUser;
 import lombok.extern.slf4j.Slf4j;
@@ -77,8 +78,12 @@ public class UserService {
 	public SwithUser getUserByNickname(String nickname) {
         return usersMapper.findByNickname(nickname);
     }
+	// select user_no
+		public SwithUser findByUserNo(Long user_no) {
+			return usersMapper.findByUserNo(user_no);
+		}
 	
-	
+//UPDATE USER 
 	//update user profile
 	public void updateUserProfile(SwithUser swithUser) {
 		usersMapper.updateUserProfile(swithUser);
@@ -95,19 +100,26 @@ public class UserService {
 		usersMapper.updatePassword(swithUser);
 	}
 	
+//DELETE USER 
 	//delete user by Email
 	public void deleteUser(SwithUser swithUser) {
 		usersMapper.deleteUser(swithUser);
-		
 	}
 	public void deleteUserLikes(Likes likes) {
 		usersMapper.deleteUserLikes(likes);
 	}
-	
-	// select user_no
-	public SwithUser findByUserNo(Long user_no) {
-		return usersMapper.findByUserNo(user_no);
+	public void deleteUserApplication(StudyApplication studyApplication) {
+		usersMapper.deleteUserApplication(studyApplication);
 	}
+	public List<SwithUser> selectDeleteUserList() {
+		return usersMapper.selectDeleteUserList();
+	}
+	
+	public void deleteAdmin(SwithUser swithUser) {
+		usersMapper.deleteAdmin(swithUser);
+	}
+	
+	
 	
 	
 }

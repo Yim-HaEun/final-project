@@ -2,6 +2,17 @@
 
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTO Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="lm.swith.user.mapper.UsersMapper">
+	<resultMap type="lm.swith.user.model.SwithUser" id="deleteUserResultMap">
+	<id property="user_no" column="USER_NO"/>
+	<result property="email" column="EMAIL"/>
+	<result property="signout" column="SIGNOUT"/>
+	<association property="studyPost" resultMap="StudyPost"/>
+	</resultMap>
+	
+	<resultMap type="lm.swith.main.model.StudyPost" id="StudyPost">
+	<id property="post_no" column="POST_NO"/>
+	</resultMap>
+	
 	<!-- 회원등록 -->
 	<insert id ="insertUser" parameterType="lm.swith.user.model.SwithUser">
 		INSERT INTO USERS (EMAIL, PASSWORD, USERNAME, NICKNAME, USER_PROFILE, USERADDRESS, USER_INTRODUCTION )
@@ -54,8 +65,21 @@
 	<delete id= "deleteUserLikes" parameterType="lm.swith.main.model.Likes">
 		DELETE FROM LIKES WHERE USER_NO  =#{user_no}
 	</delete>
+	<delete id = "deleteUserApplication" parameterType="lm.swith.main.model.StudyApplication">
+		DELETE FROM STUDY_APPLICATION WHERE USER_NO= #{user_no}
+	</delete>
 	
-		<!--  delete -->
+	<select id = "selectDeleteUserList" resultMap="deleteUserResultMap">
+		SELECT U.user_no, U.email, U.signout, SP.post_no
+		FROM USERS U
+		LEFT JOIN STUDY_POST SP ON U.user_no = SP.user_no
+		WHERE U.SIGNOUT = 'TRUE'
+	</select>
+	<delete id="deleteAdmin" parameterType="lm.swith.user.model.SwithUser">
+		DELETE FROM USERS WHERE USER_NO = #{user_no}
+	</delete>
+	
+<!--  delete -->
 	<delete id="deleteStudyRoomNoticeMy" parameterType="lm.swith.studyroom.model.StudyRoomNotice">
 		DELETE FROM STUDY_ROOM_NOTICE WHERE USER_NO = #{user_no}
 	</delete>

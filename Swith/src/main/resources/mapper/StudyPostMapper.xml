@@ -699,6 +699,10 @@
 	<select id="alarmLikeInfo" resultType="lm.swith.main.model.Likes">
 		SELECT * FROM LIKES WHERE post_no = #{post_no}
 	</select>
+	<!-- 스터디방 종료 날짜 선언 -->
+	<update id="updateStudyRoomEnd" parameterType="lm.swith.main.model.StudyPost">
+	UPDATE STUDY_POST SET STUDYROOMEND = #{studyroomend} WHERE POST_NO = #{post_no}
+	</update>
 
 </mapper>
     

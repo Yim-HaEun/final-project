@@ -17,4 +17,4 @@ public class Comments {
 	private Date comment_post_time;
 	
 	private SwithUser user;
-
+}
