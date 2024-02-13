@@ -188,4 +188,7 @@ public interface StudyPostMapper {
 	
 		// 스터디방 종료날짜 선언
 		void updateStudyRoomEnd(Long post_no, String studyroomend);
+		
+		// 스터디방 종료날짜 조회
+		List<StudyPost> selectStudyRoomEnd();
 	}

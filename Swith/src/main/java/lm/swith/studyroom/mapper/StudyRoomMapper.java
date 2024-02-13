@@ -61,6 +61,12 @@ public interface StudyRoomMapper {
 	
 	//UPDATE
 	void updateStudyRoomTitle(Long post_no,Long user_no, String study_title); //update는 void나 int형식으로 반환해야함
+
+// StudyRoom 종료 후 스터디 방 삭제를 위한 DELETE
+		void deleteMessagePostNo(Long post_no);
+		void deleteTodoListPostNo(Long post_no);
+		void deleteStudyMomentPostNo(Long post_no);
+		void deleteStudyRoomNoticeByPostNo(Long post_no);
 }
 
 

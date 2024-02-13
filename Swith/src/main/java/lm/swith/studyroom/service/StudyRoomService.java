@@ -41,7 +41,19 @@ public class StudyRoomService {
 	public void deleteStudyMoment(Long moment_no, Long user_no) {
 		studyRoomMapper.deleteStudyMoment(moment_no, user_no);
 	}
-	
+	 // 스터디방 종료날짜 조회
+    public List<StudyPost> selectStudyRoomEnd() {
+    	return studyPostMapper.selectStudyRoomEnd();
+    }
+    
+	// StudyRoom 종료 후 스터디 방 삭제를 위한 DELETE
+	public void deleteStudyRoomByPostNo(Long post_no) {
+		// StudyRoom 종료 후 스터디 방 삭제를 위한 DELETE
+		studyRoomMapper.deleteMessagePostNo(post_no);
+		studyRoomMapper.deleteTodoListPostNo(post_no);
+		studyRoomMapper.deleteStudyMomentPostNo(post_no);
+		studyRoomMapper.deleteStudyRoomNoticeByPostNo(post_no);
+	}
 	
 	
 	

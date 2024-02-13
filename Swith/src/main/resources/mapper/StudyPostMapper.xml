@@ -624,16 +624,9 @@
 	<!-- 닉네임으로 게시글 검색 -->
 	<select id="getStudiesByNickname"
 		resultType="lm.swith.main.model.StudyPost">
-		SELECT sp.*, s.skill_name
-		FROM study_post sp
-		LEFT JOIN
-		post_tech_stacks pts ON sp.post_no = pts.post_no
-		LEFT JOIN skill s ON
-		pts.skill_no = s.skill_no
-		WHERE sp.nickname LIKE '%' || #{nickname} ||
-		'%'
-
-
+		SELECT *
+		FROM study_post
+		WHERE nickname LIKE '%' || #{nickname} || '%'
 	</select>
 
 	<!-- 닉네임으로 댓글 검색 -->
@@ -703,6 +696,10 @@
 	<update id="updateStudyRoomEnd" parameterType="lm.swith.main.model.StudyPost">
 	UPDATE STUDY_POST SET STUDYROOMEND = #{studyroomend} WHERE POST_NO = #{post_no}
 	</update>
+	<!-- 스터디방 종료기간 조회 -->
+	<select id="selectStudyRoomEnd" parameterType="lm.swith.main.model.StudyPost">
+		SELECT STUDYROOMEND FROM STUDY_POST WHERE POST_NO = #{post_no}
+	</select>
 
 </mapper>
     

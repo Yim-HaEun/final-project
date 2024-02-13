@@ -120,7 +120,7 @@ public class KakaoService {
 		                .user_profile(userProfile)
 		                .useraddress(userAddress) 
 		                .user_introduction(userIntroduction)
-		                .role(role)
+		                .user_role(role)
 		                .build();
 		    }
 				   public SwithUser signUpUser(SwithUser swithUser)  {
@@ -132,7 +132,7 @@ public class KakaoService {
 						user.setUser_profile(swithUser.getUser_profile());
 						user.setUseraddress(swithUser.getUseraddress());
 						user.setUser_introduction(swithUser.getUser_introduction());
-						user.setRole(swithUser.getRole());
+						user.setUser_role(swithUser.getUser_role());
 						
 						usersMapper.insertUser(swithUser);
 						return user;

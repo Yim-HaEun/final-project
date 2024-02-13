@@ -6,6 +6,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.security.Timestamp;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
 
@@ -204,6 +205,21 @@ public class StudyRoomController {
 		studyRoomService.updateStudyRoomTitle(post_no, user_no, study_title);
 		System.out.println("Success");
 		return ResponseEntity.ok("Success");
+	}
+	@GetMapping("/RoomEnd") // 종료된 스터디룸 조회
+	public ResponseEntity<?> selectStudyRoomEnd() {
+		List<StudyPost> RoomEndInfo = studyRoomService.selectStudyRoomEnd();
+		LocalDate now = LocalDate.now();
+
+		for (StudyPost post : RoomEndInfo) {
+			LocalDate roomEnd = LocalDate.parse(post.getStudyroomend());
+			int comparison = roomEnd.compareTo(now);
+			if (comparison == 0) {
+				studyRoomService.deleteStudyRoomByPostNo(post.getPost_no());
+				studyPostService.deleteStudyPost(post.getPost_no());
+			}
+		}
+		return ResponseEntity.ok("ok");
 	}
 	
 	

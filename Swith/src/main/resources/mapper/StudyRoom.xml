@@ -22,7 +22,7 @@
 	
 	<insert id="createCalendarEvent" parameterType="lm.swith.studyroom.model.Calendar">
 	INSERT INTO STUDY_ROOM_CALENDAR(POST_NO, USER_NO, TITLE, EVENT_DATE)
-	VALUES(#{post_no}, #{user_no}, #{title}, #{start})
+	VALUES(#{post_no}, #{user_no}, #{title}, #{todo_date})
 	</insert>
 	
 	
@@ -85,7 +85,22 @@
 	<update id= "updateStudyRoomTitle" parameterType="lm.swith.main.model.StudyPost">
 	  UPDATE STUDY_POST SET STUDY_TITLE = #{study_title} WHERE post_no = #{post_no} AND user_no = #{user_no}
 	</update>
+	<!-- 스터디방 삭제를 위한 Moment,Notice,Message,Events DELETE -->
+	<delete id="deleteStudyRoomNoticeByPostNo" parameterType="lm.swith.studyroom.model.StudyRoomNotice">
+		DELETE FROM STUDY_ROOM_NOTICE WHERE POST_NO = #{post_no}
+	</delete>
 	
+	<delete id="deleteStudyMomentPostNo" parameterType="lm.swith.studyroom.model.StudyMoment">
+		DELETE FROM STUDY_MOMENT WHERE POST_NO = #{post_no}
+	</delete>
+	
+	<delete id="deleteTodoListPostNo" parameterType="lm.swith.studyroom.model.Todo">
+		DELETE FROM EVENTS WHERE POST_NO = #{post_no}
+	</delete>
+	
+	<delete id="deleteMessagePostNo" parameterType="lm.swith.studyroom.model.MessageRequestDto">
+		DELETE FROM message WHERE POST_NO = #{post_no}
+	</delete>
 	
 	
 	

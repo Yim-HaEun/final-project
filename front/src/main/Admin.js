@@ -124,7 +124,6 @@ export default function Admin() {
       try {
         const response = await usersUserinfoAxios.post(
           `/users/deleteAdmin/${selUser.user_no}`,
-
           {
             withCredentials: true,
           }
