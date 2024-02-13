@@ -33,6 +33,7 @@ function RegisterUser() {
   //이용약관
   const [allAgree, setAllAgree] = useState(false);
   const [Agreements, setAgreements] = useState({
+    all: false,
     terms: false,
     personalInfo: false,
     provision: false,
@@ -43,13 +44,15 @@ function RegisterUser() {
     // 개별 동의
     const { name, checked } = e.target;
     setAgreements((prevAgreements) => ({ ...prevAgreements, [name]: checked }));
-  };
-  useEffect(() => {
-    const allChecked = Object.values(Agreements).every(
+
+    const allChecked = Object.values({ ...Agreements, [name]: checked }).every(
       (value) => value === true
     );
-    setAllAgree(allChecked);
-  }, [Agreements]);
+
+    if (allChecked) {
+      setAllAgree(true);
+    }
+  };
 
   const handleAllAgreementChange = (e) => {
     const { checked } = e.target;

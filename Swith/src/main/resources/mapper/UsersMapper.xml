@@ -45,12 +45,17 @@
 		UPDATE USERS SET PASSWORD = #{password} WHERE email = #{email}
 	</update>
 	
-	<!-- delete user -->
-	<delete id = "deleteUser" parameterType="lm.swith.user.model.SwithUser">
-		DELETE FROM USERS WHERE EMAIL = #{email}
+	
+	
+	<!-- 회원탈퇴용 delete user (신청) -->
+	<update id = "deleteUser" parameterType="lm.swith.user.model.SwithUser">
+		UPDATE USERS SET NICKNAME='(이름없음)',SIGNOUT='TRUE' WHERE EMAIL = #{email}
+	</update>
+	<delete id= "deleteUserLikes" parameterType="lm.swith.main.model.Likes">
+		DELETE FROM LIKES WHERE USER_NO  =#{user_no}
 	</delete>
 	
-		<!-- 회원탈퇴용 delete -->
+		<!--  delete -->
 	<delete id="deleteStudyRoomNoticeMy" parameterType="lm.swith.studyroom.model.StudyRoomNotice">
 		DELETE FROM STUDY_ROOM_NOTICE WHERE USER_NO = #{user_no}
 	</delete>
@@ -62,6 +67,7 @@
 	<select id="findByUserNo" parameterType="lm.swith.user.model.SwithUser">
 		SELECT * FROM Users WHERE USER_NO = #{user_no}
 	</select>
-
+	
+	
 	
 </mapper>

@@ -11,6 +11,7 @@ import StudyRoom from './StudyRoom/Room';
 import ModifyPage from './ModifyPage';
 import ChattingPage from './Chatting/pages/ChattingPage';
 import FindUser from './FindUser';
+import Admin from './Admin';
 // function AuthenticatedRoute({ children }) {
 //   const authContext = useAuth();
 
@@ -35,6 +36,7 @@ export default function Control() {
           <Route path="/modify" element={<ModifyPage />} />
           <Route path="chat/:post_no" element={<ChattingPage />} />
           <Route path="find" element={<FindUser />} />
+          <Route path="admin" element={<Admin />} />
         </Routes>
       </BrowserRouter>
     </div>

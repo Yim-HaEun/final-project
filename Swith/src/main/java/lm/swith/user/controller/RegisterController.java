@@ -30,6 +30,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 import jakarta.servlet.http.HttpServletRequest;
+import lm.swith.main.model.Likes;
 import lm.swith.user.Service.KakaoService;
 import lm.swith.user.Service.MailService;
 import lm.swith.user.Service.UserService;
@@ -73,31 +74,29 @@ public class RegisterController {
 	
 	// -------- 토큰 발급 --------
 	@PostMapping("/signin")
-	public ResponseEntity<?> authenticate(@RequestBody SwithDTO siwthDTO) {
-		SwithUser user = userService.getByCredentials(siwthDTO.getEmail(), siwthDTO.getPassword(), passwordEncoder);
-		
-        	// 사용자의 id, pwd 일치할 경우
-		if(user != null) {
-			// 토큰 생성
-			final String token = tokenProvider.createAccessToken(user);  
-			final SwithDTO responseUserDTO = SwithDTO.builder()
-					.email(user.getEmail())
-					.user_no(user.getUser_no())
-					.username(user.getUsername())
-					.useraddress(user.getUseraddress())
-					.nickname(user.getNickname())
-					.token(token)          //반환된 토큰 적용
-					.build();
-			return ResponseEntity.ok().body(responseUserDTO);
+	public ResponseEntity<?> authenticate(@RequestBody SwithUser swithUser) {
+		SwithUser user = userService.getByCredentials(swithUser.getEmail(), swithUser.getPassword(), passwordEncoder);
+		System.out.println(user.getSignout());
+		// 사용자의 id, pwd 일치할 경우
+		if (user != null) {
+			if (user.getSignout().equals("FALSE")) { // signout status
+				// 토큰 생성
+				final String token = tokenProvider.createAccessToken(user);
+				final SwithDTO responseUserDTO = SwithDTO.builder().email(user.getEmail()).user_no(user.getUser_no())
+						.username(user.getUsername()).useraddress(user.getUseraddress()).nickname(user.getNickname())
+						.token(token) // 반환된 토큰 적용
+						.build();
+				return ResponseEntity.ok().body(responseUserDTO);
+			} else {
+				return ResponseEntity.badRequest().body("signout");
+			}
 		} else {
-			ResponseDTO responseDTO = ResponseDTO.builder()
-					.error("Login faild.")
-					.build();
+			ResponseDTO responseDTO = ResponseDTO.builder().error("Login faild.").build();
 			return ResponseEntity.badRequest().body(responseDTO);
 		}
-		
+
 	}
-	
+
 	@GetMapping("/userinfo")
 	public ResponseEntity<?> getUserInfo() {
         // 현재 인증된 사용자의 정보를 가져오는 로직
@@ -306,11 +305,17 @@ public class RegisterController {
 	    	userService.updatePassword(swithUser);
 	        return ResponseEntity.ok("User's password updated successfully");
 	    }
-	    
+	    //delete User 관련
 	    @PostMapping("/deleteUser")
 	    public ResponseEntity<String> deleteUser(@RequestBody SwithUser swithUser){
 	    	userService.deleteUser(swithUser);
 	    	return ResponseEntity.ok("Delete User");
+	    }
+	    
+	    @PostMapping("/deleteLikes")
+	    public ResponseEntity<?> deleteUserLikes(@RequestBody Likes likes){
+	    	userService.deleteUserLikes(likes);
+	    	return ResponseEntity.ok("Delete User's Like");
 	    }
 	    
 	    
@@ -322,10 +327,10 @@ public class RegisterController {
                            @RequestParam(required = false) byte[] userProfile,
                            @RequestParam(required = false) String userAddress,
                            @RequestParam(required = false) String userIntroduction,
-                           @RequestParam(required = false) String role,
+                           @RequestParam(required = false) String user_role,
                            Model model) throws Exception {
 
-        SwithUser kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"), password,userName, userProfile,userAddress,userIntroduction,role );
+        SwithUser kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"), password,userName, userProfile,userAddress,userIntroduction,user_role );
         model.addAttribute("kakaoInfo", kakaoInfo);
         return "kakaoRegister";
     }
@@ -337,7 +342,7 @@ public class RegisterController {
 										          @RequestParam byte[] userProfile,
 										          @RequestParam String userAddress, 
 												  @RequestParam String userIntroduction, 
-												  @RequestParam String role
+												  @RequestParam String user_role
 												  ) {
         SwithUser swithUser = SwithUser.builder()
         		.email(email)
@@ -347,7 +352,7 @@ public class RegisterController {
                 .user_profile(userProfile)
                 .useraddress(userAddress)
                 .user_introduction(userIntroduction)
-                .role(role)
+                .user_role(user_role)
                 .build();
 
         SwithUser registeredUser = userService.signUpUser(swithUser);

@@ -210,6 +210,13 @@ const UpdateUser = () => {
             withCredentials: true,
           }
         );
+        const responseLikes = await usersUserinfoAxios.post(
+          'http://localhost:8080/users/deleteLikes',
+          userData,
+          {
+            withCredentials: true,
+          }
+        );
         console.log('사용자 삭제 성공'); //사용자 삭제후,
         if (isTokenAvailable() !== null) {
           //로그아웃 후 메인페이지로
