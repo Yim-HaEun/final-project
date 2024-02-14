@@ -4,8 +4,9 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.security.Timestamp;
+
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.Base64;
 import java.util.List;
@@ -140,38 +141,6 @@ public class StudyRoomController {
 		return ResponseEntity.ok(moment);
 	}
 	
-//STUDYROOM CALENDAR 
-	//INSERT
-	@PostMapping("/create/Calendar/{post_no}")
-	public ResponseEntity<?> createCalendarEvent(@PathVariable Long post_no, @RequestBody Calendar calendar) {
-		studyRoomService.createCalendarEvent(calendar);
-		return ResponseEntity.ok(studyRoomService);
-	}
-	
-//STUDYROOM TODO
-	//INSERT
-	@PostMapping("/create/Todo/{post_no}")
-	public ResponseEntity<?> createTodoList(@PathVariable Long post_no, @RequestBody Todo todo){
-		System.out.println(todo.getTodo_description());
-		System.out.println(todo.getChecked());
-		System.out.println(todo.getTodo_date());
-		todo.setPost_no(post_no);
-		System.out.println(todo.getPost_no());
-		studyRoomService.createTodoList(todo);
-		return ResponseEntity.ok(studyRoomService);
-	}
-	@GetMapping("/get/Todo/{date}")
-	public ResponseEntity<?>getTodoListByDate(@PathVariable Date todo_date){
-		 try {
-	            List<Todo> todoList = studyRoomService.getTodoListByDate(todo_date);
-	            return ResponseEntity.ok(todoList);
-	        } catch (Exception e) {
-	            e.printStackTrace();
-	            return ResponseEntity.ok("error"); 
-	        }
-		 
-	}
-	
 	// 채팅 SELECT
 	@GetMapping("/post/{post_no}")
 	public ResponseEntity<List<MessageRequestDto>> getInitialMessages(@PathVariable Long post_no) {
@@ -221,8 +190,41 @@ public class StudyRoomController {
 		}
 		return ResponseEntity.ok("ok");
 	}
+//Calendar &TodoList
+	//TodoList Insert
+	@PostMapping("/create/Todo/{post_no}")
+	public ResponseEntity<Todo> createTodoList(@PathVariable Long post_no, @RequestBody Todo todo){
+		System.out.println(post_no);
+		System.out.println(todo.getTodo_list());
+		System.out.println(todo.getTodo_date());
+		studyRoomService.createTodoList(post_no, todo);
+		return ResponseEntity.ok(todo);
+	}
 	
+	//Select TodoList
+	@GetMapping("/get/Todo/{post_no}/{todo_date}")
+	public ResponseEntity<List<Todo>> getTodoList(@PathVariable Long post_no, @PathVariable Date todo_date ){
+		System.out.println(todo_date);
+		List<Todo> todo = studyRoomService.getTodoList(post_no, todo_date);
+		 if (!todo.isEmpty()) {
+				return ResponseEntity.ok(todo);
+				 }else {
+					 return ResponseEntity.noContent().build();
+				 }
+	}
+	//Update TodoList
+	@PostMapping("/update/Todo/{post_no}/{id}")
+	public ResponseEntity<?>updateTodoList(@PathVariable Long post_no, @PathVariable Long id, @RequestParam Date todo_date, @RequestParam String todo_list){
+		studyRoomService.updateTodoList(post_no,id,todo_date,todo_list);
+		return ResponseEntity.ok("update Todo List Success");
+	}
 	
+	//Delete TodoList
+	@PostMapping("/delete/Todo/{post_no}/{id}")
+	public ResponseEntity<?> deleteTodoList(@PathVariable Long post_no, @PathVariable Long id, @RequestParam Date todo_date){
+		studyRoomService.deleteTodoList(post_no, id, todo_date);
+		return ResponseEntity.ok("delete success");
+	}
 	
 
 }

@@ -5,6 +5,7 @@ import Header from './Header';
 import '../css/RegisterUser.css';
 import Required from './img/required.png';
 import sample6_execDaumPostcode from './KakaoAddress';
+import Footer from './Footer';
 import girl from '../main/img/girl.png';
 
 function RegisterUser() {
@@ -587,6 +588,7 @@ function RegisterUser() {
       <br></br>
       <br></br>
       <br></br>
+      <Footer />
     </div>
   );
 }

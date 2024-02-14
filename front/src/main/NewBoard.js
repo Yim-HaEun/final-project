@@ -1,25 +1,26 @@
-import React, { useState, useEffect } from "react";
-import Header from "./Header";
-import "../css/NewBoard.css";
-import StudyProject from "./StudyProject";
-import FormFour from "./FormFour";
-import MentoMenti from "./MentoMenti";
-import usersUserinfoAxios from "../token/tokenAxios";
+import React, { useState, useEffect } from 'react';
+import Header from './Header';
+import '../css/NewBoard.css';
+import StudyProject from './StudyProject';
+import FormFour from './FormFour';
+import Footer from './Footer';
+import MentoMenti from './MentoMenti';
+import usersUserinfoAxios from '../token/tokenAxios';
 
 function NewBoard() {
   // FormFour에서 사용하는 상태들을 초기화
-  const [studyTitle, setStudyTitle] = useState(""); // 추가
-  const [studyContent, setStudyContent] = useState(""); // 추가
-  const [userData, setUserData] = useState("");
+  const [studyTitle, setStudyTitle] = useState(''); // 추가
+  const [studyContent, setStudyContent] = useState(''); // 추가
+  const [userData, setUserData] = useState('');
   useEffect(() => {
     const fetchUserData = async () => {
       try {
         // 서버에 사용자 정보를 가져오는 요청
-        const response = await usersUserinfoAxios.get("/users/userinfo");
+        const response = await usersUserinfoAxios.get('/users/userinfo');
         setUserData(response.data);
         console.log(userData);
       } catch (error) {
-        console.error("Failed to fetch user data.", error);
+        console.error('Failed to fetch user data.', error);
       }
     };
 
@@ -28,7 +29,7 @@ function NewBoard() {
 
   const handleDataFromChild = (data) => {
     // 자식 컴포넌트에서 받은 데이터 처리
-    console.log("Data from child component:", data);
+    console.log('Data from child component:', data);
     // 여기에서 필요한 로직을 수행
     setStudyMethod(data.studyMethod);
     setApplicationCount(data.applicationCount);
@@ -46,8 +47,8 @@ function NewBoard() {
       studyContent: data.studyContent,
     });
 
-    console.log("제목1: " + formFourData.studyTitle);
-    console.log("제목2: " + studyTitle);
+    console.log('제목1: ' + formFourData.studyTitle);
+    console.log('제목2: ' + studyTitle);
 
     // StudyProject에서 받은 데이터 처리
     setStudyTitle(data.studyTitle);
@@ -56,35 +57,35 @@ function NewBoard() {
 
   const [board, setBoard] = useState([]);
   const [formFourData, setFormFourData] = useState({
-    studyTitle: "",
-    studyContent: "",
+    studyTitle: '',
+    studyContent: '',
   });
   // StudyProject에서 사용하는 상태들을 초기화
-  const [studyMethod, setStudyMethod] = useState("");
+  const [studyMethod, setStudyMethod] = useState('');
 
-  const [duration, setDuration] = useState("");
-  const [techStack, setTechStack] = useState("");
-  const [deadline, setDeadline] = useState("");
-  const [region, setRegion] = useState("1");
-  const [study_place, setStudy_place] = useState("1");
-  const [studyStatus, setStudyStatus] = useState("O");
-  const [studyLikes, setStudyLikes] = useState("1");
-  const [studyLocation, setStudyLocation] = useState("1");
-  const [firstStudy, setFirstStudy] = useState("1");
-  const [mentorCount, setMentorCount] = useState("");
-  const [menteeCount, setMenteeCount] = useState("");
-  const [applicationCount, setApplicationCount] = useState("");
+  const [duration, setDuration] = useState('');
+  const [techStack, setTechStack] = useState('');
+  const [deadline, setDeadline] = useState('');
+  const [region, setRegion] = useState('1');
+  const [study_place, setStudy_place] = useState('1');
+  const [studyStatus, setStudyStatus] = useState('O');
+  const [studyLikes, setStudyLikes] = useState('1');
+  const [studyLocation, setStudyLocation] = useState('1');
+  const [firstStudy, setFirstStudy] = useState('1');
+  const [mentorCount, setMentorCount] = useState('');
+  const [menteeCount, setMenteeCount] = useState('');
+  const [applicationCount, setApplicationCount] = useState('');
   const [selectedItem1, setSelectedItem1] = useState(null);
   const [submittedData, setSubmittedData] = useState(null);
-  const [startDate, setStartDate] = useState("");
+  const [startDate, setStartDate] = useState('');
 
   // 게시물을 생성하는 함수
   // 게시물 생성 함수를 의존성 배열 밖으로 빼서 코드를 간소화
   const createPost = async () => {
-    console.log("studyMethod:", studyMethod);
+    console.log('studyMethod:', studyMethod);
     try {
       const response = await usersUserinfoAxios.post(
-        "/create",
+        '/create',
         {
           study_status: studyStatus,
           mentor_count: mentorCount,
@@ -111,11 +112,11 @@ function NewBoard() {
       );
       console.log(response.data);
 
-      console.log("게시물 생성 성공:", response.data);
+      console.log('게시물 생성 성공:', response.data);
       setSubmittedData(response.data); // 생성된 게시물 데이터 저장
     } catch (error) {
-      console.error("게시물 생성 실패:", error);
-      console.error("에러 응답 데이터:", error.response?.data);
+      console.error('게시물 생성 실패:', error);
+      console.error('에러 응답 데이터:', error.response?.data);
     }
   };
 
@@ -135,7 +136,7 @@ function NewBoard() {
     }
   };
 
-  console.log("뉴보드js: " + studyMethod);
+  console.log('뉴보드js: ' + studyMethod);
 
   return (
     <div>
@@ -152,27 +153,27 @@ function NewBoard() {
           <ul className="postToggle_ul">
             <li
               className={`postToggle ${
-                selectedItem1 === "스터디" ? "clicked" : ""
+                selectedItem1 === '스터디' ? 'clicked' : ''
               }`}
-              onClick={() => handleItem1Click("스터디")}
+              onClick={() => handleItem1Click('스터디')}
             >
               <span className="postToggle_text">스터디</span>
             </li>
 
             <li
               className={`postToggle ${
-                selectedItem1 === "프로젝트" ? "clicked" : ""
+                selectedItem1 === '프로젝트' ? 'clicked' : ''
               }`}
-              onClick={() => handleItem1Click("프로젝트")}
+              onClick={() => handleItem1Click('프로젝트')}
             >
               <span className="postToggle_text">프로젝트</span>
             </li>
 
             <li
               className={`postToggle ${
-                selectedItem1 === "멘토/멘티" ? "clicked" : ""
+                selectedItem1 === '멘토/멘티' ? 'clicked' : ''
               }`}
-              onClick={() => handleItem1Click("멘토/멘티")}
+              onClick={() => handleItem1Click('멘토/멘티')}
             >
               <span className="postToggle_text">멘토/멘티</span>
             </li>
@@ -181,7 +182,7 @@ function NewBoard() {
           <br />
 
           {/* Conditionally render StuduyProject based on the selected item */}
-          {selectedItem1 === "스터디" || selectedItem1 === "프로젝트" ? (
+          {selectedItem1 === '스터디' || selectedItem1 === '프로젝트' ? (
             <StudyProject
               handleDataFromChild={handleDataFromChild}
               setStudyMethod={setStudyMethod}
@@ -196,13 +197,14 @@ function NewBoard() {
               setStartDate={setStartDate}
             />
           ) : null}
-          {selectedItem1 === "멘토/멘티" ? (
+          {selectedItem1 === '멘토/멘티' ? (
             <MentoMenti onDataChanged={handleDataFromChild} />
           ) : null}
         </section>
       </div>
       {/* 추가: Submit 버튼 */}
       <button onClick={handleCreatePost}>게시물 생성</button>
+      <Footer />
     </div>
   );
 }

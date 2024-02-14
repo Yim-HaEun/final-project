@@ -70,6 +70,25 @@ const Moment = () => {
     };
     fetchMoment();
   }, []);
+  const handleDeleteMoment = async (e, selectedMoment) => {
+    e.preventDefault();
+    console.log('Delete button clicked');
+    try {
+      //서버로 삭제할 데이터 보내기
+      const response = await usersUserinfoAxios.post(
+        `/studyRoom/delete/StudyMoment/${post_no}`,
+        { ...moment, moment_no: selectedMoment.moment_no },
+        // 삭제 전송
+        {
+          withCredentials: true,
+        }
+      );
+      alert('삭제 성공');
+      window.location.reload();
+    } catch (error) {
+      console.error('삭제 불가', error);
+    }
+  };
 
   const chunkArray = (array, chunkSize) => {
     const result = [];
@@ -111,7 +130,15 @@ const Moment = () => {
                     </div>
                     <div className="board_info_right">
                       <div className="comment_count_section">
-                        <button>X</button>
+                        {userData.user_no === moment.user_no && (
+                          <button
+                            onClick={(e) => {
+                              handleDeleteMoment(e, moment);
+                            }}
+                          >
+                            X
+                          </button>
+                        )}
                       </div>
                     </div>
                   </section>

@@ -7,6 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import HeartButton from './HeartButton';
 import SearchIcon from './img/search.png';
 import DeleteIcon from './img/delete.png';
+import Footer from './Footer';
 import axios from 'axios';
 import usersUserinfoAxios from '../token/tokenAxios';
 
@@ -642,6 +643,7 @@ function MainContent() {
           )}
         </ul>
       </main>
+      <Footer />
     </div>
   );
 }

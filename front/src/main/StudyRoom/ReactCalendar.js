@@ -4,7 +4,9 @@ import 'react-calendar/dist/Calendar.css'; // css import
 import moment from 'moment'; // npm i moment
 import TodoList from './Todo/TodoList'; // TodoList import 추가
 import axios from 'axios';
+import { useParams } from 'react-router-dom';
 function ReactCalendar() {
+  const { post_no } = useParams();
   const [value, onChange] = useState(new Date());
   const [mark, setMark] = useState([]);
   const [selectedDate, setSelectedDate] = useState(null); // 선택된 날짜 상태 추가
@@ -22,7 +24,7 @@ function ReactCalendar() {
     try {
       // TODO: 서버에서 해당 날짜의 TodoList를 가져오는 API 호출
       const response = await axios.get(
-        `http://localhost:8080/studyRoom/get/Todo/${todo_date}`
+        `http://localhost:8080/studyRoom/get/Todo/${post_no}/${todo_date}`
       );
 
       // 가져온 데이터를 TodoList 상태에 업데이트

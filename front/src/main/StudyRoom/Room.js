@@ -14,6 +14,9 @@ import ReactCalendar from './ReactCalendar';
 import TodoApp from './Todo/TodoApp';
 import StudyRoomTitle from './StudyRoomTitle';
 import Application from './Application';
+import Footer from '../Footer';
+//import ReactCalendar from 'react-calendar';
+import Calendar from './TodoList/Calendar';
 const StudyRoom = () => {
   const [userData, setUserData] = useState('');
 
@@ -50,6 +53,7 @@ const StudyRoom = () => {
         <StudyRoomTitle />
         <Application />
         <div>
+          <Calendar />
           <DayCount />
           <br />
           <br />
@@ -57,11 +61,8 @@ const StudyRoom = () => {
           <StudyRoomSkills />
           <br />
 
-          <ReactCalendar />
           <br />
-          <div>
-            <TodoApp />{' '}
-          </div>
+          <div>{/*<TodoApp />{' '}*/}</div>
 
           <br />
           <br />
@@ -84,6 +85,7 @@ const StudyRoom = () => {
         <br />
         <br />
       </div>
+      <Footer />
     </div>
   );
 };

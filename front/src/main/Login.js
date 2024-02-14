@@ -4,7 +4,7 @@ import Header from './Header';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import '../css/LoginTest.css';
 import LoginAxios from '../token/tokenAxios';
-
+import Footer from './Footer';
 function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -160,6 +160,7 @@ function Login() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

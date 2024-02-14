@@ -6,7 +6,7 @@ import usersUserinfoAxios from '../token/tokenAxios';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import Header from './Header';
-import '../css/RegisterUser.css';
+import '../css/FindUser.css';
 
 function FindUser() {
   const [number, setNumber] = useState(''); //보낸 난수
@@ -162,15 +162,18 @@ function FindUser() {
 
       <br></br>
       <div>
-        <h1 className="title">아이디(email) 찾기</h1>
+        <h1 className="finduser_emailtitle">
+          {' '}
+          &nbsp;&nbsp;&nbsp;&nbsp; 아이디(email) 찾기
+        </h1>
         <form className="m-5 mb-1">
           <div className="register_id m-3">
-            <div className="two">
+            <div className="finduser_emailtext">
               <h4 className="s_text">찾을 Email을 입력하세요</h4>
             </div>
             <label className="m-2"></label>
             <input
-              className="textInput"
+              className="finduser_textInput"
               type="text"
               name="username"
               value={swithUser.username}
@@ -191,11 +194,13 @@ function FindUser() {
             >
               찾기
             </button>
-            <p className={isMessageVisible ? 'visible' : 'hidden'}>
-              {confirmEmail
-                ? `${swithUser.email} 존재하는 이메일 입니다.`
-                : `${swithUser.email} 존재하지 않는 이메일 입니다.`}
-            </p>
+            <div className="finduser_text">
+              <p className={isMessageVisible ? 'visible' : 'hidden'}>
+                {confirmEmail
+                  ? `${swithUser.email} 존재하는 이메일 입니다.`
+                  : `${swithUser.email} 존재하지 않는 이메일 입니다.`}
+              </p>
+            </div>
           </div>
         </form>
       </div>
@@ -208,7 +213,7 @@ function FindUser() {
             <h1 className="title">비밀번호 찾기</h1>
           </div>
 
-          <h4 className="s_text_id">이메일을 입력하세요</h4>
+          <h4 className="finduser_text">이메일을 입력하세요</h4>
           <label className="m-2"></label>
 
           <input

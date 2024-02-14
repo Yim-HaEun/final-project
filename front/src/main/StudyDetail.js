@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import Header from './Header';
 import '../css/StudyDetail.css';
 import '../css/NewBoard.css';
+import Footer from './Footer';
 import usersUserinfoAxios from '../token/tokenAxios';
 
 function StudyDetail() {
@@ -178,6 +179,7 @@ function StudyDetail() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
