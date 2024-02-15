@@ -97,8 +97,8 @@ public class StudyRoomService {
     	studyRoomMapper.createTodoList(post_no, todo.getTodo_list(), todo.getTodo_date());
     }
     
-    public List<Todo> getTodoList(Long post_no, Date todo_date){
-    	return studyRoomMapper.getTodoList(post_no, todo_date);
+    public List<Todo> getTodoList(Todo todo){
+    	return studyRoomMapper.getTodoList(todo);
     }
     
     public void updateTodoList(Long post_no,Long id, Date todo_date, String todo_list) {

@@ -100,8 +100,8 @@
 	VALUES(#{post_no},  #{todo_list},  #{todo_date})
 	</insert>
 	
-	<select id= "getTodoList" parameterType ="lm.swith.studyroom.model.Todo">
-		SELECT * FROM TODO WHERE POST_NO = #{post_no} AND TODO_DATE = TO_DATE(#{todo_date}, 'YYYY-MM-DD')
+	<select id= "getTodoList" parameterType ="lm.swith.studyroom.model.Todo" resultType="lm.swith.studyroom.model.Todo">
+		SELECT * FROM TODO WHERE POST_NO = #{post_no} AND TODO_DATE = #{todo_date})
 	</select>
 	
 	<update id="updateTodoList" parameterType="lm.swith.studyroom.model.Todo">

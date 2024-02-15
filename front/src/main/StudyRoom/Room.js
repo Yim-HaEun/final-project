@@ -10,8 +10,6 @@ import Notice from './Notice';
 import Moment from './Moment';
 import DayCount from './DayCount';
 import StudyRoomSkills from './StudyRoomSkills';
-import ReactCalendar from './ReactCalendar';
-import TodoApp from './Todo/TodoApp';
 import StudyRoomTitle from './StudyRoomTitle';
 import Application from './Application';
 import Footer from '../Footer';

@@ -68,21 +68,25 @@ function FindUser() {
   //email
   const handleEmail = async (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(
-        'http://localhost:8080/users/findPassword',
-        swithUser,
-        {
-          withCredentials: true,
-        }
-      );
+    if (handleInputChange === null) {
+      alert('값을 입력하세요');
+    } else {
+      try {
+        const response = await axios.post(
+          'http://localhost:8080/users/findPassword',
+          swithUser,
+          {
+            withCredentials: true,
+          }
+        );
 
-      setConfirm(response.data.toString());
-      alert('인증번호가 전송되었습니다.');
+        setConfirm(response.data.toString());
+        alert('인증번호가 전송되었습니다.');
 
-      console.log(response.data);
-    } catch (error) {
-      console.error('이메일이 부적합합니다.', error);
+        console.log(response.data);
+      } catch (error) {
+        console.error('이메일이 부적합합니다.', error);
+      }
     }
   };
 
@@ -94,15 +98,23 @@ function FindUser() {
   const handleConfirm = async () => {
     console.log('number:', number);
     console.log('confirm:', confirm);
-    if (number === confirm) {
+    if (
+      number === null ||
+      confirm === null ||
+      number === '' ||
+      confirm === ''
+    ) {
+      alert('인증값을 입력해주세요');
+      console.error('빈값 인증');
+    } else if (number === confirm) {
       alert('인증 완료.');
       setIsButtonDisabled(true);
+      setIsPasswordVisible(true);
       // 전송한 이메일 값을 a에 담아주기
     } else {
       alert('인증 번호가 다릅니다.');
       console.error('인증 실패');
     }
-    setIsPasswordVisible(true);
   };
   const handleInputChange1 = (e) => {
     //e 자리값 밑에 target

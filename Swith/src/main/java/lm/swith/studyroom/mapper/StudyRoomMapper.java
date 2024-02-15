@@ -62,7 +62,7 @@ public interface StudyRoomMapper {
 
 //calendar & TodoList
 		void createTodoList(Long post_no, String todo_list, Date todo_date); //insert
-		List<Todo> getTodoList(Long post_no, Date todo_date); // select
+		List<Todo> getTodoList(Todo todo); // select
 		void updateTodoList(Long post_no,Long id,Date todo_date, String todo_list);//update
 		void deleteTodoList(Long post_no, Long id, Date todo_date);//delete
 		

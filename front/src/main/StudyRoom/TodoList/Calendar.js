@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import Calendar from 'react-calendar'; //npm i react-calendar,
 import 'react-calendar/dist/Calendar.css'; // css import
 import moment from 'moment'; // npm i moment
@@ -10,14 +10,6 @@ function ReactCalendar() {
   const [selectedDate, setSelectedDate] = useState(null); // 선택된 날짜 상태 추가
   const [todo, setTodo] = useState([]); // TodoList를 가져올 데이터, 배열로 설정해준다.
   const [showInput, setShowInput] = useState(false); //+ 버튼 누르면 보여줄 비밀번호 input창
-  useEffect(() => {
-    // 선택된 날짜가 변경될 때 TodoList 데이터를 불러옴
-    if (selectedDate) {
-      // Todo 데이터를 불러오는 로직 (axios 등을 사용)
-      fetchTodoList(selectedDate);
-      console.log(selectedDate);
-    }
-  }, [selectedDate]);
 
   //insert
   const handleInsert = async (e) => {
@@ -49,26 +41,54 @@ function ReactCalendar() {
   const handleInputChange = (e) => {
     //e 자리값 밑에 target
     const { name, value } = e.target;
-    setTodo((prevUser) => ({ ...prevUser, [name]: value }));
+    setTodo((prevTodo) => ({ ...prevTodo, [name]: value }));
   };
 
   //const
 
   //select
-  const fetchTodoList = async (todo_date) => {
-    try {
-      // TODO: 서버에서 해당 날짜의 TodoList를 가져오는 API 호출
-      const response = await axios.get(
-        `http://localhost:8080/studyRoom/get/Todo/${post_no}/${todo_date}`
-      );
+  const fetchTodoList = useCallback(
+    async (todo_date) => {
+      try {
+        // 서버로 보낼 데이터
+        const requestData = {
+          post_no: post_no,
+          todo_date: moment(todo_date).format('YYYY-MM-DD'), // Date 객체를 'YYYY-MM-DD' 형식의 문자열로 변환
+        };
+        // TODO: 서버에서 해당 날짜의 TodoList를 가져오는 API 호출
+        const response = await axios
+          .get('http://localhost:8080/studyRoom/get/Todo', requestData, {
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+          .then((response) => {
+            console.log(response.data);
+          })
+          .catch((error) => {
+            console.error(error);
+          });
 
-      // 가져온 데이터를 TodoList 상태에 업데이트
-      setTodo(response.data); //값을 넣어줌
-      console.log(response.data);
-    } catch (error) {
-      console.error('TodoList를 불러오는데 실패했습니다.', error);
-    }
-  };
+        setTodo(response.data);
+        console.log(response.data);
+      } catch (error) {
+        console.error('TodoList를 불러오는데 실패했습니다.', error);
+      }
+    },
+    [post_no]
+  );
+  useEffect(
+    () => {
+      // 선택된 날짜가 변경될 때 TodoList 데이터를 불러옴
+      if (selectedDate) {
+        // Todo 데이터를 불러오는 로직 (axios 등을 사용)
+        fetchTodoList(selectedDate);
+        console.log(selectedDate);
+      }
+    },
+    [selectedDate],
+    [fetchTodoList]
+  );
 
   return (
     <div>
