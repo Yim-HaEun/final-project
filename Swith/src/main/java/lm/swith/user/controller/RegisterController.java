@@ -49,8 +49,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 @CrossOrigin(origins="http://localhost:3000", allowCredentials = "true")
 public class RegisterController {
-	private final KakaoService kakaoService;
-	private final UserService userService;
+		private final UserService userService;
 	private final MailService mailService;
 	private final JavaMailSender javaMailSender;
 	private final TokenProvider tokenProvider;
@@ -72,7 +71,6 @@ public class RegisterController {
 	        return ResponseEntity.notFound().build();
 	    }
 	}
-	
 	
 	// -------- 토큰 발급 --------
 	@PostMapping("/signin")
@@ -168,28 +166,15 @@ public class RegisterController {
 		     String num = "" + number;
 		     return ResponseEntity.ok(num);
 	  }
-	  
-	  //email(아이디)찾기
-	  @PostMapping("/ExistEmail")
-	  public ResponseEntity<String> checkEmail(@RequestBody SwithUser swithUser){
-		  SwithUser user = userService.getUserByEmail(swithUser.getEmail());
-		  //값이 db에 존재하는지 아닌지
-		  if(user != null && user.getEmail()==null) { // 존재한다면
-			  String existsEmail = "existsEmail";
-			  return ResponseEntity.ok(existsEmail);
-		  }else {
-			  String None = "none";
-			  return ResponseEntity.ok(None);
-		  }
-	  }
+	
 	  //닉네임 중복 체크 
 	  @PostMapping("/nickname")
 	  public ResponseEntity<String> checkNickname(@RequestBody SwithUser swithUser){
 	  	
 	  	SwithUser user = userService.getUserByNickname(swithUser.getNickname()); 
-	  	
+	  	System.out.println(swithUser.getNickname());
 	  	//넣은 값이 db에 존재하는지, 넣은 값이 null이 아닌 
-	  	if(user != null && user.getNickname() == null) { //find해서 값이 존재하면 거부, null이면 
+	  	if(user != null && user.getNickname() != null) { //find해서 값이 존재하면 거부, null이면 
 	  		String existsNick = "existsNick";
 	  		 return ResponseEntity.ok(existsNick);
 	  	 }else {
@@ -343,54 +328,9 @@ public class RegisterController {
 	    	return ResponseEntity.ok("Delete User");
 	    }
 	    
+	    //github
 	    
-	//카카오 
-	@GetMapping("/kakao/callback")
-    public String callback(HttpServletRequest request,
-                           @RequestParam(required = false) String password,
-                           @RequestParam(required = false) String userName, 
-                           @RequestParam(required = false) byte[] userProfile,
-                           @RequestParam(required = false) String userAddress,
-                           @RequestParam(required = false) String userIntroduction,
-                           @RequestParam(required = false) String user_role,
-                           Model model) throws Exception {
-
-        SwithUser kakaoInfo = kakaoService.getKakaoInfo(request.getParameter("code"), password,userName, userProfile,userAddress,userIntroduction,user_role );
-        model.addAttribute("kakaoInfo", kakaoInfo);
-        return "kakaoRegister";
-    }
-    @PostMapping("/kakaoregister")
-    public ResponseEntity<MsgEntity> registerUser(@RequestParam String email,
-									    		  @RequestParam String password,
-										          @RequestParam String userName,
-										          @RequestParam String nickname,
-										          @RequestParam byte[] userProfile,
-										          @RequestParam String userAddress, 
-												  @RequestParam String userIntroduction, 
-												  @RequestParam String user_role
-												  ) {
-        SwithUser swithUser = SwithUser.builder()
-        		.email(email)
-        		.password(password)
-                .username(userName)
-                .nickname(nickname)
-                .user_profile(userProfile)
-                .useraddress(userAddress)
-                .user_introduction(userIntroduction)
-                .user_role(user_role)
-                .build();
-
-        SwithUser registeredUser = userService.signUpUser(swithUser);
-        
-        
-        return ResponseEntity.ok()
-                .body(new MsgEntity("Success", registeredUser));
-       
-        /* String redirectUrl = request.getContextPath() + "/";
-        MsgEntity responseMsg = new MsgEntity("Success", registeredUser, redirectUrl);
-
-        return ResponseEntity.ok()
-                .body(responseMsg);
-                */
-    }
+	    
+	
+   
 }

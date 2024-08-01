@@ -117,6 +117,7 @@ function Login() {
                 login
               </button>
             </div>
+            
             <div className="login_sns">
               <button
                 type="button"
@@ -133,7 +134,7 @@ function Login() {
                   fontFamily: "SUITE-Regular",
                   fontSize: "18px",
                 }}
-              >
+              > 
                 카카오 로그인
               </button>
 

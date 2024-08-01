@@ -23,7 +23,7 @@ public interface StudyPostMapper {
 	List<StudyPost> getAllStudyPostWithSkills();
 	
 	// 스터디 조건 검색
-	List<StudyPost> getStudiesBySelect(Map<String, Object> params);
+	List<StudyPost> getStudiesBySelect(Map<String, ?> params);
 	
 	
 	// 스터디 제목+내용 검색
