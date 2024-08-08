@@ -136,7 +136,9 @@
 ![image](https://github.com/user-attachments/assets/c8976602-ce57-4b48-8943-d226f992f3d3)
 </div>    
 </details>
------------------------
+ 
+ -----------------------
+
 <details>
 <summary>진행중 스터디방 </summary> 
 <div markdown="1">
@@ -216,6 +218,7 @@
 </details>
 
 -----------------------
+
 <details>
 <summary>관리자 페이지 </summary>
 <div markdown = "1">
@@ -244,6 +247,7 @@
    
 </div>    
 </details>
+
 ## S.with 홈페이지 설명
 
  <details>
