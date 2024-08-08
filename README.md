@@ -110,7 +110,9 @@
     카페 마크 클릭시 게시글로 이동.
 </div>
 </details>
+
 -----------------------
+
 <details>
 <summary>아이디,비밀번호 찾기</summary>
 <div markdown="1">       
@@ -122,7 +124,9 @@
     
 </div>
 </details>
+
 -----------------------
+
 <details>  
 <summary>회원 정보 수정 및 탈퇴</summary> 
 <div markdown ="1">
@@ -328,7 +332,9 @@
     스터디 마감일, 시작일 등 메세지를 확인할 수 있다.
 </div>
  </details>
+ 
 ## Trouble Shooting 
+
 [로그인 토큰 (springboot)]
     
     CORS(Cross-Origin Resource Sharing) 오류가 나서 찾아보니, 프론트와 연결할 때 보안문제로 springboot에서 자체적으로 막아서 연결이 안됐었다.
@@ -336,6 +342,7 @@
     refreshtoken 개념을 추가해 토큰이 7일마다 새로 업데이트된다.(예시로 든 기간)
     
    ![token](https://github.com/user-attachments/assets/1713a3aa-9bba-40fc-beb3-b346730618bf)
+   
 [찜하기 DB ]
     
     찜하기 기능이 동작하려면 어떤 컬럼이 필요한지 DB 설정을 제대로 안하고 만들어서 
@@ -364,6 +371,7 @@
     그래서 생각해낸 방법이 탈퇴한 사람은 더이상 로그인하지못하게 update를 하고,
     진행중인 스터디 방이 종료될때까지 (이름없음)으로 자료가 남겨져있다가 종료일 30일 이후 스터디방이 완전히 비활성화 되면
     관리자 권한으로 탈퇴 신청자의 데이터를 완전히 지울 수 있게 했다.
+    
 ## 프로젝트를 통해 배운 점
 
 - 사용자 관점에서 기능 구현을 해야한다.
