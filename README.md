@@ -34,6 +34,7 @@
 <img src="https://img.shields.io/badge/Trello-0052CC?style=for-the-badge&logo=trello&logoColor=white">
 <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">
 </div>
+
 ## ERD
 
 ![깃헙리드미파이널3](https://github.com/user-attachments/assets/e080a52e-54c9-4b80-8873-94bda3d92b35)
