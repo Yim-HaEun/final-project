@@ -96,7 +96,9 @@
     
 </div>
 </details>
+
 -----------------------
+
 <details>
 <summary>로그인 페이지 및 로그아웃</summary>
 <div markdown="1">       
@@ -212,6 +214,7 @@
     작성자만 삭제할 수 있다.
 </div>
 </details>
+
 -----------------------
 <details>
 <summary>관리자 페이지 </summary>
@@ -241,7 +244,8 @@
    
 </div>    
 </details>
- ## S.with 홈페이지 설명
+## S.with 홈페이지 설명
+
  <details>
      <summary>메인페이지</summary>
      <div markdown = "1">
@@ -270,9 +274,12 @@
   <details>
      <summary>게시글 작성 페이지</summary>
      <div markdown = "1">
+
 ![post](https://github.com/user-attachments/assets/18b762da-5eca-463c-af10-39f7ebe82e7d)
 ![createposting](https://github.com/user-attachments/assets/6b01b0c5-2f51-47db-9960-b7339f8d4859)
-    작성완료 버튼을 누르면 알람창이 뜨고 메인페이지로 이동
+    
+      
+      작성완료 버튼을 누르면 알람창이 뜨고 메인페이지로 이동
 ![comment](https://github.com/user-attachments/assets/b7481718-5c16-4408-afd1-3aa6dc9039cd)
     
     작성자에게만 게시글 삭제 버튼이 뜬다.
