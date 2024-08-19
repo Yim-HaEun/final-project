@@ -45,6 +45,7 @@
 <div markdown="1">  
     
 ![signup](https://github.com/user-attachments/assets/9f2fc1ce-1a59-485d-bcff-4cd6e225adb5)
+
 <details>
     <summary>1.이용약관 </summary>
     <div markdown = "1">
@@ -81,7 +82,9 @@
 <div markdown="1">
 
  ![nickname](https://github.com/user-attachments/assets/f2d4a25b-99ca-4af7-9c10-1e0afef1938f)
+
 ![nickname alarm](https://github.com/user-attachments/assets/870ca16e-3f2a-4c5b-94f5-8d3fb179884f)
+
 </div>
 </details>
 <details>
@@ -89,6 +92,7 @@
 <div markdown="1">
 
  ![address](https://github.com/user-attachments/assets/b58bebd8-caec-4190-8b46-4804aca257f1)
+
 ![add](https://github.com/user-attachments/assets/b4edf6a6-f0ca-46b0-9665-01d595134c78)
    
 </div>
@@ -105,6 +109,7 @@
 <div markdown="1">       
 
  ![loginPage](https://github.com/user-attachments/assets/225da279-ccb4-498e-8964-9895fb085f8e)
+
 ![loginvs](https://github.com/user-attachments/assets/0197f2ef-7986-44ea-bb90-550c897dc622)
      
     로그인 후, 자신의 주소 마커가 찍히고 스터디를 구하고있는 만남 장소가 뜬다. 
@@ -117,7 +122,8 @@
 <details>
 <summary>아이디,비밀번호 찾기</summary>
 <div markdown="1">       
-![IDPassword](https://github.com/user-attachments/assets/ceec1ad7-034c-49fd-a4ae-55566b8bb699)
+
+ ![IDPassword](https://github.com/user-attachments/assets/ceec1ad7-034c-49fd-a4ae-55566b8bb699)
    
 ![passwordsearch](https://github.com/user-attachments/assets/7997c64c-e083-4382-a58b-e61905d82359)
     
@@ -133,9 +139,11 @@
 <div markdown ="1">
    
 1.수정 
+
 ![profile](https://github.com/user-attachments/assets/49beb6bf-facb-4b4f-b756-e6827f386542)
 ![eedit](https://github.com/user-attachments/assets/cf302011-727c-4c75-b132-eef889e37aea)
 ![p](https://github.com/user-attachments/assets/ea92af2c-788c-4d3c-bc3f-874d22ce6d85)
+
 2.탈퇴
     
 ![image](https://github.com/user-attachments/assets/c8976602-ce57-4b48-8943-d226f992f3d3)
@@ -149,7 +157,9 @@
 <div markdown="1">
 
  ![myStudyRoom](https://github.com/user-attachments/assets/b8c248e3-cba6-4ee5-b027-5d172c6d0b90)
+
 ![SWITH MOMENT](https://github.com/user-attachments/assets/a0fa4622-10ef-4f6a-b790-e3c2e3f450b8)
+
 <details>
     <summary> 1.스터디방 이름 수정  </summary>
  <div markdown ="1">
@@ -174,6 +184,7 @@
  <div markdown ="1">
 
   ![d-day](https://github.com/user-attachments/assets/2f2d271a-8d30-4d94-8149-705afd2ab5a9)
+   
      스터디원을 구할 때, 공부 기간을 정하기 때문에 시작일을 기준으로 d-day를 보여준다.
 </div>
 </details>
@@ -184,7 +195,9 @@
 ![calendar](https://github.com/user-attachments/assets/dedc72de-da51-4798-adc8-c909b8804937)
     
      달력을 눌러 todo 리스트를 보거나 추가할 수 있다.
+
 ![todolist](https://github.com/user-attachments/assets/2a2e7c4c-5175-496e-9f3a-46034a0019a9)
+
 ![writetodo](https://github.com/user-attachments/assets/e1d3adcf-65da-4f35-b887-ab210b2ff197)
     todo+ 버튼을 눌러 작성
 </div>
@@ -213,6 +226,7 @@
     <div markdown ="1">
  
 ![SWITH MOMENT](https://github.com/user-attachments/assets/4cbdefae-db4d-496c-abcf-b75d52b44d66)
+
 ![modalmoment](https://github.com/user-attachments/assets/190a4b3b-5e66-4c35-b3d8-1f8d49549206)
     
     모달창으로 사진과 제목을 추가
@@ -232,6 +246,7 @@
       
        관리자에게만 보이는 관리자페이지 버튼
 1.유저 검색
+
 ![adminsearch](https://github.com/user-attachments/assets/fad8dd6d-1198-48b5-b626-c890447a984b)
     
     닉네임으로 유저의 게시글 목록,댓글,유저 정보를 볼 수 있다.
@@ -265,6 +280,7 @@
     그곳의 스터디 구인 공고 글을 볼 수 있다.
     
 ![toggle](https://github.com/user-attachments/assets/4bd98b60-ba78-4c47-81a9-864dbdac3151)
+
 ![mogodb](https://github.com/user-attachments/assets/95eec2fd-2f76-4ad1-b808-57f0e5659d9a)
     
     자신이 배우고싶은 기능들을 위주로 검색 가능. (복수 검색 가능)
@@ -275,6 +291,7 @@
 ![searchtitle](https://github.com/user-attachments/assets/59862cb1-f774-4bc9-8dd5-d7cd7793ade3)
    
     내용이나 제목으로 검색 가능
+
 ![heart](https://github.com/user-attachments/assets/5c470d5c-3109-49d1-918d-1e1dcff3d74f)
     
     찜하기를 누르면 마이페이지의 '내가 찜한 스윗' 리스트에 들어간다.
@@ -285,6 +302,7 @@
      <div markdown = "1">
 
 ![post](https://github.com/user-attachments/assets/18b762da-5eca-463c-af10-39f7ebe82e7d)
+
 ![createposting](https://github.com/user-attachments/assets/6b01b0c5-2f51-47db-9960-b7339f8d4859)
     
       
@@ -302,6 +320,7 @@
      <div markdown = "1">
     
 ![join](https://github.com/user-attachments/assets/0f0b91f2-300a-4864-9329-22611e48aaab)
+
 ![join2](https://github.com/user-attachments/assets/9daa26a0-cfc9-453f-b8c4-72a3cd241bdc)
     
     신청자는 신청취소를 할 수 있고,
@@ -350,6 +369,7 @@
     true false 컬럼을 추가해 해결해줬다.
  
  ![like2](https://github.com/user-attachments/assets/872c42ef-1c22-465c-8044-3839a4cfa7a6)
+
 [swith 모달창]
      
      공지글과 모먼트는 모달창으로 간단하게 글이나 사진을 남길 수 있는 공간이다.
@@ -397,9 +417,11 @@
 - 마감일까지 스케줄을 맞추려면 어떻게 해야할까?
 
       계획을 세우고 진행상황을 공유하면서 프로젝트를 진행했다. 
+
 ![plan](https://github.com/user-attachments/assets/e5bce124-7af4-4c69-a572-e91df6523918)
     
        전체 진행 상황을 보기위한 차트,
+
 ![plann](https://github.com/user-attachments/assets/100b0d64-a8a7-4670-9cc4-0ebdd42195db)
     
     개인 진행 상황 차트를 모두가 볼 수 있게 해놨다.
@@ -407,7 +429,6 @@
      어려울거 같았던 것들이 예상보다 쉽게 해결되는 경우도 있었고 
      쉬울거라 생각했던 기능들이 오류때문에 시간을 잡아먹을때도 있었다. 
      물론 정해놓은 계획 기간내에 해결하기위해 밤도 새고 알아보는 과정은 재밌었다. 
-     물론 정해놓은 계획을 기간내에 해결하기위해 밤도 새고 알아보는 과정은 재밌었다. 
      기간내에 구현하도록 노력하는 것은 당연하나 
      자신이 오류를 해결할때 얼마나 걸릴 지 예상하는 것과 
      기능구현을 기간내에 완성 할 수 있는지에 대해 아는 메타인지능력도 중요하다고 느꼈다.
