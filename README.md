@@ -49,6 +49,7 @@
 <details>
     <summary>1.이용약관 </summary>
     <div markdown = "1">
+     
 ![terms](https://github.com/user-attachments/assets/eab10c0e-2685-4d61-9619-58296c1e903b)
         
     - 모두 동의해야만 가입할 수 있다.
