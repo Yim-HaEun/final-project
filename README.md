@@ -360,7 +360,7 @@
     
     CORS(Cross-Origin Resource Sharing) 오류가 나서 찾아보니, 프론트와 연결할 때 보안문제로 springboot에서 자체적으로 막아서 연결이 안됐었다.
     JWT토큰을 사용하여 토큰을 발급하기때문에 인가된 코드가 아니면 예외처리를하도록 문제를 해결했다.토큰 발급에 보안을 강화하기 위해 
-    refreshtoken 개념을 추가해 토큰이 7일마다 새로 업데이트된다.(예시로 든 기간)
+    refreshtoken 개념을 추가해 토큰이 1일마다 새로 업데이트된다.(예시로 든 기간)
     
    ![token](https://github.com/user-attachments/assets/1713a3aa-9bba-40fc-beb3-b346730618bf)
    
