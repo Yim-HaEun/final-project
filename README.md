@@ -362,7 +362,8 @@
     JWT토큰을 사용하여 토큰을 발급하기때문에 인가된 코드가 아니면 예외처리를하도록 문제를 해결했다.토큰 발급에 보안을 강화하기 위해 
     refreshtoken 개념을 추가해 토큰이 1일마다 새로 업데이트된다.(예시로 든 기간)
     
-   ![token](https://github.com/user-attachments/assets/1713a3aa-9bba-40fc-beb3-b346730618bf)
+ ![jwt_refresh1](https://github.com/user-attachments/assets/947888e4-3a7d-4611-8f4b-a22a0bc12053)
+
    
 [찜하기 DB ]
     
