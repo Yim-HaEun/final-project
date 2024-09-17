@@ -34,6 +34,16 @@
 <img src="https://img.shields.io/badge/Trello-0052CC?style=for-the-badge&logo=trello&logoColor=white">
 <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">
 </div>
+<div>
+언어: Java,HTML5/CSS,JavaScript          
+서버 : SpringBoot 3.2.1 
+프론트엔드 도구 : Node.js, npm 
+프레임워크 : Spring Framework 6.x, MyBatis 3.0.3 
+DB : Oracle 11g 
+IDE : Eclipse 2023.12, VisualStudio 
+API : Restful API(JSON) 
+라이브러리 : React 
+빌드 도구 : Maven1.12.0</div>
 
 ## ERD
 
