@@ -50,7 +50,7 @@ API : Restful API(JSON)
 
 라이브러리 : React  
 
-빌드 도구 : Maven1.12.0
+빌드 도구 : Maven
 
 </div>
 
