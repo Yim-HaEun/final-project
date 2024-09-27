@@ -38,13 +38,19 @@
 
  언어: Java,HTML5/CSS,JavaScript   프론트엔드 도구 : Node.js, npm        
 
- 서버 : SpringBoot 3.2.1    프레임워크 : Spring Framework 6.x, MyBatis 3.0.3 
+ 서버 : SpringBoot 3.2.1    
+ 
+ 프레임워크 : Spring Framework 6.x, MyBatis 3.0.3 
 
  DB : Oracle 11g 
 
 IDE : Eclipse 2023.12, VisualStudio 
 
-API : Restful API(JSON)   라이브러리 : React  빌드 도구 : Maven1.12.0
+API : Restful API(JSON)   
+
+라이브러리 : React  
+
+빌드 도구 : Maven1.12.0
 
 </div>
 
